@@ -1,0 +1,16 @@
+    <resources>
+        <string name="home_brand">CERCANÍAS COPILOT</string>
+        <string name="home_title">Tu próximo trayecto,
+con contexto.</string>
+        <string name="home_subtitle">Tu viaje habitual y tus compromisos, en un mismo lugar.</string>
+        <string name="journey_heading">Mi trayecto habitual</string>
+        <string name="journey_not_configured">Todavía no hay un trayecto configurado</string>
+        <string name="journey_empty_description">Aquí verás tu origen, destino y duración estimada cuando configures tu trayecto.</string>
+        <string name="journey_duration">Duración de referencia: %1$d min</string>
+        <string name="journey_loading">Consultando tu trayecto…</string>
+        <string name="journey_error">No se ha podido consultar el trayecto.</string>
+        <string name="journey_retry">Reintentar</string>
+        <string name="home_upcoming_title">Próximamente</string>
+        <string name="home_upcoming_body">Consulta del servicio ferroviario y evaluación de llegada a tus compromisos del calendario.</string>
+        <string name="home_privacy">Tú decides cuándo dar acceso a tu calendario.</string>
+    </resources>
