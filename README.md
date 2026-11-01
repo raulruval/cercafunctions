@@ -1,7 +1,9 @@
 # Cercanías Copilot · Cercafunctions
 
+Empieza por [START_HERE.md](START_HERE.md): mapa de casos, primer incremento y método SDD.
+
 Base Android nativa para investigar una arquitectura que proporcione capacidades
-a agentes, inspirada en Rocket-Beer. Fase 0: análisis y arranque. SDD pendiente de revisión.
+a agentes, inspirada en Rocket-Beer. Fase 0 ejecutable y SDD configurado; casos de uso en Draft.
 
 ## Qué ejecuta esta base
 
@@ -46,5 +48,5 @@ en `gradle/libs.versions.toml`. AGP 9 usa Kotlin integrado en los módulos Andro
 - [Snapshot de esta fase y validación](docs/phase-0.md).
 
 Calendario, Renfe, cálculo de puntualidad, publicación AppFunctions, ChatApp y
-Testing Agent se abordan después de revisar esta base. No se ha iniciado SDD,
-creado un backlog de casos de uso ni desplegado un backend.
+Testing Agent se abordan mediante los casos de uso de `specs/`. Se ha configurado Spec Kit y
+creado sus especificaciones iniciales; todavía no hay implementación de funcionalidades ni backend.

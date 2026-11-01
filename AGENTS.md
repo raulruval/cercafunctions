@@ -1,17 +1,41 @@
 # Cercanías Copilot
 
-Esta fase crea solo el repositorio base. No iniciar SDD, nuevas funcionalidades,
-calendario, Renfe, AppFunctions publicadas ni interoperabilidad sin una petición posterior.
+## Contexto y alcance vigente
 
-- Mantener seis módulos y dependencias descritas en docs/architecture.md.
-- core-domain y core-data son Kotlin/JVM; no importar Android, Compose, Hilt ni AppFunctions.
-- UI y adaptadores de capacidades invocan los mismos casos de uso de dominio.
+Leer `START_HERE.md`, `.specify/memory/constitution.md` y `specs/README.md`.
+La petición actual autoriza configurar SDD y redactar especificaciones, plan
+y tareas. No implementar funcionalidades hasta una petición posterior de construcción.
+La fase 0 queda preservada en su etiqueta; los documentos de aquella fase son históricos.
+
+## Flujo SDD
+
+- Usar las skills oficiales instaladas en `.agents/skills/speckit-*`.
+- Una característica activa en `.specify/feature.json` o `SPECIFY_FEATURE_DIRECTORY`.
+  La rama Git no cambia automáticamente ese puntero local ignorado por Git.
+- `spec.md` define comportamiento; `plan.md`, diseño; `tasks.md`, trabajo ejecutable.
+- Un solo caso en construcción. Mantener estado y evidencia en los archivos del caso.
+- Revisar supuestos de borrador antes de construir. Una petición de implementar
+  el caso revisado autoriza sus tareas; no pedir confirmación para cada paso.
+- No marcar una tarea o criterio completado sin comprobación real. Distinguir
+  revisión documental de pruebas de producto y de aprobación humana.
+- Conservar cambios locales ajenos; no incluirlos incidentalmente en commits.
+
+## Arquitectura y seguridad
+
+- Mantener seis módulos y dependencias de `docs/architecture.md`.
+- `core-domain` y `core-data`: Kotlin/JVM sin Android, Compose, Hilt o AppFunctions.
+- UI y capacidades consumen los mismos casos de uso; sin ViewModel en servicios.
 - No modificar Rocket-Beer ni incorporar sus artefactos privados.
-- AppFunctions: leer la skill oficial android/skills, device-ai/appfunctions y sus referencias.
-  Seguir API beta01 o posterior; contrastar ejemplos antiguos con las notas de versión.
-- No publicar capacidades que la UI aún no ofrece. No conceder permisos desde un servicio.
-- Identificar explícitamente fixtures; nunca extrapolar alertas actuales a mañana.
-- No enviar mensajes sin confirmación explícita de destinatario y texto.
-- No publicar credenciales, calendarios reales, datos privados o local.properties.
-- Verificación base: ./gradlew :core-domain:test :app:assembleDebug :app:lintDebug.
-- Explicar los cambios y las particularidades Android desde la experiencia Flutter/BLoC.
+- AppFunctions: leer la skill oficial Google y sus referencias al trabajar esa frontera.
+  API beta01 o posterior; contrastar snippets antiguos con notas de versión.
+- Exponer únicamente capacidades ya ofrecidas por UI; no pedir permisos desde servicios.
+- Identificar fixtures y procedencia; no extrapolar alertas actuales a mañana.
+- Separar lectura de calendario de autorización para compartir datos mínimos.
+- Envío de mensajes solo tras confirmar destinatario y contenido exactos.
+- No versionar credenciales, calendarios reales, local.properties o entornos Python.
+
+## Verificación y mentoría
+
+Elegir comprobaciones según `docs/sdd-workflow.md`; no compilar por documentos solos.
+Base Android: `./gradlew :core-domain:test :app:assembleDebug :app:lintDebug`.
+Explicar decisiones Android desde experiencia Flutter/Dart/BLoC y aportar evidencia.
