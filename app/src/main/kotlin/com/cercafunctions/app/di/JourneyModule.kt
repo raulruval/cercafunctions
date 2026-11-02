@@ -1,6 +1,11 @@
 package com.cercafunctions.app.di
 
 import android.content.Context
+import java.time.Clock
+import java.time.ZoneId
+import com.cercafunctions.domain.estimate.JourneyFixtureRepository
+import com.cercafunctions.domain.estimate.QueryJourneyArrival
+import com.cercafunctions.data.estimate.ReproducibleJourneyFixtures
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
@@ -20,6 +25,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object JourneyModule {
+    @Provides fun provideClock(): Clock = Clock.systemUTC()
+    @Provides fun provideZone(): ZoneId = ZoneId.systemDefault()
+    @Provides fun provideFixtures(): JourneyFixtureRepository = ReproducibleJourneyFixtures()
+    @Provides fun provideArrival(repository: JourneyRepository, fixtures: JourneyFixtureRepository, clock: Clock) =
+        QueryJourneyArrival(repository, fixtures, clock)
+
     @Provides
     @Singleton
     fun provideJourneyStore(@ApplicationContext context: Context): DataStore<Preferences> =

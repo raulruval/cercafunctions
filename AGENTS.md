@@ -3,8 +3,9 @@
 ## Contexto y alcance vigente
 
 Leer `START_HERE.md`, `.specify/memory/constitution.md` y `specs/README.md`.
-La instrucción del 2026-11-02 autoriza publicar la base/SDD y construir UC-001
-conforme a su especificación y plan. UC-001 queda Verified; los demás casos siguen en Draft.
+Las instrucciones del 2026-11-02 autorizan publicar la base/SDD y construir UC-001
+y después UC-002. Ambos quedan Verified; UC-003–008 siguen en Draft. No iniciar
+el siguiente caso sin petición. Ver specs/002-journey-estimate/verification.md.
 La fase 0 queda preservada en su etiqueta; los documentos de aquella fase son históricos.
 
 ## Flujo SDD

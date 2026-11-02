@@ -121,3 +121,11 @@ Esto mantiene un coste pequeño y evita acoplar una librería corporativa a tren
 6. Separar consentimiento Android para leer de autorización para compartir con agentes.
 7. Persistencia, selección inequívoca de reunión, margen de llegada, zona horaria,
    alcance ferroviario y conservación de datos se concretarán en SDD.
+
+## Incremento UC-002
+`QueryJourneyArrival` vive en core-domain y recibe JourneyRepository,
+JourneyFixtureRepository y Clock. El catálogo fijo reside en core-data;
+Hilt lo enlaza en app. ArrivalViewModel/ArrivalPanel reciben resultados tipados.
+No se amplían core-platform ni core-appfunctions, ni se añaden módulos. La futura
+fachada AppFunctions consumirá este mismo caso, con mapeo explícito de java.time
+a sus DTO y política de exposición por definir en UC-006.

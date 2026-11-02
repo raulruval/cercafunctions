@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import com.cercafunctions.presentation.estimate.ArrivalViewModel
 import com.cercafunctions.presentation.home.HomeRoute
 import com.cercafunctions.presentation.home.HomeViewModel
 import com.cercafunctions.presentation.theme.CopilotTheme
@@ -12,6 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    private val arrivalViewModel: ArrivalViewModel by viewModels()
     private val viewModel: HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,7 +21,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             CopilotTheme {
-                HomeRoute(viewModel)
+                HomeRoute(viewModel, arrivalViewModel)
             }
         }
     }

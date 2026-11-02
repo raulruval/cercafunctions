@@ -6,7 +6,7 @@ Base ejecutable: etiqueta `phase-0-base`. Adopción SDD: etiqueta `sdd-inception
 | Caso | Resultado de usuario | Dependencias | Estado | Plan / construcción |
 | --- | --- | --- | --- | --- |
 | UC-001 | [Configurar y conservar mi trayecto habitual](001-habitual-journey/spec.md) | Base phase-0-base. | Verified | 12/12; ver [evidencia](001-habitual-journey/verification.md) |
-| UC-002 | [Consultar llegada de referencia y escenarios reproducibles](002-journey-estimate/spec.md) | UC-001. | In progress | Plan y tareas en preparación; instrucción 2026-11-02 |
+| UC-002 | [Consultar llegada de referencia y escenarios reproducibles](002-journey-estimate/spec.md) | UC-001. | Verified | 12/12; ver [evidencia](002-journey-estimate/verification.md) |
 | UC-003 | [Consultar contexto ferroviario real con vigencia explícita](003-renfe-context/spec.md) | UC-002. | Draft | Se preparan al activar |
 | UC-004 | [Elegir un compromiso del calendario del dispositivo](004-calendar-selection/spec.md) | Base Android; independiente de UC-001–003. | Draft | Se preparan al activar |
 | UC-005 | [Evaluar llegada frente al compromiso seleccionado](005-arrival-assessment/spec.md) | UC-002 y UC-004; UC-003 como contexto adicional. | Draft | Se preparan al activar |
@@ -43,7 +43,7 @@ en las últimas etapas, desde el consumidor externo además de la UI existente.
 - **Verified**: aceptación satisfecha y evidencia registrada en `verification.md`.
 - **Blocked**: obstáculo real encontrado, con causa y acción pendiente documentadas.
 
-Estado al 2026-11-02: **UC-001 Verified**, **12/12 tareas completadas** y **1/8 casos Verified**. Las casillas
+Estado al 2026-11-02: **UC-001 y UC-002 Verified**, **24/24 tareas completadas** y **2/8 casos Verified**. Las casillas
 marcadas de `checklists/requirements.md` solo indican revisión del documento.
 No representan tests ejecutados ni aprobación humana. Al implementar, actualizar
 estado y tareas en el mismo commit que su código/evidencia.
@@ -71,6 +71,6 @@ estado y tareas en el mismo commit que su código/evidencia.
 
 ## Próxima sesión
 
-UC-001 está cerrado en `uc-001-v1`. El siguiente caso propuesto es UC-002:
-revisar fecha/zona/hora de salida y procedencia antes de planificarlo. No se ha
-iniciado. Ver [START_HERE](../START_HERE.md) y la evidencia del primer incremento.
+UC-002 queda cerrado en `uc-002-v1`. El siguiente caso propuesto es UC-003:
+revisar cobertura y vigencia de datos ferroviarios antes de planificarlo. No se ha
+iniciado. Ver [START_HERE](../START_HERE.md) y las evidencias de ambos incrementos.

@@ -3,7 +3,7 @@
 Empieza por [START_HERE.md](START_HERE.md): mapa de casos, primer incremento y método SDD.
 
 Base Android nativa para investigar una arquitectura que proporcione capacidades
-a agentes, inspirada en Rocket-Beer. UC-001 implementado y verificado; siete casos siguientes en Draft.
+a agentes, inspirada en Rocket-Beer. UC-001 y UC-002 implementados y verificados; seis casos siguientes en Draft.
 
 ## Qué ejecuta esta base
 
@@ -15,6 +15,12 @@ validan antes de escribir y los errores no se convierten en configuración vací
 La duración es una referencia del usuario, no una predicción ferroviaria. Ver
 [pruebas y evidencia de UC-001](specs/001-habitual-journey/verification.md).
 
+El panel de llegada calcula una referencia para fecha/hora/zona confirmadas.
+Incluye tres demos con reloj y datos fijos: normal, +15 y desconocido; nunca se
+presentan como operación real. Pruebas cubren medianoche y cambios de hora.
+Ver [guía UC-002](specs/002-journey-estimate/quickstart.md) y
+[evidencia](specs/002-journey-estimate/verification.md).
+
 ## Módulos
 
 | Módulo | Responsabilidad |
@@ -22,7 +28,7 @@ La duración es una referencia del usuario, no una predicción ferroviaria. Ver
 | `app` | Application, Activity y ensamblado Hilt |
 | `core-presentation` | Compose, tema, estado y ViewModel |
 | `core-domain` | Modelos, contratos y casos de uso Kotlin/JVM |
-| `core-data` | Repositorios JVM; implementación en memoria para fixtures |
+| `core-data` | Repositorios JVM y catálogo explícito de fixtures reproducibles |
 | `core-platform` | Persistencia DataStore; futura integración CalendarContract |
 | `core-appfunctions` | Frontera Android de capacidades; biblioteca preparada, sin servicio publicado |
 
@@ -35,7 +41,7 @@ Ver [configuración y pruebas](docs/setup.md).
 
 ```powershell
 $env:JAVA_HOME = 'C:\Program Files\Android\Android Studio\jbr'
-.\gradlew.bat :core-domain:test :core-platform:testDebugUnitTest :core-presentation:testDebugUnitTest :app:assembleDebug :app:lintDebug
+.\gradlew.bat :core-domain:test :core-data:test :core-platform:testDebugUnitTest :core-presentation:testDebugUnitTest :app:assembleDebug :app:lintDebug
 .\gradlew.bat :app:installDebug
 ```
 
@@ -53,4 +59,4 @@ en `gradle/libs.versions.toml`. AGP 9 usa Kotlin integrado en los módulos Andro
 
 Calendario, Renfe, cálculo de puntualidad, publicación AppFunctions, ChatApp y
 Testing Agent se abordan mediante los casos de uso de `specs/`. Se ha configurado Spec Kit y
-creado sus especificaciones iniciales. UC-001 es el primer incremento funcional; no hay backend.
+creado sus especificaciones iniciales. UC-001 y UC-002 son incrementos funcionales; no hay backend.

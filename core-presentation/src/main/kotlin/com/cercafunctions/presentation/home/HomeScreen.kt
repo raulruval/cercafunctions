@@ -8,6 +8,9 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import com.cercafunctions.presentation.estimate.ArrivalRoute
+import com.cercafunctions.presentation.estimate.ArrivalViewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -34,15 +37,16 @@ internal data class HomeActions(
 )
 
 @Composable
-fun HomeRoute(viewModel: HomeViewModel) {
+fun HomeRoute(viewModel: HomeViewModel, arrivalViewModel: ArrivalViewModel) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    LaunchedEffect(state.content) { arrivalViewModel.onJourneyChanged((state.content as? JourneyContent.Ready)?.journey) }
     BackHandler(enabled = state.editor != null, onBack = viewModel::cancelEditing)
     HomeScreen(state, HomeActions(viewModel::refresh, viewModel::beginEditing, viewModel::cancelEditing,
-        viewModel::updateOrigin, viewModel::updateDestination, viewModel::updateDuration, viewModel::save))
+        viewModel::updateOrigin, viewModel::updateDestination, viewModel::updateDuration, viewModel::save)) { ArrivalRoute(arrivalViewModel) }
 }
 
 @Composable
-internal fun HomeScreen(state: HomeUiState, actions: HomeActions = HomeActions()) {
+internal fun HomeScreen(state: HomeUiState, actions: HomeActions = HomeActions(), arrivalContent: @Composable () -> Unit = {}) {
     Scaffold { insets ->
         Column(
             modifier = Modifier.fillMaxSize().padding(insets).imePadding()
@@ -63,6 +67,7 @@ internal fun HomeScreen(state: HomeUiState, actions: HomeActions = HomeActions()
                 }
             }
             if (state.editor == null) {
+                if (state.content is JourneyContent.Ready) arrivalContent()
                 Text(stringResource(R.string.home_upcoming_title), style = MaterialTheme.typography.titleMedium)
                 Text(stringResource(R.string.home_upcoming_body), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Text(stringResource(R.string.home_privacy), style = MaterialTheme.typography.bodySmall)

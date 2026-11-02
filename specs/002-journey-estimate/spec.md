@@ -4,7 +4,7 @@
 
 **Created**: 2026-11-01
 
-**Status**: In progress — petición de continuar UC-002 recibida el 2026-11-02. No implica lectura documental ni aprobación humana de checklists.
+**Status**: Verified — implementado y comprobado el 2026-11-02; ver [verification.md](verification.md). La autorización de continuar no implica lectura documental ni aprobación humana de checklists.
 
 **Input**: Consultar mi trayecto para mañana y disponer de escenarios reproducibles de puntualidad y retraso.
 

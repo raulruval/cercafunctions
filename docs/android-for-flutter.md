@@ -108,3 +108,35 @@ Al ejecutar UI tests se encontró Espresso 3.5.0 transitivo desde Compose. Se fi
 3.7.0 en los dos módulos de pruebas porque usa el acceso soportado a InputManager.
 La BOM de Compose no versiona todas las bibliotecas externas de AndroidX Test.
 Ese fallo de infraestructura se registra aparte de los fallos de comportamiento.
+
+## Lo aprendido en UC-002
+
+Dart `DateTime` agrupa fecha/hora con UTC o zona local del dispositivo. java.time
+separa `LocalDate` (día), `LocalTime` (hora), `LocalDateTime` (sin zona), `ZoneId`
+(reglas IANA), `ZoneOffset` (desplazamiento concreto) e `Instant` (punto temporal).
+Una hora local puede no existir o repetirse con dos offsets. Por eso consultamos
+`getValidOffsets`, exigimos elección si hay dos y sumamos duración en `Instant`.
+Mostrar solo HH:mm perdería la fecha al llegar después de medianoche.
+
+`Clock` es una dependencia, equivalente a inyectar un proveedor de tiempo en un
+Cubit en vez de usar `DateTime.now()` por todas partes. El reloj real se construye
+en Hilt; pruebas y demos usan tiempo fijo. Mañana es siguiente fecha local, no
+`Duration(hours: 24)`. Ver [Clock oficial](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Clock.html)
+y [ZoneRules](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/zone/ZoneRules.html).
+
+`ArrivalViewModel` equivale a otro Cubit del panel. `viewModelScope` cancela al
+destruir definitivamente su propietario; además cancelamos consultas al editar.
+Un contador impide publicar respuestas antiguas. `collectAsStateWithLifecycle`
+adapta StateFlow al estado Compose según lifecycle, parecido a la suscripción
+que un BlocBuilder administra, con las reglas de Activity de Android.
+
+`LaunchedEffect` se inicia de nuevo al recrear composición: no prueba que haya
+cambiado el trayecto. El ViewModel compara el trayecto observado para conservar
+consulta al rotar y retirarla tras guardar una duración distinta. Tras morir el
+proceso se recupera solo el trayecto persistido, no la consulta efímera.
+
+Sigue `MainActivity` → `HomeRoute` → `ArrivalRoute` → `ArrivalViewModel` →
+`QueryJourneyArrival`. El dominio no importa Android ni Hilt; la futura función
+podrá ejecutar el mismo caso sin componer pantalla o instanciar un ViewModel.
+Ejecuta `QueryJourneyArrivalTest` para observar DST con Clock fijo y
+`ArrivalFlowTest` para ver ensamblaje Hilt, formularios y recreación reales.
