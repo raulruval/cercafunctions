@@ -1,25 +1,31 @@
-# Validación prevista · UC-001
+# Ejecutar y comprobar · UC-001
 
-Estado: guía para después de implementar. Hoy la pantalla base no permite guardar.
-
-1. En emulador API 26+, abrir app sin configuración y elegir Configurar.
-2. Guardar Origen de prueba / Destino de prueba / 35 y comprobar el resumen.
-3. Cerrar y relanzar el proceso sin borrar datos: recuperar los tres valores.
-4. Editar a 40, guardar y relanzar: recuperar 40 con el mismo origen/destino.
-5. Probar los inválidos de spec.md, cancelar una edición y repetir después de rotación.
-6. Pruebas con fallo inyectado: lectura no disponible y escritura fallida sin éxito falso.
-
-Comandos previstos desde el repositorio, con JDK/SDK configurados:
+Requisitos: JDK/SDK de docs/setup.md y un emulador de prueba para instrumentación.
 
 ```powershell
 .\gradlew.bat :core-domain:test :core-platform:testDebugUnitTest :core-presentation:testDebugUnitTest :app:assembleDebug :app:lintDebug
 .\gradlew.bat :core-presentation:connectedDebugAndroidTest
+.\gradlew.bat :app:connectedDebugAndroidTest
 .\gradlew.bat :app:installDebug
+```
+
+Ejecutar las dos instrumentaciones secuencialmente. Gradle puede desinstalar
+los APK de instrumentación al terminar; usar installDebug para volver a abrir la app.
+
+1. Configurar Origen de prueba / Destino de prueba / 35 y guardar.
+2. Confirmar resumen y etiqueta de duración de referencia.
+3. Editar a 40, cancelar y comprobar que sigue en 35.
+4. Editar a 40 y guardar; cerrar y relanzar sin borrar datos:
+
+```powershell
 adb shell am force-stop com.cercafunctions.app
 adb shell am start -W -n com.cercafunctions.app/.MainActivity
 ```
 
-Los tests nuevos se crearán al implementar. No ejecutar borrados de datos sobre
-un dispositivo del usuario; usar emulador de pruebas. Añadir evidencia real,
-entorno y resultados a verification.md al cierre. Ningún comando de esta guía
-se ha ejecutado como prueba de la funcionalidad futura.
+5. Recuperar 40 min y los mismos nombres. Probar nombres iguales, duración vacía,
+   decimal, cero y 1441: no se sustituye la configuración válida.
+6. Recrear la Activity durante edición: se mantiene el borrador; si muere el
+   proceso sin guardar, puede perderse ese borrador, pero no el dato confirmado.
+
+No borrar datos en dispositivos personales. [verification.md](verification.md)
+registra el entorno, pruebas ejecutadas y escenarios de errores inyectados.

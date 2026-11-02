@@ -1,6 +1,6 @@
 # Decisiones de UC-001
 
-Estado: propuestas de diseño, no evidencia de código construido.
+Estado: decisiones aplicadas en UC-001; evidencia de implementación en verification.md.
 
 ## R1 · Persistencia mínima
 

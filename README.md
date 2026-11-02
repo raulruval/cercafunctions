@@ -3,13 +3,17 @@
 Empieza por [START_HERE.md](START_HERE.md): mapa de casos, primer incremento y método SDD.
 
 Base Android nativa para investigar una arquitectura que proporcione capacidades
-a agentes, inspirada en Rocket-Beer. Fase 0 ejecutable y SDD configurado; casos de uso en Draft.
+a agentes, inspirada en Rocket-Beer. UC-001 implementado y verificado; siete casos siguientes en Draft.
 
 ## Qué ejecuta esta base
 
-Primera pantalla Compose + Material 3, ViewModel, StateFlow y Hilt. Consulta un
-caso de uso Kotlin puro y presenta el estado «sin trayecto configurado».
-El repositorio inicial está vacío y vive en memoria; no hay datos ferroviarios simulados.
+Pantalla Compose + Material 3 para configurar, guardar y editar un trayecto habitual.
+ViewModel/StateFlow ejecuta los casos de uso Kotlin puros y Hilt enlaza Preferences
+DataStore. La configuración se recupera tras reiniciar el proceso. Los campos se
+validan antes de escribir y los errores no se convierten en configuración vacía.
+
+La duración es una referencia del usuario, no una predicción ferroviaria. Ver
+[pruebas y evidencia de UC-001](specs/001-habitual-journey/verification.md).
 
 ## Módulos
 
@@ -18,8 +22,8 @@ El repositorio inicial está vacío y vive en memoria; no hay datos ferroviarios
 | `app` | Application, Activity y ensamblado Hilt |
 | `core-presentation` | Compose, tema, estado y ViewModel |
 | `core-domain` | Modelos, contratos y casos de uso Kotlin/JVM |
-| `core-data` | Implementaciones de repositorios Kotlin/JVM |
-| `core-platform` | Frontera Android reservada para CalendarContract |
+| `core-data` | Repositorios JVM; implementación en memoria para fixtures |
+| `core-platform` | Persistencia DataStore; futura integración CalendarContract |
 | `core-appfunctions` | Frontera Android de capacidades; biblioteca preparada, sin servicio publicado |
 
 ## Ejecutar
@@ -31,7 +35,7 @@ Ver [configuración y pruebas](docs/setup.md).
 
 ```powershell
 $env:JAVA_HOME = 'C:\Program Files\Android\Android Studio\jbr'
-.\gradlew.bat :core-domain:test :app:assembleDebug :app:lintDebug
+.\gradlew.bat :core-domain:test :core-platform:testDebugUnitTest :core-presentation:testDebugUnitTest :app:assembleDebug :app:lintDebug
 .\gradlew.bat :app:installDebug
 ```
 
@@ -49,4 +53,4 @@ en `gradle/libs.versions.toml`. AGP 9 usa Kotlin integrado en los módulos Andro
 
 Calendario, Renfe, cálculo de puntualidad, publicación AppFunctions, ChatApp y
 Testing Agent se abordan mediante los casos de uso de `specs/`. Se ha configurado Spec Kit y
-creado sus especificaciones iniciales; todavía no hay implementación de funcionalidades ni backend.
+creado sus especificaciones iniciales. UC-001 es el primer incremento funcional; no hay backend.

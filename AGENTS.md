@@ -3,8 +3,8 @@
 ## Contexto y alcance vigente
 
 Leer `START_HERE.md`, `.specify/memory/constitution.md` y `specs/README.md`.
-La petición actual autoriza configurar SDD y redactar especificaciones, plan
-y tareas. No implementar funcionalidades hasta una petición posterior de construcción.
+La instrucción del 2026-11-02 autoriza publicar la base/SDD y construir UC-001
+conforme a su especificación y plan. UC-001 queda Verified; los demás casos siguen en Draft.
 La fase 0 queda preservada en su etiqueta; los documentos de aquella fase son históricos.
 
 ## Flujo SDD

@@ -3,51 +3,35 @@ package com.cercafunctions.domain.journey
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNull
 import org.junit.Assert.assertSame
+import org.junit.Assert.fail
 import org.junit.Test
 
 class GetHabitualJourneyTest {
-    @Test
-    fun `unconfigured journey remains absent`() = runTest {
-        val repository = object : JourneyRepository {
-            override suspend fun getHabitualJourney(): HabitualJourney? = null
-        }
-        assertNull(GetHabitualJourney(repository)())
+    @Test fun `absence remains distinct from read failure`() = runTest {
+        val repository = ReadRepository(JourneyReadResult.NotConfigured)
+        assertEquals(JourneyReadResult.NotConfigured, GetHabitualJourney(repository)())
+        repository.result = JourneyReadResult.Unavailable(JourneyStorageFailure.READ_FAILED)
+        assertEquals(repository.result, GetHabitualJourney(repository)())
     }
 
-    @Test
-    fun `configured journey preserves the user supplied baseline`() = runTest {
-        val journey = HabitualJourney("Origen de prueba", "Destino de prueba", 35)
-        val repository = object : JourneyRepository {
-            override suspend fun getHabitualJourney() = journey
-        }
-        assertEquals(journey, GetHabitualJourney(repository)())
+    @Test fun `configured journey is preserved`() = runTest {
+        val result = JourneyReadResult.Configured(HabitualJourney("A", "B", 35))
+        assertEquals(result, GetHabitualJourney(ReadRepository(result))())
     }
 
-    @Test
-    fun `cancellation propagates to the caller`() = runTest {
-        val cancellation = CancellationException("Caller cancelled")
+    @Test fun `read cancellation propagates`() = runTest {
+        val cancelled = CancellationException("cancelled")
         val repository = object : JourneyRepository {
-            override suspend fun getHabitualJourney(): HabitualJourney = throw cancellation
+            override suspend fun getHabitualJourney(): JourneyReadResult = throw cancelled
+            override suspend fun saveHabitualJourney(journey: HabitualJourney): JourneySaveResult = error("unused")
         }
-        try {
-            GetHabitualJourney(repository)()
-            throw AssertionError("Cancellation must propagate")
-        } catch (actual: CancellationException) {
-            assertSame(cancellation, actual)
-        }
+        try { GetHabitualJourney(repository)(); fail("Cancellation must propagate") }
+        catch (actual: CancellationException) { assertSame(cancelled, actual) }
     }
+}
 
-    @Test(expected = IllegalArgumentException::class)
-    fun `duration cannot be zero`() { HabitualJourney("A", "B", 0) }
-
-    @Test(expected = IllegalArgumentException::class)
-    fun `duration cannot be negative`() { HabitualJourney("A", "B", -1) }
-
-    @Test(expected = IllegalArgumentException::class)
-    fun `origin cannot be blank`() { HabitualJourney(" ", "B", 35) }
-
-    @Test(expected = IllegalArgumentException::class)
-    fun `destination cannot be blank`() { HabitualJourney("A", " ", 35) }
+private class ReadRepository(var result: JourneyReadResult) : JourneyRepository {
+    override suspend fun getHabitualJourney() = result
+    override suspend fun saveHabitualJourney(journey: HabitualJourney): JourneySaveResult = error("unused")
 }

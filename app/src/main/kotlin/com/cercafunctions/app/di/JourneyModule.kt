@@ -1,23 +1,38 @@
 package com.cercafunctions.app.di
 
-import com.cercafunctions.data.journey.InMemoryJourneyRepository
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStoreFile
 import com.cercafunctions.domain.journey.GetHabitualJourney
 import com.cercafunctions.domain.journey.JourneyRepository
+import com.cercafunctions.domain.journey.SaveHabitualJourney
+import com.cercafunctions.platform.journey.DataStoreJourneyRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-/** The composition root keeps domain and data independent of Hilt. */
+/** One store per file/process. No Activity or UI state participates in persistence. */
 @Module
 @InstallIn(SingletonComponent::class)
 object JourneyModule {
     @Provides
     @Singleton
-    fun provideJourneyRepository(): JourneyRepository = InMemoryJourneyRepository()
+    fun provideJourneyStore(@ApplicationContext context: Context): DataStore<Preferences> =
+        PreferenceDataStoreFactory.create { context.preferencesDataStoreFile("habitual_journey") }
 
     @Provides
-    fun provideGetHabitualJourney(repository: JourneyRepository): GetHabitualJourney =
-        GetHabitualJourney(repository)
+    @Singleton
+    fun provideJourneyRepository(store: DataStore<Preferences>): JourneyRepository =
+        DataStoreJourneyRepository(store)
+
+    @Provides
+    fun provideGetHabitualJourney(repository: JourneyRepository) = GetHabitualJourney(repository)
+
+    @Provides
+    fun provideSaveHabitualJourney(repository: JourneyRepository) = SaveHabitualJourney(repository)
 }

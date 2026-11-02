@@ -3,7 +3,7 @@
 **Input**: [spec.md](spec.md), [plan.md](plan.md), [data-model.md](data-model.md),
 [contracts/journey.md](contracts/journey.md), [research.md](research.md).
 
-**Status**: Draft. 0/12 ejecutadas. La creación de esta lista no inicia construcción.
+**Status**: Verified — 12/12 completadas el 2026-11-02. Evidencia en verification.md; snapshot uc-001-v1.
 
 **Tests**: pedidos expresamente en FR-008. Crear pruebas de comportamiento antes
 de su implementación y observar el fallo relevante; no aceptar fallos solo de setup.
@@ -11,11 +11,11 @@ Las rutas son relativas a la raíz del repositorio y propuestas para el incremen
 
 ## Phase 1: Setup
 
-- [ ] T001 Fijar DataStore 1.3.0 y dependencias de tests en `gradle/libs.versions.toml`, `core-platform/build.gradle.kts` y `core-presentation/build.gradle.kts`; configurar runner de pruebas Compose sin añadir módulos.
+- [x] T001 Fijar DataStore 1.3.0 y dependencias de tests en `gradle/libs.versions.toml`, `core-platform/build.gradle.kts` y `core-presentation/build.gradle.kts`; configurar runner de pruebas Compose sin añadir módulos.
 
 ## Phase 2: Foundational
 
-- [ ] T002 Definir lectura/guardado y resultados específicos en `core-domain/src/main/kotlin/com/cercafunctions/domain/journey/JourneyRepository.kt`, `JourneyReadResult.kt` y `JourneySaveResult.kt`, conforme a `contracts/journey.md`; mantener el dominio sin Android.
+- [x] T002 Definir lectura/guardado y resultados específicos en `core-domain/src/main/kotlin/com/cercafunctions/domain/journey/JourneyRepository.kt`, `JourneyReadResult.kt` y `JourneySaveResult.kt`, conforme a `contracts/journey.md`; mantener el dominio sin Android.
 
 ## Phase 3: User Story 1 · Configurar y conservar trayecto (P1)
 
@@ -25,24 +25,24 @@ Las rutas son relativas a la raíz del repositorio y propuestas para el incremen
 
 ### Tests
 
-- [ ] T003 [P] [US1] Escribir casos de validación, normalización, lectura ausente/no disponible y cancelación en `core-domain/src/test/kotlin/com/cercafunctions/domain/journey/GetHabitualJourneyTest.kt` y `SaveHabitualJourneyTest.kt`; cubrir límites 0/1/1440/1441 y no invocar guardado ante datos inválidos.
-- [ ] T004 [P] [US1] Escribir pruebas con archivo temporal, cierre/recreación del scope, actualización íntegra, datos parciales, fallos inyectados y concurrencia en `core-platform/src/test/kotlin/com/cercafunctions/platform/journey/DataStoreJourneyRepositoryTest.kt`; nunca dos instancias activas sobre el mismo archivo.
-- [ ] T005 [US1] Escribir pruebas de carga, edición/cancelación, errores, doble guardado y propagación de cancelación en `core-presentation/src/test/kotlin/com/cercafunctions/presentation/home/HomeViewModelTest.kt`; usar scheduler de coroutines controlado.
-- [ ] T006 [US1] Escribir pruebas de formulario y resumen para S1/S3/S4/S5/S7/S8 en `core-presentation/src/androidTest/kotlin/com/cercafunctions/presentation/home/HomeScreenTest.kt`, con estado/callbacks controlados, sin red o calendario.
+- [x] T003 [P] [US1] Escribir casos de validación, normalización, lectura ausente/no disponible y cancelación en `core-domain/src/test/kotlin/com/cercafunctions/domain/journey/GetHabitualJourneyTest.kt` y `SaveHabitualJourneyTest.kt`; cubrir límites 0/1/1440/1441 y no invocar guardado ante datos inválidos.
+- [x] T004 [P] [US1] Escribir pruebas con archivo temporal, cierre/recreación del scope, actualización íntegra, datos parciales, fallos inyectados y concurrencia en `core-platform/src/test/kotlin/com/cercafunctions/platform/journey/DataStoreJourneyRepositoryTest.kt`; nunca dos instancias activas sobre el mismo archivo.
+- [x] T005 [US1] Escribir pruebas de carga, edición/cancelación, errores, doble guardado y propagación de cancelación en `core-presentation/src/test/kotlin/com/cercafunctions/presentation/home/HomeViewModelTest.kt`; usar scheduler de coroutines controlado.
+- [x] T006 [US1] Escribir pruebas de formulario y resumen para S1/S3/S4/S5/S7/S8 en `core-presentation/src/androidTest/kotlin/com/cercafunctions/presentation/home/HomeScreenTest.kt`, con estado/callbacks controlados, sin red o calendario.
 
 ### Implementation
 
-- [ ] T007 [US1] Implementar validación/normalización en `core-domain/src/main/kotlin/com/cercafunctions/domain/journey/SaveHabitualJourney.kt` y `HabitualJourney.kt`, adaptar `GetHabitualJourney.kt` y `core-data/src/main/kotlin/com/cercafunctions/data/journey/InMemoryJourneyRepository.kt` al contrato; pasar las pruebas T003.
-- [ ] T008 [US1] Implementar almacenamiento transaccional y errores en `core-platform/src/main/kotlin/com/cercafunctions/platform/journey/DataStoreJourneyRepository.kt`; enlazar una instancia de DataStore por archivo en `app/src/main/kotlin/com/cercafunctions/app/di/JourneyModule.kt`, sustituyendo el binding en memoria; pasar T004.
-- [ ] T009 [US1] Adaptar estados y acciones en `core-presentation/src/main/kotlin/com/cercafunctions/presentation/home/HomeUiState.kt` y `HomeViewModel.kt`, conservando borrador durante errores/rotación y evitando guardados simultáneos; pasar T005.
-- [ ] T010 [US1] Añadir configurar/editar/guardar/cancelar/reintentar en `core-presentation/src/main/kotlin/com/cercafunctions/presentation/home/HomeScreen.kt` y `core-presentation/src/main/res/values/strings.xml`; actualizar Preview y pasar T006.
+- [x] T007 [US1] Implementar validación/normalización en `core-domain/src/main/kotlin/com/cercafunctions/domain/journey/SaveHabitualJourney.kt` y `HabitualJourney.kt`, adaptar `GetHabitualJourney.kt` y `core-data/src/main/kotlin/com/cercafunctions/data/journey/InMemoryJourneyRepository.kt` al contrato; pasar las pruebas T003.
+- [x] T008 [US1] Implementar almacenamiento transaccional y errores en `core-platform/src/main/kotlin/com/cercafunctions/platform/journey/DataStoreJourneyRepository.kt`; enlazar una instancia de DataStore por archivo en `app/src/main/kotlin/com/cercafunctions/app/di/JourneyModule.kt`, sustituyendo el binding en memoria; pasar T004.
+- [x] T009 [US1] Adaptar estados y acciones en `core-presentation/src/main/kotlin/com/cercafunctions/presentation/home/HomeUiState.kt` y `HomeViewModel.kt`, conservando borrador durante errores/rotación y evitando guardados simultáneos; pasar T005.
+- [x] T010 [US1] Añadir configurar/editar/guardar/cancelar/reintentar en `core-presentation/src/main/kotlin/com/cercafunctions/presentation/home/HomeScreen.kt` y `core-presentation/src/main/res/values/strings.xml`; actualizar Preview y pasar T006.
 
 **Checkpoint**: S1–S8 comprobables y pruebas específicas en verde; falta validación del APK real.
 
 ## Phase 4: Polish & Cross-Cutting Concerns
 
-- [ ] T011 Ejecutar pruebas, compilación/lint y relanzamiento real de `quickstart.md`; registrar comandos, resultados, entorno y evidencia S1–S8 en `specs/001-habitual-journey/verification.md`, diferenciando pruebas automáticas de pasos manuales.
-- [ ] T012 Revisar conformidad spec/código con `$speckit-converge`, cerrar hallazgos, actualizar `specs/README.md` y la explicación de DataStore/lifecycle en `docs/android-for-flutter.md`; guardar un commit/snapshot local solo cuando la evidencia permita Verified.
+- [x] T011 Ejecutar pruebas, la integración real de `app/src/androidTest/kotlin/com/cercafunctions/app/JourneyFlowTest.kt`, compilación/lint y relanzamiento de `quickstart.md`; registrar comandos, resultados, entorno y evidencia S1–S8 en `specs/001-habitual-journey/verification.md`, diferenciando pruebas automáticas de pasos manuales.
+- [x] T012 Revisar conformidad spec/código con `$speckit-converge`, cerrar hallazgos, actualizar `specs/README.md` y la explicación de DataStore/lifecycle en `docs/android-for-flutter.md`; guardar un commit/snapshot local solo cuando la evidencia permita Verified.
 
 ## Dependencies & Execution Order
 

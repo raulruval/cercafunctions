@@ -1,10 +1,10 @@
 # Feature Specification: UC-001 · Configurar y conservar mi trayecto habitual
 
-**Feature Branch**: `chore/sdd-foundation` (borrador; rama de construcción por crear)
+**Feature Branch**: `feat/001-habitual-journey`
 
 **Created**: 2026-11-01
 
-**Status**: Draft — pendiente de revisión; ninguna implementación autorizada por este documento.
+**Status**: Verified — implementado y comprobado el 2026-11-02; ver verification.md.
 
 **Input**: Configurar origen, destino y duración estimada de un trayecto habitual.
 
@@ -64,5 +64,5 @@ Alcance inicial propuesto: un trayecto, nombres de texto y duración de 1 a 1440
 
 **Dependencias**: Base phase-0-base.
 
-La precisión del borrador es suficiente para revisar alcance; las decisiones propuestas
-se refinan al activar el caso. Un escenario escrito no demuestra que ya funcione.
+Autorización: «Haz push al repo de lo que llevamos hasta ahora y comienza con el primer caso de uso» (2026-11-02).
+Los criterios permanecen iguales; su cumplimiento se registra en verification.md al cierre.

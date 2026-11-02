@@ -1,6 +1,6 @@
 # Modelo y estados · UC-001
 
-Propuesta para implementar; no existen todavía estos resultados en código.
+Implementado en UC-001 el 2026-11-02; ver verification.md para su validación.
 
 | Elemento | Datos / invariantes |
 | --- | --- |

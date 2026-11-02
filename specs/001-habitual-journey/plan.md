@@ -1,8 +1,8 @@
 # Implementation Plan: UC-001 · Trayecto habitual persistido
 
-**Branch**: `chore/sdd-foundation` (plan); construcción propuesta en `feat/001-habitual-journey`.
+**Branch**: `feat/001-habitual-journey`.
 **Date**: 2026-11-01 | **Spec**: [spec.md](spec.md)
-**Status**: Draft. Diseño propuesto, ninguna tarea ejecutada.
+**Status**: Implementado y verificado el 2026-11-02; ver verification.md.
 
 ## Summary
 
@@ -28,7 +28,7 @@ El caso queda cerrado al recuperar la configuración tras recrear el proceso.
 Antes y después del diseño: seis módulos conservados, dominio puro, sin capacidades
 nuevas publicadas, sin datos privados, sin predicciones. Dependencia Android nueva
 acotada a plataforma. Contratos de dominio compartibles con el futuro servicio.
-Diseño documental conforme; revisión humana y pruebas de implementación pendientes.
+Diseño conforme; construcción solicitada el 2026-11-02 y comprobaciones completadas.
 
 ## Project Structure
 
@@ -63,6 +63,10 @@ consumidores y tests en el mismo incremento. No crear una jerarquía global Eith
 Propagar cancelación. Una cancelación no garantiza rollback de una escritura ya
 confirmada; solo se exige estado completo y ausencia de confirmación falsa.
 No capturar errores de almacenamiento devolviendo configuración vacía por defecto.
+
+La dependencia DataStore se declara `api` en plataforma porque su constructor
+forma parte del contrato de composición consumido por app. Se añade una prueba
+de integración en app para verificar Activity, Hilt y repositorio reales.
 
 ## Validation and Delivery
 

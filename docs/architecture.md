@@ -1,6 +1,6 @@
 # Arquitectura propuesta · fase 0
 
-Estado: implementada como base, pendiente de revisión técnica antes de SDD.
+Estado al 2026-11-02: base y UC-001 implementados; SDD activo. La etiqueta phase-0-base conserva el estado inicial.
 
 ## Dependencias de compilación
 
@@ -32,12 +32,16 @@ módulos `utils`, `common`, `network`, `feature-*` o de convenciones Gradle.
 `MainActivity` obtiene `HomeViewModel` mediante Hilt. `HomeRoute` observa su
 `StateFlow` con `collectAsStateWithLifecycle`; `HomeScreen` solo recibe estado
 y un callback. El ViewModel invoca `GetHabitualJourney` en `viewModelScope`.
-El caso de uso consulta `JourneyRepository`; `app/di/JourneyModule` lo enlaza
-a `InMemoryJourneyRepository`, inicialmente vacío.
+Los casos `GetHabitualJourney` y `SaveHabitualJourney` consumen `JourneyRepository`;
+`app/di/JourneyModule` lo enlaza a `DataStoreJourneyRepository` en plataforma y
+crea DataStore como singleton. La implementación JVM en memoria queda para fixtures.
 
-El estado «sin configurar» es real para esta base. No representa una consulta a
-Renfe ni un fixture de puntualidad. El repositorio aún no permite guardar.
-Las entradas de configuración y persistencia se diseñarán al iniciar SDD.
+UC-001 permite guardar y editar origen, destino y duración de referencia.
+El dominio valida y devuelve resultados tipados; la UI distingue lectura en curso,
+ausencia y error. Plataforma persiste los tres campos en una única transacción.
+Ubicar este repositorio en plataforma mantiene el acceso Android junto a DataStore
+y evita una capa delegadora adicional; el repositorio ferroviario seguirá en data.
+Esto no es una consulta Renfe ni un fixture de puntualidad.
 
 ## Qué es core-appfunctions
 

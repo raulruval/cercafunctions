@@ -1,16 +1,31 @@
-    <resources>
-        <string name="home_brand">CERCANÍAS COPILOT</string>
-        <string name="home_title">Tu próximo trayecto,
-con contexto.</string>
-        <string name="home_subtitle">Tu viaje habitual y tus compromisos, en un mismo lugar.</string>
-        <string name="journey_heading">Mi trayecto habitual</string>
-        <string name="journey_not_configured">Todavía no hay un trayecto configurado</string>
-        <string name="journey_empty_description">Aquí verás tu origen, destino y duración estimada cuando configures tu trayecto.</string>
-        <string name="journey_duration">Duración de referencia: %1$d min</string>
-        <string name="journey_loading">Consultando tu trayecto…</string>
-        <string name="journey_error">No se ha podido consultar el trayecto.</string>
-        <string name="journey_retry">Reintentar</string>
-        <string name="home_upcoming_title">Próximamente</string>
-        <string name="home_upcoming_body">Consulta del servicio ferroviario y evaluación de llegada a tus compromisos del calendario.</string>
-        <string name="home_privacy">Tú decides cuándo dar acceso a tu calendario.</string>
-    </resources>
+<resources>
+    <string name="home_brand">CERCANÍAS COPILOT</string>
+    <string name="home_title">Tu próximo trayecto, con contexto.</string>
+    <string name="home_subtitle">Tu viaje habitual y tus compromisos, en un mismo lugar.</string>
+    <string name="journey_heading">Mi trayecto habitual</string>
+    <string name="journey_not_configured">Todavía no hay un trayecto configurado</string>
+    <string name="journey_empty_description">Guarda tu origen, destino y duración de referencia para empezar.</string>
+    <string name="journey_duration">Duración de referencia: %1$d min</string>
+    <string name="journey_reference_note">Duración indicada por ti. No es una predicción del servicio ferroviario.</string>
+    <string name="journey_loading">Consultando tu trayecto…</string>
+    <string name="journey_error">No se ha podido leer tu configuración. Reintenta la consulta; no se han sustituido tus datos.</string>
+    <string name="journey_invalid_stored">La configuración guardada no es válida. No se ha sobrescrito. Puedes reintentar la lectura.</string>
+    <string name="journey_retry">Reintentar</string>
+    <string name="journey_configure">Configurar trayecto</string>
+    <string name="journey_edit">Editar trayecto</string>
+    <string name="journey_editor_title">Configura tu trayecto.</string>
+    <string name="journey_origin">Origen</string>
+    <string name="journey_destination">Destino</string>
+    <string name="journey_minutes">Duración en minutos</string>
+    <string name="journey_origin_error">Escribe un origen distinto del destino.</string>
+    <string name="journey_destination_error">Escribe un destino distinto del origen.</string>
+    <string name="journey_duration_error">Introduce un número entero entre 1 y 1440.</string>
+    <string name="journey_save">Guardar</string>
+    <string name="journey_saving">Guardando…</string>
+    <string name="journey_cancel">Cancelar</string>
+    <string name="journey_save_error">No se ha podido guardar. Tu edición sigue aquí para reintentar.</string>
+    <string name="journey_saved">Trayecto guardado</string>
+    <string name="home_upcoming_title">Próximamente</string>
+    <string name="home_upcoming_body">Consulta del servicio ferroviario y evaluación de llegada a tus compromisos del calendario.</string>
+    <string name="home_privacy">Tú decides cuándo dar acceso a tu calendario.</string>
+</resources>

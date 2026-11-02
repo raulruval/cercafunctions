@@ -1,4 +1,4 @@
-# Contratos propuestos · UC-001
+# Contratos implementados · UC-001
 
 ## Dominio
 

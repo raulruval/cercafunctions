@@ -14,4 +14,8 @@ android {
 
 dependencies {
     implementation(project(":core-domain"))
+    // The constructor exposes DataStore to the app composition root.
+    api(libs.androidx.datastore.preferences)
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
 }

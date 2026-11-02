@@ -15,8 +15,9 @@
 | Hilt `@Provides`, `@HiltViewModel` | Provider/RepositoryProvider o GetIt | Generación y verificación de grafo en compilación, scopes asociados a componentes Android |
 | Módulo Gradle JVM / Android Library | Paquete Dart / plugin de plataforma | Frontera de compilación y dependencias real; Android Library produce AAR con manifest y recursos |
 
-`HomeUiState` es una sealed interface con Loading, NotConfigured, Ready y Error;
-es comparable a estados de Cubit con variantes exhaustivas. El caso de uso no
+`HomeUiState` es un estado inmutable con contenido de lectura, borrador y
+confirmación de guardado. `JourneyContent` es una sealed interface con Loading,
+NotConfigured, Ready y Unavailable; se parece a variantes de estado de Cubit. El caso de uso no
 sabe qué significa mostrar un spinner. Tampoco conoce Hilt o AppFunctions.
 
 ## Activity, Application, Context y lifecycle
@@ -32,9 +33,9 @@ provocar fugas. Los futuros adaptadores usarán Application context cuando
 corresponda. El dominio no recibe ninguno.
 
 `collectAsStateWithLifecycle` evita mantener la recogida activa en un estado de
-pantalla inadecuado. El ViewModel sobrevive a la rotación; para recuperar datos
-tras morir el proceso hará falta persistencia. El almacén vacío de esta base
-todavía no proporciona esa persistencia.
+pantalla inadecuado. El ViewModel conserva el borrador al recrear la Activity,
+como ocurre al rotar. La configuración confirmada se recupera desde DataStore
+tras morir el proceso; el borrador no confirmado puede perderse.
 
 ## Gradle, Hilt y compilación
 
@@ -74,7 +75,36 @@ accede a Compose para obtener resultados. El agente externo orquesta proveedores
 
 1. Abrir `MainActivity`, seguir `HomeRoute` y `HomeViewModel` hasta `GetHabitualJourney`.
 2. Comprobar que `JourneyRepository` solo contiene tipos Kotlin.
-3. Ver la implementación vacía en `core-data` y su enlace Hilt en `app`.
+3. Seguir el enlace Hilt hasta `DataStoreJourneyRepository` en `core-platform`.
 4. Abrir el Preview de `HomeScreen`: funciona sin contenedor Hilt ni dispositivo.
 5. Ejecutar tests JVM; después instalar el APK y rotar la pantalla para observar
-   la separación entre Activity y ViewModel. La rotación aún no tiene prueba automatizada.
+   la separación entre Activity y ViewModel. `JourneyFlowTest` ya verifica recreación,
+   conservación del borrador y cancelación de edición con la Activity real.
+
+
+## Lo aprendido en UC-001
+
+En Flutter podrías combinar un Cubit de formulario con un repositorio y
+`shared_preferences`. Aquí ViewModel cumple ese papel y StateFlow publica el
+estado. Compose recibe valores/callbacks; no conoce DataStore ni ejecuta escritura.
+
+Preferences DataStore es almacenamiento asíncrono y transaccional. Escribimos los
+tres campos en un solo `edit`: varios guardados concurrentes no mezclan origen
+de uno y destino de otro. La UI confirma el éxito solo después de que termine.
+Una instancia por archivo se mantiene con `@Singleton` en Hilt; `@ApplicationContext`
+evita conservar una Activity. El dominio no conoce ninguna de esas APIs.
+
+El permiso para guardar preferencias privadas lo aporta el sandbox de la app:
+UC-001 no necesita un diálogo runtime ni acceso al calendario. Reiniciar el proceso
+es distinto de recrear la Activity: la primera comprobación exige persistencia;
+la segunda comprueba la continuidad del ViewModel y del borrador.
+
+Los resultados tipados separan «nunca configurado» de «no se puede leer». No hay
+un `catch` que devuelva vacío para cualquier fallo. La cancelación de una coroutine
+se propaga y no se muestra como error del usuario ni éxito. El dominio normaliza y
+valida; la presentación solo convierte texto a entero y traduce errores a recursos.
+
+Al ejecutar UI tests se encontró Espresso 3.5.0 transitivo desde Compose. Se fijó
+3.7.0 en los dos módulos de pruebas porque usa el acceso soportado a InputManager.
+La BOM de Compose no versiona todas las bibliotecas externas de AndroidX Test.
+Ese fallo de infraestructura se registra aparte de los fallos de comportamiento.
