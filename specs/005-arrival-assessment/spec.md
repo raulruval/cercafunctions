@@ -1,10 +1,10 @@
 # Feature Specification: UC-005 · Evaluar llegada frente al compromiso seleccionado
 
-**Feature Branch**: `chore/sdd-foundation` (borrador; rama de construcción por crear)
+**Feature Branch**: `feat/005-arrival-assessment`
 
 **Created**: 2026-11-01
 
-**Status**: Draft — pendiente de revisión; ninguna implementación autorizada por este documento.
+**Status**: In progress — petición UC-005 recibida el 2026-11-02. Checklist humano sin cambios.
 
 **Input**: Comparar la llegada estimada con el comienzo de una reunión.
 
@@ -25,6 +25,9 @@ Como usuario quiero saber si mi llegada prevista encaja con el compromiso y sobr
 3. **S3**: Dada llegada 09:15 y reunión 09:00, cuando evalúo, entonces veo retraso previsto de 15 minutos según la fuente usada.
 4. **S4**: Dada llegada desconocida o compromiso ya no válido, cuando evalúo, entonces el resultado es indeterminado con explicación.
 5. **S5**: Dados instantes iguales mostrados en zonas distintas, cuando comparo, entonces obtengo el mismo margen.
+
+6. **S6**: Dada una consulta visible cuya duración guardada cambió, cuando evalúo, entonces se exige consultar de nuevo el trayecto, sin comparar silenciosamente otra llegada.
+7. **S7**: Dada pérdida de permiso o compromiso borrado/modificado durante la evaluación, cuando revalido, entonces se retiran la selección/detalles invalidados y se conserva una explicación de resultado indeterminado.
 
 ### Edge Cases
 
@@ -56,6 +59,22 @@ Evaluación: horarios comparados, margen/retraso previsto y calidad de evidencia
 ## Assumptions
 
 Depende de UC-002 y UC-004; UC-003 añade contexto. Margen adicional inicial 0 minutos y sin desplazamiento estación–reunión: la POC compara llegada a destino ferroviario con comienzo; esta simplificación se muestra al usuario.
+
+## Alcance activado · 2026-11-02
+Evaluación explícita, nunca automática ni persistida. Reconsultar misma salida,
+zona/offset y escenario con QueryJourneyArrival; si cambia evidencia cuantitativa
+o trayecto, pedir refresco. observedAt puede actualizarse en una referencia al
+recalcular; no se inventa TTL. Salida pasada reutiliza rechazo de UC-002. Demos
+mantienen reloj y datos fijos; no se trasladan al día del calendario ni caducan
+por compararlas con el reloj actual. Fechas distintas se muestran completas.
+
+Revalidar compromiso inmediatamente antes de comparar; resultado de dominio sin
+título, nombre de calendario ni participantes. Sin selección/llegada conocida no
+leer agenda innecesariamente. Invalidar evaluación al editar entrada, seleccionar
+otro compromiso, consultar/revalidar calendario o abandonar primer plano. La
+selección de UC-004 conserva su semántica de sesión; la evaluación requiere nueva
+acción tras recreación/retorno. No se añaden módulos, red ni permisos nuevos.
+Los avisos UC-003 permanecen cualitativos: no alteran minutos.
 
 **Dependencias**: UC-002 y UC-004; UC-003 como contexto adicional.
 
