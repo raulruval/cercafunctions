@@ -140,3 +140,36 @@ Sigue `MainActivity` → `HomeRoute` → `ArrivalRoute` → `ArrivalViewModel` �
 podrá ejecutar el mismo caso sin componer pantalla o instanciar un ViewModel.
 Ejecuta `QueryJourneyArrivalTest` para observar DST con Clock fijo y
 `ArrivalFlowTest` para ver ensamblaje Hilt, formularios y recreación reales.
+
+
+## Lo aprendido en UC-003
+Un `Future` de HTTP en Dart y una función `suspend` no garantizan por sí solos
+cancelar una conexión. `suspendCancellableCoroutine` adapta los callbacks de
+OkHttp; `invokeOnCancellation { call.cancel() }` conecta el lifecycle con el socket.
+Equivale a propagar una cancelación explícita al cliente desde un Cubit; cerrar
+una suscripción de estado no basta. `viewModelScope` y el token de generación
+impiden publicar una respuesta antigua después de cambiar estación o consulta.
+
+HTTP es asíncrono en hilos de OkHttp. El parser corre en Dispatchers.IO; declarar
+`suspend` no mueve trabajo bloqueante fuera del hilo principal automáticamente,
+igual que `async` en Dart no crea un isolate para cálculos intensivos. En esta
+POC el JSON acotado no justifica un motor adicional de procesamiento.
+
+La frontera JSON tiene nombres camelCase/snake_case y épocas en strings; el
+dominio recibe Instant, selectores y periodos tipados. Gson se usa como árbol,
+no para instanciar por reflexión las data classes Kotlin: validamos presencia,
+rangos y tamaño. Esto cumple el mismo papel que DTO + mapper desde un repositorio
+Dart, manteniendo HTTP y formato remoto fuera del caso de uso.
+
+`INTERNET` es un permiso normal declarado en Manifest; Android lo concede al
+instalar sin diálogo runtime. READ_CALENDAR del siguiente caso sí requerirá
+flujo de autorización de usuario. No hacen falta Activity ni Context en el
+repositorio HTTP; por eso permanece JVM en core-data.
+
+La selección explícita de IDs evita tratar nombres libres como identidad.
+`FeedHeader.timestamp` informa cuándo se produjo el contenido; HTTP200 no lo
+rejuvenece. Frescura del feed y periodo de afectación son cosas distintas. El
+resultado permanece cualitativo y no altera ArrivalEstimate, por lo que UI y
+futuros adaptadores de capacidades podrán consumir el mismo QueryRailContext.
+Pruebas locales cubren HTTP200/503/redirect/tamaño/timeout/cancelación con servidor
+loopback; las instrumentadas no dependen del estado del proveedor externo.

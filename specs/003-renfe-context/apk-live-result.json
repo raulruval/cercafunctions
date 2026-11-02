@@ -1,0 +1,20 @@
+{
+  "observedAt": "2026-11-02T13:13:34+0100",
+  "visibleTexts": [
+    "Cobertura parcial: solo estaciones extremas. No se ha verificado línea, tren, sentido, servicio directo ni estaciones intermedias.",
+    "Catálogo Renfe · snapshot 2026-11-02. Los nombres libres del trayecto no se asocian automáticamente.",
+    "Vicálvaro · 70100",
+    "Estación de origen (nombre o ID)",
+    "Coslada · 70108",
+    "Estación de destino (nombre o ID)",
+    "Consultar avisos Renfe",
+    "Contexto no disponible. Puedes reintentar la consulta.",
+    "Origen de los datos: Renfe Operadora · CC BY 4.0 https://gtfsrt.renfe.com/alerts.json",
+    "Consulta (UTC): 2026-11-02T12:13:27.734206Z Actualización del feed (UTC): 2026-10-07T07:32:52Z",
+    "La respuesta no tiene el formato de avisos compatible. No se interpreta como ausencia de incidencias.",
+    "La llegada de referencia se mantiene independiente. No hay un retraso cuantitativo verificado para esta salida.",
+    "Próximamente",
+    "Consulta del servicio ferroviario y evaluación de llegada a tus compromisos del calendario.",
+    "Tú decides cuándo dar acceso a tu calendario."
+  ]
+}

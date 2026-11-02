@@ -1,6 +1,6 @@
-# Arquitectura propuesta · fase 0
+# Arquitectura · base e incrementos
 
-Estado al 2026-11-02: base y UC-001 implementados; SDD activo. La etiqueta phase-0-base conserva el estado inicial.
+Estado al 2026-11-02: base y UC-001–003 implementados; SDD activo. La etiqueta phase-0-base conserva el estado inicial.
 
 ## Dependencias de compilación
 
@@ -24,7 +24,7 @@ o CalendarContract vive en `core-platform`, detrás de un contrato de dominio.
 No hay un módulo por pantalla, framework genérico, navegación ni backend.
 
 `core-platform` y `core-appfunctions` son fronteras solicitadas explícitamente:
-se incluyen ahora aunque aún no tienen adaptadores ejecutables. No se añaden
+plataforma ya implementa DataStore; capacidades siguen sin servicio publicado. No se añaden
 módulos `utils`, `common`, `network`, `feature-*` o de convenciones Gradle.
 
 ## Recorrido que ya funciona
@@ -129,3 +129,12 @@ Hilt lo enlaza en app. ArrivalViewModel/ArrivalPanel reciben resultados tipados.
 No se amplían core-platform ni core-appfunctions, ni se añaden módulos. La futura
 fachada AppFunctions consumirá este mismo caso, con mapeo explícito de java.time
 a sus DTO y política de exposición por definir en UC-006.
+
+
+## Incremento UC-003
+QueryRailContext recibe referencia, asociación explícita de IDs, repositorio,
+catálogo y Clock. Produce contexto cualitativo sin cambiar llegada. Contratos y
+frescura/matching viven en domain; OkHttp, JSON y snapshot en data; estado y
+selección en presentation. app aporta Hilt e INTERNET. Sin cambios en plataforma
+ni AppFunctions. Los IDs solo prueban estaciones del snapshot: ninguna capa
+afirma cobertura de línea, tren o servicio directo. Las consultas no persisten.

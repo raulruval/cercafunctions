@@ -9,6 +9,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import com.cercafunctions.presentation.rail.RailContextViewModel
 import com.cercafunctions.presentation.estimate.ArrivalRoute
 import com.cercafunctions.presentation.estimate.ArrivalViewModel
 import androidx.compose.runtime.getValue
@@ -37,12 +38,12 @@ internal data class HomeActions(
 )
 
 @Composable
-fun HomeRoute(viewModel: HomeViewModel, arrivalViewModel: ArrivalViewModel) {
+fun HomeRoute(viewModel: HomeViewModel, arrivalViewModel: ArrivalViewModel, railViewModel: RailContextViewModel) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     LaunchedEffect(state.content) { arrivalViewModel.onJourneyChanged((state.content as? JourneyContent.Ready)?.journey) }
     BackHandler(enabled = state.editor != null, onBack = viewModel::cancelEditing)
     HomeScreen(state, HomeActions(viewModel::refresh, viewModel::beginEditing, viewModel::cancelEditing,
-        viewModel::updateOrigin, viewModel::updateDestination, viewModel::updateDuration, viewModel::save)) { ArrivalRoute(arrivalViewModel) }
+        viewModel::updateOrigin, viewModel::updateDestination, viewModel::updateDuration, viewModel::save)) { ArrivalRoute(arrivalViewModel, railViewModel) }
 }
 
 @Composable

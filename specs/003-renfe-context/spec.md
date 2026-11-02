@@ -4,7 +4,7 @@
 
 **Created**: 2026-11-01
 
-**Status**: In progress — construcción autorizada por «Continua con el UC-003», 2026-11-02. Checklist humano se conserva sin cambios.
+**Status**: Verified — alcance acotado implementado y verificado el 2026-11-02; ver [verification.md](verification.md). Checklist humano se conserva sin cambios.
 
 **Input**: Consultar estado del trayecto e incidencias usando Renfe Data cuando sus datos sean aplicables.
 
@@ -58,7 +58,7 @@ Contexto de servicio: alertas, cobertura y vigencia. Evidencia cuantitativa: hor
 
 ## Assumptions
 
-Depende de UC-002. Se limitará a un trayecto directo y una cobertura demostrable. Si hace falta seleccionar estaciones identificadas, se hará explícitamente antes de afirmar cobertura. No se exige construir un planificador GTFS completo.
+Depende de UC-002. El alcance activado solo demuestra asociación a dos estaciones extremas seleccionadas explícitamente; no demuestra servicio directo. No se exige construir un planificador GTFS completo. Los detalles están en el alcance revisado siguiente.
 
 ## Alcance revisado al activar · 2026-11-02
 Se implementa consulta HTTPS manual a alerts.json y selección explícita de dos
@@ -82,5 +82,5 @@ silencioso a fixtures ni red automática. Sin datos válidos, se conserva su eti
 
 **Dependencias**: UC-002.
 
-La precisión del borrador es suficiente para revisar alcance; las decisiones propuestas
-se refinan al activar el caso. Un escenario escrito no demuestra que ya funcione.
+La evidencia ejecutada y los límites de cada escenario se registran en verification.md.
+La revisión documental del checklist no equivale a aprobación humana.

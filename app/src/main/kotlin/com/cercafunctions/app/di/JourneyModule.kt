@@ -1,5 +1,8 @@
 package com.cercafunctions.app.di
 
+import com.cercafunctions.data.rail.RenfeRailContextRepository
+import com.cercafunctions.data.rail.RenfeStationCatalog
+import com.cercafunctions.domain.rail.*
 import android.content.Context
 import java.time.Clock
 import java.time.ZoneId
@@ -25,6 +28,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object JourneyModule {
+    @Provides @Singleton fun provideRailRepository(): RailContextRepository = RenfeRailContextRepository()
+    @Provides @Singleton fun provideRailCatalog(): RailStationCatalog = RenfeStationCatalog()
+    @Provides fun provideRailQuery(repository:RailContextRepository,catalog:RailStationCatalog,clock:Clock) = QueryRailContext(repository,catalog,clock)
+
     @Provides fun provideClock(): Clock = Clock.systemUTC()
     @Provides fun provideZone(): ZoneId = ZoneId.systemDefault()
     @Provides fun provideFixtures(): JourneyFixtureRepository = ReproducibleJourneyFixtures()

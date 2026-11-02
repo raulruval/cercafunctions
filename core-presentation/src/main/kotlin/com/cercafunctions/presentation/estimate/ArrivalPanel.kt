@@ -1,5 +1,7 @@
 package com.cercafunctions.presentation.estimate
 
+import com.cercafunctions.presentation.rail.RailContextRoute
+import com.cercafunctions.presentation.rail.RailContextViewModel
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -21,14 +23,15 @@ internal data class ArrivalActions(
 )
 
 @Composable
-fun ArrivalRoute(viewModel: ArrivalViewModel) {
+fun ArrivalRoute(viewModel: ArrivalViewModel, railViewModel: RailContextViewModel) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    LaunchedEffect(state.result) { railViewModel.setArrival((state.result as? ArrivalResult.Estimated)?.value) }
     ArrivalPanel(state, ArrivalActions(viewModel::updateDate, viewModel::updateTime,
-        viewModel::updateZone, viewModel::tomorrow, viewModel::selectScenario, viewModel::chooseOffset, viewModel::consult))
+        viewModel::updateZone, viewModel::tomorrow, viewModel::selectScenario, viewModel::chooseOffset, viewModel::consult)) { RailContextRoute(railViewModel) }
 }
 
 @Composable
-internal fun ArrivalPanel(state: ArrivalUiState, actions: ArrivalActions = ArrivalActions()) {
+internal fun ArrivalPanel(state: ArrivalUiState, actions: ArrivalActions = ArrivalActions(), railContent: @Composable () -> Unit = {}) {
     Card(Modifier.fillMaxWidth()) {
         Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Text(stringResource(R.string.arrival_heading), style = MaterialTheme.typography.titleLarge)
@@ -75,7 +78,7 @@ internal fun ArrivalPanel(state: ArrivalUiState, actions: ArrivalActions = Arriv
                 Text(stringResource(if (state.busy) R.string.arrival_loading else R.string.arrival_consult))
             }
             when (val result = state.result) {
-                is ArrivalResult.Estimated -> ArrivalResultContent(result.value)
+                is ArrivalResult.Estimated -> { ArrivalResultContent(result.value); railContent() }
                 null -> Unit
                 else -> Text(stringResource(when (result) {
                     ArrivalResult.Gap -> R.string.arrival_gap

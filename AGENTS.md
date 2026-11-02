@@ -3,9 +3,9 @@
 ## Contexto y alcance vigente
 
 Leer `START_HERE.md`, `.specify/memory/constitution.md` y `specs/README.md`.
-Las instrucciones del 2026-11-02 autorizan publicar la base/SDD y construir UC-001
-y después UC-002. Ambos quedan Verified; UC-003–008 siguen en Draft. No iniciar
-el siguiente caso sin petición. Ver specs/002-journey-estimate/verification.md.
+Las instrucciones del 2026-11-02 autorizan la base/SDD y UC-001, UC-002 y UC-003.
+Los tres quedan Verified; UC-004–008 siguen Draft. No iniciar el siguiente caso
+sin petición. Ver specs/003-renfe-context/verification.md.
 La fase 0 queda preservada en su etiqueta; los documentos de aquella fase son históricos.
 
 ## Flujo SDD

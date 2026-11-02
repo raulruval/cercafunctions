@@ -60,4 +60,35 @@
     <string name="arrival_delay_demo">Retraso ficticio de este escenario: %1$d min.</string>
     <string name="arrival_observed">Consulta (UTC): %1$s</string>
     <string name="arrival_horizon">Solo para esta salida. Sin validación ferroviaria ni garantía de puntualidad real.</string>
+    <string name="rail_heading">Avisos Renfe de las estaciones</string>
+    <string name="rail_associate">Asocia expresamente %1$s → %2$s a dos estaciones del catálogo. Busca por nombre o ID y pulsa cada sugerencia para confirmar.</string>
+    <string name="rail_coverage">Cobertura parcial: solo estaciones extremas. No se ha verificado línea, tren, sentido, servicio directo ni estaciones intermedias.</string>
+    <string name="rail_catalog">Catálogo Renfe · snapshot 2026-11-02. Los nombres libres del trayecto no se asocian automáticamente.</string>
+    <string name="rail_origin">Estación de origen (nombre o ID)</string>
+    <string name="rail_destination">Estación de destino (nombre o ID)</string>
+    <string name="rail_consult">Consultar avisos Renfe</string>
+    <string name="rail_loading">Consultando avisos…</string>
+    <string name="rail_demo">Esta es una demo con datos fijos. Selecciona Referencia para consultar avisos reales; no se consulta Renfe para la demo.</string>
+    <string name="rail_available">Feed reciente al consultar · cobertura parcial</string>
+    <string name="rail_unresolved">Cobertura no resuelta. Selecciona dos estaciones distintas de las sugerencias; no se ha consultado la red.</string>
+    <string name="rail_unavailable">Contexto no disponible. Puedes reintentar la consulta.</string>
+    <string name="rail_stale">Feed caducado: supera 10 minutos según la política de esta POC. No se presentan sus avisos como actuales.</string>
+    <string name="rail_freshness_unknown">Actualidad no demostrada: el feed no incluye timestamp. No se presentan avisos vigentes.</string>
+    <string name="rail_future">Fecha del feed futura: supera la tolerancia de 60 segundos. Revisa el reloj y reintenta.</string>
+    <string name="rail_source">Origen de los datos: Renfe Operadora · CC BY 4.0
+%1$s</string>
+    <string name="rail_times">Consulta (UTC): %1$s
+Actualización del feed (UTC): %2$s</string>
+    <string name="rail_unknown_time">No informada</string>
+    <string name="rail_failure_network">No se pudo acceder a la fuente. Comprueba la conexión.</string>
+    <string name="rail_failure_http">El servidor respondió con un estado HTTP no satisfactorio.</string>
+    <string name="rail_failure_format">La respuesta no tiene el formato de avisos compatible. No se interpreta como ausencia de incidencias.</string>
+    <string name="rail_failure_size">La respuesta supera el límite de descarga de esta POC.</string>
+    <string name="rail_empty">Sin avisos verificables para estas estaciones y esta consulta. La cobertura es parcial; esto no demuestra puntualidad ni ausencia de incidencias del trayecto.</string>
+    <string name="rail_unresolved_count">Avisos con selectores no resueltos: %1$d. No se asumen relacionados con tu viaje.</string>
+    <string name="rail_impact_confirmed">Aviso de estación con periodo de afectación que coincide con la salida</string>
+    <string name="rail_impact_unknown">Aviso de estación · afectación a esta salida sin confirmar</string>
+    <string name="rail_periods">Publicación (UTC): %1$s
+Afectación publicada (UTC): %2$s</string>
+    <string name="rail_unchanged">La llegada de referencia se mantiene independiente. No hay un retraso cuantitativo verificado para esta salida.</string>
 </resources>

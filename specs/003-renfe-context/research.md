@@ -5,7 +5,11 @@ Decisión: [Incidencias y avisos](https://data.renfe.com/dataset/incidencias-avi
 mediante https://gtfsrt.renfe.com/alerts.json, sin autenticación. Catálogo anuncia
 actualización cada20s, pero el 2026-11-02T11:46:52Z respondió HTTP200/69 entidades
 con header.timestamp=1791358372 (2026-10-07T07:32:52Z). Se clasifica caducado.
-HTTP Date no sustituye timestamp del contenido. Ver live-probe.json con hashes.
+HTTP Date no sustituye timestamp del contenido. La comprobación del APK detectó
+además69 entidades/68 IDs únicos: AVISO_518187 repetido con contenido diferente.
+La validación estructural rechaza ese feed completo como INVALID_FORMAT, conservando
+la fecha de cabecera. No se decide last-wins ni se oculta la inconsistencia.
+La antigüedad y la incompatibilidad son hallazgos separados; no se presenta vigente. Ver live-probe.json con hashes.
 
 Alternativa cuantitativa: [trip updates](https://data.renfe.com/dataset/horarios-viaje-cercanias)
 sí respondió fresco (353 entidades, timestamp1793619997); no prueba qué tren usa
@@ -35,6 +39,7 @@ OkHttp5.5.1 y Gson2.15.0 fijados, disponibles en Maven Central y releases oficia
 Callbacks HTTP adaptados a suspensión con cancelación de Call; parseo fuera de Main.
 Gson árbol explícito: sin reflexión sobre modelos Kotlin ni plugin adicional.
 1MiB/2000 entidades, timeout15s, sin redirects, caché persistida ni polling.
+Validación estructural del subconjunto consumido, no un validador GTFS completo.
 Alternativas: Retrofit innecesario para un GET; protobuf añade generación/bindings;
 JDK HttpClient no está disponible uniformemente en Android26. Sin nuevos módulos.
 Fuentes: [OkHttp](https://github.com/square/okhttp), [Gson](https://github.com/google/gson/releases).

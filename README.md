@@ -3,7 +3,7 @@
 Empieza por [START_HERE.md](START_HERE.md): mapa de casos, primer incremento y método SDD.
 
 Base Android nativa para investigar una arquitectura que proporcione capacidades
-a agentes, inspirada en Rocket-Beer. UC-001 y UC-002 implementados y verificados; seis casos siguientes en Draft.
+a agentes, inspirada en Rocket-Beer. UC-001–003 implementados y verificados; cinco casos siguientes en Draft.
 
 ## Qué ejecuta esta base
 
@@ -21,6 +21,12 @@ presentan como operación real. Pruebas cubren medianoche y cambios de hora.
 Ver [guía UC-002](specs/002-journey-estimate/quickstart.md) y
 [evidencia](specs/002-journey-estimate/verification.md).
 
+UC-003 consulta avisos públicos de Renfe por HTTPS y filtra localmente por dos
+estaciones seleccionadas expresamente del catálogo. Distingue feed caducado,
+actualidad desconocida y fuente no disponible. Cobertura solo de extremos;
+ningún aviso añade minutos inventados. Ver [guía](specs/003-renfe-context/quickstart.md)
+y [evidencia](specs/003-renfe-context/verification.md).
+
 ## Módulos
 
 | Módulo | Responsabilidad |
@@ -28,7 +34,7 @@ Ver [guía UC-002](specs/002-journey-estimate/quickstart.md) y
 | `app` | Application, Activity y ensamblado Hilt |
 | `core-presentation` | Compose, tema, estado y ViewModel |
 | `core-domain` | Modelos, contratos y casos de uso Kotlin/JVM |
-| `core-data` | Repositorios JVM y catálogo explícito de fixtures reproducibles |
+| `core-data` | Repositorios JVM, HTTP/parser Renfe, catálogo de estaciones y fixtures |
 | `core-platform` | Persistencia DataStore; futura integración CalendarContract |
 | `core-appfunctions` | Frontera Android de capacidades; biblioteca preparada, sin servicio publicado |
 
@@ -57,6 +63,6 @@ en `gradle/libs.versions.toml`. AGP 9 usa Kotlin integrado en los módulos Andro
 - [Guía Android desde Flutter](docs/android-for-flutter.md).
 - [Snapshot de esta fase y validación](docs/phase-0.md).
 
-Calendario, Renfe, cálculo de puntualidad, publicación AppFunctions, ChatApp y
-Testing Agent se abordan mediante los casos de uso de `specs/`. Se ha configurado Spec Kit y
-creado sus especificaciones iniciales. UC-001 y UC-002 son incrementos funcionales; no hay backend.
+Calendario, evaluación de compromisos, AppFunctions, ChatApp y Testing Agent
+siguen en los siguientes casos de `specs/`. UC-001–003 son incrementos funcionales
+con Spec Kit y evidencia versionada; no hay backend ni predicción de puntualidad real.
