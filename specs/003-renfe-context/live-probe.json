@@ -1,0 +1,172 @@
+[
+  {
+    "url": "https://gtfsrt.renfe.com/alerts.json",
+    "fetchedAt": "2026-11-02T11:46:52.212103+00:00",
+    "status": 200,
+    "bytes": 99718,
+    "sha256": "54416f9c7058a1838e65de94cd4b4a83b29b490799460f631b908acd21792d90",
+    "httpDate": "Mon, 02 Nov 2026 11:46:53 GMT",
+    "lastModified": "Wed, 07 Oct 2026 07:32:51 GMT",
+    "header": {
+      "gtfsRealtimeVersion": "2.0",
+      "timestamp": "1791358372"
+    },
+    "entities": 69,
+    "firstEntityKeys": [
+      "id",
+      "alert"
+    ]
+  },
+  {
+    "url": "https://gtfsrt.renfe.com/trip_updates.json",
+    "fetchedAt": "2026-11-02T11:46:52.352157+00:00",
+    "status": 200,
+    "bytes": 147461,
+    "sha256": "3e7fe8f39164eaa80f02267b203a8dfc7766b5f2900723a2320b9e0110f54f9d",
+    "httpDate": "Mon, 02 Nov 2026 11:46:53 GMT",
+    "lastModified": "Mon, 02 Nov 2026 11:46:37 GMT",
+    "header": {
+      "gtfsRealtimeVersion": "2.0",
+      "timestamp": "1793619997"
+    },
+    "entities": 353,
+    "firstEntityKeys": [
+      "id",
+      "tripUpdate"
+    ]
+  },
+  {
+    "url": "https://ssl.renfe.com/ftransit/Fichero_CER_FOMENTO/fomento_transit.zip",
+    "fetchedAt": "2026-11-02T11:46:52.431333+00:00",
+    "status": 200,
+    "bytes": 16484727,
+    "sha256": "003aa69188885bb46ad44d900cec7e072570f3f905bb3c4037192c712bf35852",
+    "httpDate": "Mon, 02 Nov 2026 11:46:53 GMT",
+    "lastModified": "Mon, 02 Nov 2026 03:09:04 GMT",
+    "files": [
+      "agency.txt",
+      "calendar.txt",
+      "routes.txt",
+      "shapes.txt",
+      "stops.txt",
+      "stop_times.txt",
+      "transfers.txt",
+      "trips.txt"
+    ],
+    "stops.txt": {
+      "count": 1147,
+      "sample": [
+        {
+          "stop_id": "04040",
+          "stop_name": "Zaragoza Delicias",
+          "stop_lat": "41.6586576",
+          "stop_lon": "-0.9112693",
+          "wheelchair_boarding                                                                                               ": "1                                                                                                       "
+        },
+        {
+          "stop_id": "05102",
+          "stop_name": "San Xo\u00e1n",
+          "stop_lat": "43.4945654",
+          "stop_lon": "-8.2142733",
+          "wheelchair_boarding                                                                                               ": "1                                                                                                                "
+        }
+      ]
+    },
+    "madridStops": [
+      {
+        "stop_id": "18000",
+        "stop_name": "Madrid-Atocha Cercan\u00edas",
+        "stop_lat": "40.4066191",
+        "stop_lon": "-3.6894391",
+        "wheelchair_boarding                                                                                               ": "1                                                                                                 "
+      },
+      {
+        "stop_id": "70100",
+        "stop_name": "Vic\u00e1lvaro",
+        "stop_lat": "40.4012524",
+        "stop_lon": "-3.5958970",
+        "wheelchair_boarding                                                                                               ": "1                                                                                                               "
+      },
+      {
+        "stop_id": "70108",
+        "stop_name": "Coslada",
+        "stop_lat": "40.4232370",
+        "stop_lon": "-3.5611109",
+        "wheelchair_boarding                                                                                               ": "1                                                                                                                 "
+      }
+    ],
+    "routes.txt": {
+      "count": 265,
+      "sample": [
+        {
+          "route_id": "10T0001C1  ",
+          "route_short_name": "C1  ",
+          "route_long_name": "Principe Pio                            -Aeropuerto-T4                           ",
+          "route_type": "2",
+          "route_color": "75B6E0",
+          "route_text_color                                                                     ": "FFFFFF                                    "
+        },
+        {
+          "route_id": "10T0002C1  ",
+          "route_short_name": "C1  ",
+          "route_long_name": "Aeropuerto-T4                           -Principe Pio                            ",
+          "route_type": "2",
+          "route_color": "75B6E0",
+          "route_text_color                                                                     ": "FFFFFF                                    "
+        }
+      ]
+    },
+    "trips.txt": {
+      "count": 138395,
+      "sample": [
+        {
+          "route_id": "10T0001C1",
+          "service_id": "1005L",
+          "trip_id": "1005L19799C1",
+          "trip_headsign": "       ",
+          "wheelchair_accessible": "1",
+          "block_id": "1005L19799",
+          "shape_id                                                                     ": "10_C1                                                                                               "
+        },
+        {
+          "route_id": "10T0001C1",
+          "service_id": "1005L",
+          "trip_id": "1005L19800C1",
+          "trip_headsign": "       ",
+          "wheelchair_accessible": "1",
+          "block_id": "1005L19800",
+          "shape_id                                                                     ": "10_C1                                                                                               "
+        }
+      ]
+    },
+    "calendar.txt": {
+      "count": 450,
+      "sample": [
+        {
+          "service_id": "1005L",
+          "monday": "1",
+          "tuesday": "0",
+          "wednesday": "0",
+          "thursday": "0",
+          "friday": "0",
+          "saturday": "0",
+          "sunday": "0",
+          "start_date": "20261102",
+          "end_date                                                               ": "20261102                                                                                                                 "
+        },
+        {
+          "service_id": "1006M",
+          "monday": "0",
+          "tuesday": "1",
+          "wednesday": "0",
+          "thursday": "0",
+          "friday": "0",
+          "saturday": "0",
+          "sunday": "0",
+          "start_date": "20261103",
+          "end_date                                                               ": "20261103                                                                                                                 "
+        }
+      ]
+    }
+  }
+]

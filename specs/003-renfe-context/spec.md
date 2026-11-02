@@ -1,10 +1,10 @@
 # Feature Specification: UC-003 · Consultar contexto ferroviario real con vigencia explícita
 
-**Feature Branch**: `chore/sdd-foundation` (borrador; rama de construcción por crear)
+**Feature Branch**: `feat/003-renfe-context`
 
 **Created**: 2026-11-01
 
-**Status**: Draft — pendiente de revisión; ninguna implementación autorizada por este documento.
+**Status**: In progress — construcción autorizada por «Continua con el UC-003», 2026-11-02. Checklist humano se conserva sin cambios.
 
 **Input**: Consultar estado del trayecto e incidencias usando Renfe Data cuando sus datos sean aplicables.
 
@@ -25,6 +25,9 @@ Como usuario quiero conocer las incidencias relevantes y qué permiten concluir 
 3. **S3**: Dada una estación o servicio que no se puede relacionar con certeza, cuando consulto, entonces se informa de cobertura no resuelta.
 4. **S4**: Dada una fuente inaccesible o caducada, cuando consulto, entonces veo contexto no disponible con la causa; una referencia o fixture conservan su etiqueta propia.
 5. **S5**: Dado un horario programado válido para la fecha y servicio, cuando se usa para calcular llegada, entonces aparece como programado y no como predicción.
+
+6. **S6**: Dados identificadores seleccionados expresamente del catálogo Renfe, cuando consulto, entonces solo se afirma cobertura de las estaciones extremas; línea, tren, dirección y estaciones intermedias quedan sin resolver.
+7. **S7**: Dada una demo UC-002 o una consulta modificada, cuando cambia el resultado de referencia, entonces no se consulta Renfe para la demo y se retira/cancela el contexto anterior.
 
 ### Edge Cases
 
@@ -56,6 +59,26 @@ Contexto de servicio: alertas, cobertura y vigencia. Evidencia cuantitativa: hor
 ## Assumptions
 
 Depende de UC-002. Se limitará a un trayecto directo y una cobertura demostrable. Si hace falta seleccionar estaciones identificadas, se hará explícitamente antes de afirmar cobertura. No se exige construir un planificador GTFS completo.
+
+## Alcance revisado al activar · 2026-11-02
+Se implementa consulta HTTPS manual a alerts.json y selección explícita de dos
+estaciones mediante catálogo GTFS snapshot (1147 IDs/nombres, 2026-11-02).
+No se deducen IDs de nombres libres ni se demuestra servicio directo. Cobertura
+parcial de extremos siempre visible. Catálogo no garantiza vigencia del servicio.
+
+Se separa frescura del feed de periodos publicados y afectación al viaje.
+Política POC: timestamp de feed con antigüedad máxima 10 minutos; más de 60 segundos
+en futuro se rechaza; timestamp ausente no permite afirmar actualidad. Mostrar
+timestamp original y consulta incluso en caducado. active_period/communication_period
+son publicación, no prueba de impacto; sin impact_period, afectación sin confirmar.
+No interpretar minutos en texto libre. Feed inválido falla completo, nunca vacío.
+
+No se consumen horarios ni trip_updates para calcular llegada: S5 es condicional
+y no se activa en este incremento. FR-003 se satisface manteniendo referencia
+independiente; horas GTFS >24:00 quedan fuera del parser de alertas. Se investigan
+sus fuentes y se documenta ese límite. No se construye un planificador GTFS.
+Referencia y demos UC-002 siguen siendo elecciones explícitas; no hay fallback
+silencioso a fixtures ni red automática. Sin datos válidos, se conserva su etiqueta.
 
 **Dependencias**: UC-002.
 
