@@ -1,10 +1,10 @@
 # Feature Specification: UC-004 · Elegir un compromiso del calendario del dispositivo
 
-**Feature Branch**: `chore/sdd-foundation` (borrador; rama de construcción por crear)
+**Feature Branch**: `feat/004-calendar-selection`
 
 **Created**: 2026-11-01
 
-**Status**: Draft — pendiente de revisión; ninguna implementación autorizada por este documento.
+**Status**: In progress — petición «Continua con el UC-004», 2026-11-02. No equivale a lectura/aprobación del checklist humano.
 
 **Input**: Consultar eventos del calendario Android con permiso y seleccionar la reunión relevante.
 
@@ -24,6 +24,9 @@ Como usuario quiero elegir un compromiso de la fecha consultada y controlar el a
 2. **S2**: Dado acceso concedido y varios compromisos en la fecha seleccionada, cuando se muestran, entonces elijo uno explícitamente y se identifica la ocurrencia concreta.
 3. **S3**: Dado un evento recurrente, cuando consulto esa fecha, entonces veo la ocurrencia correspondiente, no la fecha original de toda la serie.
 4. **S4**: Dado rechazo, revocación o calendario vacío, cuando consulto, entonces se informa de ese estado sin inventar una reunión.
+
+5. **S5**: Dada una selección borrada, movida, cancelada o con fin cambiado, cuando la revalido, entonces se retira y se exige una nueva consulta/selección. La revocación retira también lista y selección.
+6. **S6**: Dadas dos reuniones con el mismo título en calendarios visibles, cuando elijo una, entonces la selección conserva su identidad de ocurrencia; cambiar fecha o zona invalida la consulta anterior.
 
 ### Edge Cases
 
@@ -55,6 +58,28 @@ Compromiso seleccionado: identificador local de ocurrencia, comienzo y zona; det
 ## Assumptions
 
 Puede desarrollarse independientemente del cálculo ferroviario. El usuario de demo preparará eventos ficticios en el proveedor local; no se presupone una API pública de capacidades de Google Calendar.
+
+## Alcance activado · 2026-11-02
+Panel independiente del trayecto, con fecha local y zona explícitas (por defecto
+mañana en la zona del dispositivo). Consulta manual de calendarios visibles del
+proveedor Android; no se supone que haya cuenta Google ni sincronización.
+Selección en memoria del ViewModel durante la sesión, conservada al recrear la
+Activity; perdida al morir proceso. Sin SavedState/DataStore para datos de agenda.
+
+Instances expande recurrencias. Identidad EVENT_ID+BEGIN; título no identifica.
+Proyección: identidad, comienzo, fin, título, nombre legible del calendario,
+ALL_DAY y STATUS para filtrar. No leer descripción, asistentes, cuenta ni ubicación.
+Horas se muestran en zona elegida, preservando instantes/fecha/offset; no se
+precisa la zona original de creación del evento.
+
+Solo READ_CALENDAR en producción. Petición contextual con Activity Result API;
+rechazo y enlace explícito a Ajustes. En ON_RESUME comprobar acceso y retirar
+datos si falta; el repositorio comprueba acceso antes/después de consultar y
+captura SecurityException. Sin consultas automáticas al volver de Ajustes.
+Revalidar selección es una acción explícita que lee de nuevo el día y exige
+misma identidad y fin. No evalúa puntualidad (UC-005) ni autoriza divulgación (UC-007).
+No asegura congelar el proveedor: cualquier evaluación posterior debe revalidar
+de nuevo inmediatamente antes de usar los datos. Sin polling/ContentObserver.
 
 **Dependencias**: Base Android; independiente de UC-001–003.
 
