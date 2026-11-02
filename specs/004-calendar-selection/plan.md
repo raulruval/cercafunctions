@@ -30,6 +30,9 @@ la petición actual autoriza construir, no representa revisión humana de docume
 - home/HomeScreen: slot de calendario fuera de dependencia del trayecto, oculto
   durante edición de trayecto. app/MainActivity y di/CalendarModule ensamblan.
 - app/manifest READ_CALENDAR; core-data y core-appfunctions no cambian.
+- scripts/calendar-demo-fixture.py: utilidad opcional SDK para crear/limpiar un
+  calendario LOCAL sintético UTC, identificado por cuenta única. Estado local
+  ignorado por Git. No añade WRITE al APK ni modifica calendarios ajenos.
 
 ## Session and safety
 ViewModel conserva selección al recrear Activity; sin persistencia tras proceso.

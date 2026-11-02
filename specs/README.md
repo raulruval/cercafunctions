@@ -8,7 +8,7 @@ Base ejecutable: etiqueta `phase-0-base`. Adopción SDD: etiqueta `sdd-inception
 | UC-001 | [Configurar y conservar mi trayecto habitual](001-habitual-journey/spec.md) | Base phase-0-base. | Verified | 12/12; ver [evidencia](001-habitual-journey/verification.md) |
 | UC-002 | [Consultar llegada de referencia y escenarios reproducibles](002-journey-estimate/spec.md) | UC-001. | Verified | 12/12; ver [evidencia](002-journey-estimate/verification.md) |
 | UC-003 | [Consultar contexto ferroviario real con vigencia explícita](003-renfe-context/spec.md) | UC-002. | Verified | 14/14; ver [evidencia](003-renfe-context/verification.md) |
-| UC-004 | [Elegir un compromiso del calendario del dispositivo](004-calendar-selection/spec.md) | Base Android; independiente de UC-001–003. | In progress | Consulta de solo lectura y selección de ocurrencia |
+| UC-004 | [Elegir un compromiso del calendario del dispositivo](004-calendar-selection/spec.md) | Base Android; independiente de UC-001–003. | Verified | 14/14; ver [evidencia](004-calendar-selection/verification.md) |
 | UC-005 | [Evaluar llegada frente al compromiso seleccionado](005-arrival-assessment/spec.md) | UC-002 y UC-004; UC-003 como contexto adicional. | Draft | Se preparan al activar |
 | UC-006 | [Publicar la consulta de trayecto como capacidad](006-journey-capability/spec.md) | UC-002 y UC-003. | Draft | Se preparan al activar |
 | UC-007 | [Compartir una evaluación mínima del compromiso autorizado](007-assessment-capability/spec.md) | UC-005 y UC-006. | Draft | Se preparan al activar |
@@ -43,7 +43,7 @@ en las últimas etapas, desde el consumidor externo además de la UI existente.
 - **Verified**: aceptación satisfecha y evidencia registrada en `verification.md`.
 - **Blocked**: obstáculo real encontrado, con causa y acción pendiente documentadas.
 
-Estado al 2026-11-02: **UC-001–003 Verified**, **38/38 tareas completadas** y **3/8 casos Verified**. Las casillas
+Estado al 2026-11-02: **UC-001–004 Verified**, **52/52 tareas completadas** y **4/8 casos Verified**. Las casillas
 marcadas de `checklists/requirements.md` solo indican revisión del documento.
 No representan tests ejecutados ni aprobación humana. Al implementar, actualizar
 estado y tareas en el mismo commit que su código/evidencia.
@@ -71,6 +71,6 @@ estado y tareas en el mismo commit que su código/evidencia.
 
 ## Próxima sesión
 
-UC-003 queda cerrado en `uc-003-v1`. El siguiente caso propuesto es UC-004:
-revisar permisos, recurrencias y selección del calendario antes de planificarlo.
+UC-004 queda cerrado en `uc-004-v1`. El siguiente caso propuesto es UC-005:
+revisar margen, procedencia y revalidación del compromiso antes de evaluar llegada.
 No se ha iniciado. Ver [START_HERE](../START_HERE.md) y las evidencias de cada caso.

@@ -11,5 +11,8 @@ local.properties
 captures/
 external/
 
+# Optional SDK calendar fixture state (local provider IDs)
+.calendar-demo-state.json
+
 # Local SDD CLI environment
 .venv-sdd/

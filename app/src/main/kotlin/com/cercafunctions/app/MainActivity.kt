@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import com.cercafunctions.presentation.calendar.CalendarViewModel
 import com.cercafunctions.presentation.rail.RailContextViewModel
 import com.cercafunctions.presentation.estimate.ArrivalViewModel
 import com.cercafunctions.presentation.home.HomeRoute
@@ -14,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    private val calendarViewModel: CalendarViewModel by viewModels()
     private val railViewModel: RailContextViewModel by viewModels()
     private val arrivalViewModel: ArrivalViewModel by viewModels()
     private val viewModel: HomeViewModel by viewModels()
@@ -23,7 +25,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             CopilotTheme {
-                HomeRoute(viewModel, arrivalViewModel, railViewModel)
+                HomeRoute(viewModel, arrivalViewModel, railViewModel, calendarViewModel)
             }
         }
     }

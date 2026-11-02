@@ -9,6 +9,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import com.cercafunctions.presentation.calendar.CalendarRoute
+import com.cercafunctions.presentation.calendar.CalendarViewModel
 import com.cercafunctions.presentation.rail.RailContextViewModel
 import com.cercafunctions.presentation.estimate.ArrivalRoute
 import com.cercafunctions.presentation.estimate.ArrivalViewModel
@@ -38,16 +40,16 @@ internal data class HomeActions(
 )
 
 @Composable
-fun HomeRoute(viewModel: HomeViewModel, arrivalViewModel: ArrivalViewModel, railViewModel: RailContextViewModel) {
+fun HomeRoute(viewModel: HomeViewModel, arrivalViewModel: ArrivalViewModel, railViewModel: RailContextViewModel, calendarViewModel: CalendarViewModel) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     LaunchedEffect(state.content) { arrivalViewModel.onJourneyChanged((state.content as? JourneyContent.Ready)?.journey) }
     BackHandler(enabled = state.editor != null, onBack = viewModel::cancelEditing)
     HomeScreen(state, HomeActions(viewModel::refresh, viewModel::beginEditing, viewModel::cancelEditing,
-        viewModel::updateOrigin, viewModel::updateDestination, viewModel::updateDuration, viewModel::save)) { ArrivalRoute(arrivalViewModel, railViewModel) }
+        viewModel::updateOrigin, viewModel::updateDestination, viewModel::updateDuration, viewModel::save), calendarContent={CalendarRoute(calendarViewModel)}) { ArrivalRoute(arrivalViewModel, railViewModel) }
 }
 
 @Composable
-internal fun HomeScreen(state: HomeUiState, actions: HomeActions = HomeActions(), arrivalContent: @Composable () -> Unit = {}) {
+internal fun HomeScreen(state: HomeUiState, actions: HomeActions = HomeActions(), calendarContent: @Composable () -> Unit = {}, arrivalContent: @Composable () -> Unit = {}) {
     Scaffold { insets ->
         Column(
             modifier = Modifier.fillMaxSize().padding(insets).imePadding()
@@ -59,6 +61,7 @@ internal fun HomeScreen(state: HomeUiState, actions: HomeActions = HomeActions()
             Text(stringResource(if (state.editor == null) R.string.home_title else R.string.journey_editor_title),
                 style = MaterialTheme.typography.headlineLarge)
             if (state.editor == null) Text(stringResource(R.string.home_subtitle), style = MaterialTheme.typography.bodyLarge)
+            if(state.editor==null)calendarContent()
             Card(modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)) {
                 Column(Modifier.padding(24.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {

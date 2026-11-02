@@ -1,6 +1,6 @@
 # Arquitectura · base e incrementos
 
-Estado al 2026-11-02: base y UC-001–003 implementados; SDD activo. La etiqueta phase-0-base conserva el estado inicial.
+Estado al 2026-11-02: base y UC-001–004 implementados; SDD activo. La etiqueta phase-0-base conserva el estado inicial.
 
 ## Dependencias de compilación
 
@@ -138,3 +138,15 @@ frescura/matching viven en domain; OkHttp, JSON y snapshot en data; estado y
 selección en presentation. app aporta Hilt e INTERNET. Sin cambios en plataforma
 ni AppFunctions. Los IDs solo prueban estaciones del snapshot: ninguna capa
 afirma cobertura de línea, tren o servicio directo. Las consultas no persisten.
+
+
+## Incremento UC-004
+CalendarRepository/GetCalendarDay/RevalidateCalendarSelection viven en dominio.
+AndroidCalendarRepository vive en plataforma y recibe ContentResolver, comprobación
+de permiso e IO dispatcher. La raíz Hilt CalendarModule los ensambla; los futuros
+adaptadores ejecutarán los mismos casos sin necesitar ViewModels ni UI.
+CalendarRoute administra RequestPermission y ON_RESUME; CalendarViewModel guarda
+solo sesión y cancela trabajo al editar. CalendarPanel muestra detalles locales;
+CalendarSelection mantiene clave, fin esperado y día, sin título ni participantes.
+No hay SavedState ni copia en DataStore. El panel no depende de trayecto/Renfe.
+No se añaden módulos Gradle ni bibliotecas nuevas de producción.

@@ -3,7 +3,7 @@
 Empieza por [START_HERE.md](START_HERE.md): mapa de casos, primer incremento y método SDD.
 
 Base Android nativa para investigar una arquitectura que proporcione capacidades
-a agentes, inspirada en Rocket-Beer. UC-001–003 implementados y verificados; cinco casos siguientes en Draft.
+a agentes, inspirada en Rocket-Beer. UC-001–004 implementados y verificados; cuatro casos siguientes en Draft.
 
 ## Qué ejecuta esta base
 
@@ -27,6 +27,12 @@ actualidad desconocida y fuente no disponible. Cobertura solo de extremos;
 ningún aviso añade minutos inventados. Ver [guía](specs/003-renfe-context/quickstart.md)
 y [evidencia](specs/003-renfe-context/verification.md).
 
+UC-004 permite consultar un día del calendario Android con permiso contextual,
+elegir una ocurrencia y revalidarla. No modifica ni persiste agenda; distingue
+denegación, revocación, vacío y fallo de proveedor. No divulga datos a agentes.
+Ver [ejecución y demo opcional sin cuenta](specs/004-calendar-selection/quickstart.md)
+y [verificación](specs/004-calendar-selection/verification.md).
+
 ## Módulos
 
 | Módulo | Responsabilidad |
@@ -35,7 +41,7 @@ y [evidencia](specs/003-renfe-context/verification.md).
 | `core-presentation` | Compose, tema, estado y ViewModel |
 | `core-domain` | Modelos, contratos y casos de uso Kotlin/JVM |
 | `core-data` | Repositorios JVM, HTTP/parser Renfe, catálogo de estaciones y fixtures |
-| `core-platform` | Persistencia DataStore; futura integración CalendarContract |
+| `core-platform` | Persistencia DataStore y lectura CalendarContract con cancelación |
 | `core-appfunctions` | Frontera Android de capacidades; biblioteca preparada, sin servicio publicado |
 
 ## Ejecutar
@@ -63,6 +69,6 @@ en `gradle/libs.versions.toml`. AGP 9 usa Kotlin integrado en los módulos Andro
 - [Guía Android desde Flutter](docs/android-for-flutter.md).
 - [Snapshot de esta fase y validación](docs/phase-0.md).
 
-Calendario, evaluación de compromisos, AppFunctions, ChatApp y Testing Agent
-siguen en los siguientes casos de `specs/`. UC-001–003 son incrementos funcionales
+Evaluación de compromisos, AppFunctions, ChatApp y Testing Agent
+siguen en los siguientes casos de `specs/`. UC-001–004 son incrementos funcionales
 con Spec Kit y evidencia versionada; no hay backend ni predicción de puntualidad real.

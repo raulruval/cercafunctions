@@ -4,7 +4,7 @@
 
 **Created**: 2026-11-01
 
-**Status**: In progress — petición «Continua con el UC-004», 2026-11-02. No equivale a lectura/aprobación del checklist humano.
+**Status**: Verified — implementado y comprobado el 2026-11-02; ver [verification.md](verification.md). Checklist humano permanece sin cambios.
 
 **Input**: Consultar eventos del calendario Android con permiso y seleccionar la reunión relevante.
 
@@ -78,10 +78,11 @@ datos si falta; el repositorio comprueba acceso antes/después de consultar y
 captura SecurityException. Sin consultas automáticas al volver de Ajustes.
 Revalidar selección es una acción explícita que lee de nuevo el día y exige
 misma identidad y fin. No evalúa puntualidad (UC-005) ni autoriza divulgación (UC-007).
-No asegura congelar el proveedor: cualquier evaluación posterior debe revalidar
+Se revalida la vista Instances publicada; no se comparan divergencias internas
+con la tabla Events (ver research.md). No asegura congelar el proveedor: cualquier evaluación posterior debe revalidar
 de nuevo inmediatamente antes de usar los datos. Sin polling/ContentObserver.
 
 **Dependencias**: Base Android; independiente de UC-001–003.
 
-La precisión del borrador es suficiente para revisar alcance; las decisiones propuestas
-se refinan al activar el caso. Un escenario escrito no demuestra que ya funcione.
+Las pruebas ejecutadas y límites conocidos se registran en verification.md.
+El checklist documental no representa aprobación humana ni sustituye esas pruebas.

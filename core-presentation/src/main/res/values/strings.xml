@@ -91,4 +91,31 @@ Actualización del feed (UTC): %2$s</string>
     <string name="rail_periods">Publicación (UTC): %1$s
 Afectación publicada (UTC): %2$s</string>
     <string name="rail_unchanged">La llegada de referencia se mantiene independiente. No hay un retraso cuantitativo verificado para esta salida.</string>
+    <string name="calendar_heading">Elige un compromiso del calendario</string>
+    <string name="calendar_privacy">Solo lectura de calendarios visibles del dispositivo. Los datos se usan aquí para elegir; no se comparten con agentes ni se guardan en la app.</string>
+    <string name="calendar_date">Fecha del calendario (AAAA-MM-DD)</string>
+    <string name="calendar_zone">Zona del calendario (p. ej. Europe/Madrid)</string>
+    <string name="calendar_tomorrow">Usar mañana en esta zona</string>
+    <string name="calendar_consult">Consultar calendario</string>
+    <string name="calendar_settings">Revisar acceso en Ajustes</string>
+    <string name="calendar_invalid_date">Introduce una fecha válida en formato AAAA-MM-DD.</string>
+    <string name="calendar_invalid_zone">Introduce una zona válida, por ejemplo Europe/Madrid.</string>
+    <string name="calendar_idle">Confirma la fecha y la zona para consultar compromisos con hora.</string>
+    <string name="calendar_access">Pulsa Consultar calendario para solicitar acceso de lectura. No se ha leído la agenda.</string>
+    <string name="calendar_denied">No has concedido acceso de lectura. Puedes reintentar la consulta o revisar el permiso en Ajustes.</string>
+    <string name="calendar_loading">Consultando compromisos…</string>
+    <string name="calendar_changed">El compromiso cambió o ya no está disponible. Consulta el calendario y elige de nuevo.</string>
+    <string name="calendar_choose">Selecciona una ocurrencia concreta. No se elige automáticamente aunque solo haya una.</string>
+    <string name="calendar_empty">No hay compromisos con hora que comiencen este día en calendarios visibles. El proveedor puede no tener eventos sincronizados.</string>
+    <string name="calendar_no_provider">No se puede acceder a un proveedor de calendario. No se ha elegido ningún compromiso.</string>
+    <string name="calendar_invalid_data">El proveedor devolvió datos no válidos. No se ha elegido ningún compromiso.</string>
+    <string name="calendar_failed">No se pudo consultar el calendario. Reintenta cuando el proveedor esté disponible.</string>
+    <string name="calendar_no_title">Sin título</string>
+    <string name="calendar_no_name">Calendario sin nombre</string>
+    <string name="calendar_time">Comienzo: %1$s · Fin: %2$s · %3$s</string>
+    <string name="calendar_choose_number">Elegir compromiso %1$d</string>
+    <string name="calendar_selected">Compromiso seleccionado</string>
+    <string name="calendar_validated">Ocurrencia revalidada en esta consulta; el calendario puede cambiar después.</string>
+    <string name="calendar_not_validated">Selección pendiente de revalidar. Aún no se ha evaluado la llegada.</string>
+    <string name="calendar_revalidate">Revalidar selección</string>
 </resources>

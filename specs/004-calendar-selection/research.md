@@ -35,3 +35,16 @@ Rechazo/concesión/revocación también se verifican desde la app instalada; rev
 puede terminar el proceso. No declarar continuidad del VM tras muerte del proceso.
 [UiAutomation](https://developer.android.com/reference/android/app/UiAutomation),
 [Calendars](https://developer.android.com/reference/android/provider/CalendarContract.Calendars).
+
+
+## Hallazgo de proveedor observado en pruebas
+AOSP CalendarInstancesHelper omite regenerar instancias cuando una actualización
+parcial no incluye DTSTART. En el emulador, modificar solo DTEND actualizó la tabla
+Events pero dejó Instances.END anterior. La fixture temporal usa DTSTART original
+y DTEND nuevo para representar una modificación completa. No es un requisito
+público universal de CalendarContract ni se intenta arreglar escribiendo desde la app.
+Revalidar significa releer la vista Instances publicada; no detectar todas las
+divergencias posibles con Events. Ampliar esa garantía exige otro diseño para
+recurrencias/excepciones. No se disfraza el problema añadiendo esperas.
+Fuente primaria: [CalendarInstancesHelper](https://android.googlesource.com/platform/packages/providers/CalendarProvider/+/refs/heads/main/src/com/android/providers/calendar/CalendarInstancesHelper.java#627)
+y [CalendarProvider2](https://android.googlesource.com/platform/packages/providers/CalendarProvider/+/refs/heads/main/src/com/android/providers/calendar/CalendarProvider2.java#4163).

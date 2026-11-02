@@ -173,3 +173,43 @@ resultado permanece cualitativo y no altera ArrivalEstimate, por lo que UI y
 futuros adaptadores de capacidades podrán consumir el mismo QueryRailContext.
 Pruebas locales cubren HTTP200/503/redirect/tamaño/timeout/cancelación con servidor
 loopback; las instrumentadas no dependen del estado del proveedor externo.
+
+
+## Lo aprendido en UC-004
+ContentResolver es el cliente nativo de un ContentProvider, identificado por URI.
+En Flutter esta frontera suele quedar oculta por un plugin y un platform channel;
+aquí el adaptador Android ejecuta la consulta directamente en IO. Un Cursor es
+un recurso, no una lista Dart: se recorre y cierra con use incluso ante errores.
+CancellationSignal permite propagar la cancelación de la coroutine a la consulta
+IPC, igual que conectar cancelación al cliente HTTP en UC-003.
+
+Events describe una serie; Instances publica sus ocurrencias expandidas por
+el proveedor. La identidad es EVENT_ID+BEGIN. Dos títulos iguales pueden ser dos
+compromisos diferentes; nunca elegimos por título ni escogemos el primero en silencio.
+El rango local se convierte a instantes desde dos medianoches, no sumando24h.
+Fechas/horas se presentan en la zona elegida, aunque el evento se creara en otra.
+
+READ_CALENDAR es un permiso runtime distinto de INTERNET. CalendarRoute registra
+un launcher con RequestPermission y lo ejecuta solo tras una acción contextual.
+Es el lugar que un plugin permission_handler resolvería desde Flutter, pero aquí
+se ve el contrato de Activity Result y su lifecycle. ON_RESUME comprueba permiso
+sin leer automáticamente; la concesión en Ajustes exige pulsar Consultar después.
+El repositorio comprueba acceso de nuevo, porque puede revocarse durante IPC.
+
+CalendarViewModel recuerda la sesión como un Cubit vivo; la recreación de Activity
+conserva ese ViewModel. Muerte del proceso no: no serializamos agenda en
+SavedStateHandle ni DataStore. Revocar permiso puede terminar el proceso; la
+prueba manual observa ambos PIDs y una pantalla sin selección al volver.
+
+Revalidar no congela la agenda. El proveedor puede cambiar después y UC-005 debe
+revalidar otra vez justo antes de evaluar. En la imagen probada, una actualización
+solo de DTEND puede dejar Instances.END anterior según el código de AOSP; la
+fixture temporal actualiza DTSTART+DTEND. No escribimos para refrescar la vista
+desde producción ni prometemos detectar divergencias no publicadas por Instances.
+Ver [investigación y fuente primaria](../specs/004-calendar-selection/research.md).
+
+Sigue CalendarModule → GetCalendarDay → AndroidCalendarRepository para la lectura,
+y CalendarRoute → CalendarViewModel para permisos/estado. La producción solo lee;
+los tests adoptan identidad shell para crear calendarios LOCAL aislados y los
+eliminan por sus propios IDs. La utilidad opcional de scripts crea fixtures UTC
+sin cuenta; no está incluida en el APK ni amplía sus permisos.
