@@ -4,7 +4,7 @@
 
 **Created**: 2026-11-01
 
-**Status**: In progress — petición UC-005 recibida el 2026-11-02. Checklist humano sin cambios.
+**Status**: Verified — evidencia en verification.md; petición UC-005 del 2026-11-02. Checklist humano sin cambios.
 
 **Input**: Comparar la llegada estimada con el comienzo de una reunión.
 

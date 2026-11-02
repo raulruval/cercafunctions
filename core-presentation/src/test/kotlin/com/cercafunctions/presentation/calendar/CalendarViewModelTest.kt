@@ -2,6 +2,9 @@ package com.cercafunctions.presentation.calendar
 
 import androidx.lifecycle.ViewModelStore
 import com.cercafunctions.domain.calendar.*
+import com.cercafunctions.domain.estimate.*
+import com.cercafunctions.domain.assessment.AssessArrival
+import com.cercafunctions.domain.journey.*
 import com.cercafunctions.presentation.home.MainDispatcherRule
 import java.time.*
 import kotlinx.coroutines.*
@@ -28,7 +31,12 @@ class CalendarViewModelTest {
             override suspend fun read(day:CalendarDay):CalendarRead {calls++;gate?.await();if(cancel)throw CancellationException("injected");return result}
         }
         val get=GetCalendarDay(repo)
-        return CalendarViewModel(get,RevalidateCalendarSelection(get),Clock.fixed(now,ZoneOffset.UTC),zone).also{store.put("vm",it)}
+        val clock=Clock.fixed(now,ZoneOffset.UTC)
+        val arrivalQuery=QueryJourneyArrival(object:JourneyRepository {
+            override suspend fun getHabitualJourney()=JourneyReadResult.Configured(HabitualJourney("A","B",35))
+            override suspend fun saveHabitualJourney(journey:HabitualJourney)=error("unused")
+        },JourneyFixtureRepository{null},clock)
+        return CalendarViewModel(get,RevalidateCalendarSelection(get),clock,zone,AssessArrival(arrivalQuery,RevalidateCalendarSelection(get),clock)).also{store.put("vm",it)}
     }
     @After fun clear(){store.clear()}
     @Test fun `initialization and resume never read calendar automatically`()=runTest {

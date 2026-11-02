@@ -150,3 +150,18 @@ solo sesión y cancela trabajo al editar. CalendarPanel muestra detalles locales
 CalendarSelection mantiene clave, fin esperado y día, sin título ni participantes.
 No hay SavedState ni copia en DataStore. El panel no depende de trayecto/Renfe.
 No se añaden módulos Gradle ni bibliotecas nuevas de producción.
+
+
+## Incremento UC-005
+AssessArrival recibe QueryJourneyArrival, RevalidateCalendarSelection y Clock en
+core-domain. Refresca la misma salida conservando offset/zona/escenario; un cambio
+de evidencia exige nueva consulta visible. Revalida la ocurrencia y compara
+Instant. Resultado Compared o Indeterminate; MeetingTiming no contiene título,
+calendario ni identificadores. El resultado no constituye autorización de divulgación.
+
+CalendarViewModel coordina selección y evaluación con trabajos/tokens separados.
+HomeRoute entrega un snapshot de llegada, sin inyectar ViewModels entre sí.
+AssessmentPanel es stateless. CalendarModule ensambla la fachada; UI y futuros
+adaptadores ejecutarán exactamente ese caso de uso. Sin nuevas dependencias,
+módulos, almacenamiento o permisos. ON_STOP cancela/retira evaluación; ON_RESUME requiere evaluación nueva.
+No se infieren minutos de avisos ni se envían mensajes. UC-006 sigue Draft.

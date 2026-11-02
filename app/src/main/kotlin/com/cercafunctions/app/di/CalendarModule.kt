@@ -4,6 +4,9 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import com.cercafunctions.domain.calendar.*
+import com.cercafunctions.domain.assessment.AssessArrival
+import com.cercafunctions.domain.estimate.QueryJourneyArrival
+import java.time.Clock
 import com.cercafunctions.platform.calendar.AndroidCalendarRepository
 import dagger.Module
 import dagger.Provides
@@ -15,6 +18,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object CalendarModule {
+    @Provides fun provideAssessArrival(query:QueryJourneyArrival,revalidate:RevalidateCalendarSelection,clock:Clock)=AssessArrival(query,revalidate,clock)
     @Provides @Singleton
     fun provideCalendarRepository(@ApplicationContext context:Context):CalendarRepository =
         AndroidCalendarRepository(context.contentResolver,{context.checkSelfPermission(Manifest.permission.READ_CALENDAR)==PackageManager.PERMISSION_GRANTED})

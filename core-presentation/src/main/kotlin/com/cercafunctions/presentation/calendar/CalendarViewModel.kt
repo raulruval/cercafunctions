@@ -6,6 +6,8 @@ import javax.inject.Inject
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.update
 import com.cercafunctions.domain.calendar.*
+import com.cercafunctions.domain.estimate.ArrivalEstimate
+import com.cercafunctions.domain.assessment.*
 import java.time.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,19 +17,58 @@ enum class CalendarInputError { DATE, ZONE }
 data class CalendarUiState(val date:String,val zone:String,val status:CalendarStatus=CalendarStatus.IDLE,
     val items:List<CalendarOccurrence> = emptyList(),val selection:CalendarSelection?=null,
     val selected:CalendarOccurrence?=null,val validated:Boolean=false,val busy:Boolean=false,
-    val inputError:CalendarInputError?=null,val failure:CalendarFailure?=null)
+    val inputError:CalendarInputError?=null,val failure:CalendarFailure?=null,
+    val arrival:ArrivalEstimate?=null,val assessment:AssessmentResult?=null,val assessmentBusy:Boolean=false)
 @HiltViewModel
 class CalendarViewModel @Inject constructor(private val getDay:GetCalendarDay,private val validate:RevalidateCalendarSelection,
-    private val clock:Clock,defaultZone:ZoneId):ViewModel() {
+    private val clock:Clock,defaultZone:ZoneId,private val assess:AssessArrival):ViewModel() {
     private val mutable=MutableStateFlow(CalendarUiState(clock.instant().atZone(defaultZone).toLocalDate().plusDays(1).toString(),defaultZone.id,
         status=if(getDay.hasReadAccess())CalendarStatus.IDLE else CalendarStatus.ACCESS_REQUIRED))
     val uiState=mutable.asStateFlow()
     private var generation=0L
     private var job:Job?=null
     private var loadedDay:CalendarDay?=null
+    private var assessmentJob:Job?=null
+    private var assessmentGeneration=0L
+    private fun invalidateAssessment() {
+        assessmentGeneration++;assessmentJob?.cancel()
+        mutable.update{it.copy(assessment=null,assessmentBusy=false)}
+    }
+    fun setArrival(value:ArrivalEstimate?) {
+        if(mutable.value.arrival==value)return
+        invalidateAssessment();mutable.update{it.copy(arrival=value)}
+    }
+    fun evaluate() {
+        val state=mutable.value
+        if(state.busy || state.assessmentBusy)return
+        invalidateAssessment()
+        val token=assessmentGeneration
+        mutable.update{it.copy(assessmentBusy=true)}
+        assessmentJob=viewModelScope.launch {
+            try {
+                val result=assess(state.arrival,state.selection)
+                if(token!=assessmentGeneration)return@launch
+                if(result is AssessmentResult.Indeterminate) when(result.reason) {
+                    AssessmentReason.CALENDAR_CHANGED -> clear(CalendarStatus.CHANGED)
+                    AssessmentReason.CALENDAR_PERMISSION -> clear(CalendarStatus.ACCESS_REQUIRED)
+                    AssessmentReason.CALENDAR_UNAVAILABLE -> {clear(CalendarStatus.UNAVAILABLE);mutable.update{it.copy(failure=CalendarFailure.QUERY_FAILED)}}
+                    else -> Unit
+                }
+                mutable.update{it.copy(assessment=result,assessmentBusy=false,validated=if(result is AssessmentResult.Compared)true else it.validated)}
+            } catch(cancelled:CancellationException){throw cancelled
+            } catch(_:Exception) {
+                if(token==assessmentGeneration) {
+                    clear(CalendarStatus.UNAVAILABLE)
+                    mutable.update{it.copy(failure=CalendarFailure.QUERY_FAILED,
+                        assessment=AssessmentResult.Indeterminate(AssessmentReason.CALENDAR_UNAVAILABLE,state.arrival,clock.instant()))}
+                }
+            } finally {if(token==assessmentGeneration)mutable.update{it.copy(assessmentBusy=false)}}
+        }
+    }
     private fun clear(status:CalendarStatus=if(getDay.hasReadAccess())CalendarStatus.IDLE else CalendarStatus.ACCESS_REQUIRED) {
+        invalidateAssessment()
         generation++;job?.cancel();loadedDay=null
-        mutable.value=CalendarUiState(mutable.value.date,mutable.value.zone,status)
+        mutable.value=CalendarUiState(mutable.value.date,mutable.value.zone,status,arrival=mutable.value.arrival)
     }
     fun updateDate(value:String) {clear();mutable.update {it.copy(date=value)}}
     fun updateZone(value:String) {clear();mutable.update {it.copy(zone=value)}}
@@ -72,7 +113,9 @@ class CalendarViewModel @Inject constructor(private val getDay:GetCalendarDay,pr
         }
     }
     fun onPermissionResult(granted:Boolean) {if(granted)consult() else clear(CalendarStatus.DENIED)}
+    fun onStop() { invalidateAssessment() }
     fun onResume() {
+        invalidateAssessment()
         if(!getDay.hasReadAccess())clear(if(mutable.value.status==CalendarStatus.DENIED)CalendarStatus.DENIED else CalendarStatus.ACCESS_REQUIRED)
         else mutable.update{it.copy(validated=false,status=if(it.status in setOf(CalendarStatus.DENIED,CalendarStatus.ACCESS_REQUIRED))CalendarStatus.IDLE else it.status)}
     }
@@ -82,12 +125,14 @@ class CalendarViewModel @Inject constructor(private val getDay:GetCalendarDay,pr
         if(state.busy || state.status!=CalendarStatus.DATA)return
         val item=state.items.find{it.key==key} ?: return
         val day=loadedDay ?: return
+        invalidateAssessment()
         mutable.update{it.copy(selection=CalendarSelection(item.key,item.end,day),selected=item,validated=false)}
     }
     fun revalidate() {
         val state=mutable.value
         val selection=state.selection ?: return
         if(state.busy)return
+        invalidateAssessment()
         val token=++generation
         mutable.update{it.copy(busy=true,validated=false)}
         job=viewModelScope.launch {

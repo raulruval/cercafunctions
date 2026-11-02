@@ -9,6 +9,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import com.cercafunctions.presentation.assessment.AssessmentRoute
+import com.cercafunctions.domain.estimate.ArrivalResult
 import com.cercafunctions.presentation.calendar.CalendarRoute
 import com.cercafunctions.presentation.calendar.CalendarViewModel
 import com.cercafunctions.presentation.rail.RailContextViewModel
@@ -43,13 +45,16 @@ internal data class HomeActions(
 fun HomeRoute(viewModel: HomeViewModel, arrivalViewModel: ArrivalViewModel, railViewModel: RailContextViewModel, calendarViewModel: CalendarViewModel) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     LaunchedEffect(state.content) { arrivalViewModel.onJourneyChanged((state.content as? JourneyContent.Ready)?.journey) }
+    val arrivalState by arrivalViewModel.uiState.collectAsStateWithLifecycle()
+    val usableArrival=(arrivalState.result as? ArrivalResult.Estimated)?.value.takeIf{state.editor==null && state.content is JourneyContent.Ready}
+    LaunchedEffect(usableArrival){calendarViewModel.setArrival(usableArrival)}
     BackHandler(enabled = state.editor != null, onBack = viewModel::cancelEditing)
     HomeScreen(state, HomeActions(viewModel::refresh, viewModel::beginEditing, viewModel::cancelEditing,
-        viewModel::updateOrigin, viewModel::updateDestination, viewModel::updateDuration, viewModel::save), calendarContent={CalendarRoute(calendarViewModel)}) { ArrivalRoute(arrivalViewModel, railViewModel) }
+        viewModel::updateOrigin, viewModel::updateDestination, viewModel::updateDuration, viewModel::save), calendarContent={CalendarRoute(calendarViewModel)},assessmentContent={AssessmentRoute(calendarViewModel,usableArrival)}) { ArrivalRoute(arrivalViewModel, railViewModel) }
 }
 
 @Composable
-internal fun HomeScreen(state: HomeUiState, actions: HomeActions = HomeActions(), calendarContent: @Composable () -> Unit = {}, arrivalContent: @Composable () -> Unit = {}) {
+internal fun HomeScreen(state: HomeUiState, actions: HomeActions = HomeActions(), calendarContent: @Composable () -> Unit = {}, assessmentContent: @Composable () -> Unit = {}, arrivalContent: @Composable () -> Unit = {}) {
     Scaffold { insets ->
         Column(
             modifier = Modifier.fillMaxSize().padding(insets).imePadding()
@@ -72,6 +77,7 @@ internal fun HomeScreen(state: HomeUiState, actions: HomeActions = HomeActions()
             }
             if (state.editor == null) {
                 if (state.content is JourneyContent.Ready) arrivalContent()
+                assessmentContent()
                 Text(stringResource(R.string.home_upcoming_title), style = MaterialTheme.typography.titleMedium)
                 Text(stringResource(R.string.home_upcoming_body), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Text(stringResource(R.string.home_privacy), style = MaterialTheme.typography.bodySmall)

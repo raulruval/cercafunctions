@@ -3,7 +3,7 @@
 Empieza por [START_HERE.md](START_HERE.md): mapa de casos, primer incremento y método SDD.
 
 Base Android nativa para investigar una arquitectura que proporcione capacidades
-a agentes, inspirada en Rocket-Beer. UC-001–004 implementados y verificados; cuatro casos siguientes en Draft.
+a agentes, inspirada en Rocket-Beer. UC-001–005 implementados y verificados; tres casos siguientes en Draft.
 
 ## Qué ejecuta esta base
 
@@ -32,6 +32,13 @@ elegir una ocurrencia y revalidarla. No modifica ni persiste agenda; distingue
 denegación, revocación, vacío y fallo de proveedor. No divulga datos a agentes.
 Ver [ejecución y demo opcional sin cuenta](specs/004-calendar-selection/quickstart.md)
 y [verificación](specs/004-calendar-selection/verification.md).
+
+UC-005 compara la llegada con el compromiso revalidado mediante AssessArrival,
+caso de dominio compartible con futuras capacidades. Distingue margen, retraso
+e indeterminado; preserva fuente e incertidumbre y retira resultados obsoletos.
+Sin margen extra ni desplazamiento estación–reunión, explícitos en pantalla.
+Ver [prueba guiada](specs/005-arrival-assessment/quickstart.md) y
+[verificación](specs/005-arrival-assessment/verification.md).
 
 ## Módulos
 
@@ -69,6 +76,6 @@ en `gradle/libs.versions.toml`. AGP 9 usa Kotlin integrado en los módulos Andro
 - [Guía Android desde Flutter](docs/android-for-flutter.md).
 - [Snapshot de esta fase y validación](docs/phase-0.md).
 
-Evaluación de compromisos, AppFunctions, ChatApp y Testing Agent
-siguen en los siguientes casos de `specs/`. UC-001–004 son incrementos funcionales
+AppFunctions, ChatApp y Testing Agent siguen en los siguientes casos de `specs/`.
+UC-001–005 son incrementos funcionales
 con Spec Kit y evidencia versionada; no hay backend ni predicción de puntualidad real.

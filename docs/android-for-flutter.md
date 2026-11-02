@@ -213,3 +213,31 @@ y CalendarRoute → CalendarViewModel para permisos/estado. La producción solo 
 los tests adoptan identidad shell para crear calendarios LOCAL aislados y los
 eliminan por sus propios IDs. La utilidad opcional de scripts crea fixtures UTC
 sin cuenta; no está incluida en el APK ni amplía sus permisos.
+
+
+## Lo aprendido en UC-005
+AssessArrival compone dos casos suspendidos de dominio. Es equivalente a un
+servicio de aplicación Dart que llama repositorios/casos, sin depender de Cubit
+ni BuildContext. En Android una función suspend no se ejecuta automáticamente
+en otro hilo: el adaptador CalendarContract ya cambia a IO; el cálculo temporal
+es pequeño y no necesita otro dispatcher. La cancelación se propaga al proveedor.
+
+CalendarViewModel conserva selección y evaluación en StateFlow como un Cubit
+con estado inmutable. Tiene un Job/token por operación: al editar cancela y evita
+publicar una respuesta anterior. La UI usa collectAsStateWithLifecycle y el host
+pasa el snapshot de llegada; no se crea una dependencia entre ViewModels.
+ON_STOP cancela y retira la evaluación al pasar a segundo plano; ON_RESUME
+la invalida también y una acción explícita la calcula otra vez.
+Recrear Activity conserva selección en el ViewModel, pero exige reevaluar.
+
+java.time distingue LocalDateTime, ZoneId e Instant; para ordenar llegadas usamos
+Instant, conservando las zonas para mostrar. Duration.toMinutes descarta fracciones,
+como Duration.inMinutes en Dart. Primero clasificamos puntualidad; luego floor
+para minutos disponibles y ceil para retraso: 1ns tarde nunca se muestra como0.
+No usamos Double ni convertimos toda la duración a nanosegundos.
+
+El estado de presentación puede mostrar un título local, pero el resultado de
+dominio solo devuelve horarios y evidencia. Esto prepara la frontera AppFunctions;
+UC-007 aún deberá definir consentimiento y DTO externos. No serializamos el estado
+de pantalla como contrato de capacidades. Para verificar: probar +10/0/−15 con
+la guía UC-005 y seguir CalendarModule → AssessArrival → sus dos casos de lectura.

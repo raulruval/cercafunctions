@@ -21,6 +21,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
     val keyboard=LocalSoftwareKeyboardController.current
     val permission=rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission(),viewModel::onPermissionResult)
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME){viewModel.onResume()}
+    LifecycleEventEffect(Lifecycle.Event.ON_STOP){viewModel.onStop()}
     CalendarPanel(state,CalendarActions(viewModel::updateDate,viewModel::updateZone,viewModel::tomorrow,
         onConsult={
             keyboard?.hide()

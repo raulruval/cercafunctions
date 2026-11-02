@@ -1,0 +1,33 @@
+{
+  "date": "2026-11-02",
+  "calendarFixtureOnly": true,
+  "fixtureCleanupVerified": true,
+  "readPermissionLeftGranted": false,
+  "results": {
+    "early": [
+      "Margen previsto: 10 min completos · sin retraso previsto según este cálculo",
+      "Referencia · duración indicada por ti",
+      "Referencia",
+      "Salida de los datos de entrada: 2026-11-03T08:15:00Z · UTC"
+    ],
+    "equal": [
+      "Margen previsto: 0 min completos · sin retraso previsto según este cálculo"
+    ],
+    "late": [
+      "Retraso previsto: 15 min · redondeado hacia arriba",
+      "Referencia · duración indicada por ti",
+      "Referencia",
+      "Salida de los datos de entrada: 2026-11-03T08:40:00Z · UTC",
+      "Consulta del cálculo (UTC): 2026-11-02T15:59:57.590929Z",
+      "Llegada comparada: 2026-11-03T09:15:00Z · UTC",
+      "Comienzo revalidado: 2026-11-03T09:00:00Z · UTC"
+    ],
+    "unknown": [
+      "Resultado indeterminado: La llegada es desconocida; no hay evidencia cuantitativa para comparar.",
+      "Demostración · datos y reloj fijos",
+      "Salida de los datos de entrada: 2026-11-02T08:00:00+01:00 · Europe/Madrid",
+      "Consulta del cálculo (UTC): 2026-11-01T08:00:00Z",
+      "Evaluación (UTC): 2026-11-02T16:00:25.454585Z"
+    ]
+  }
+}
