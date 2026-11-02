@@ -1,10 +1,10 @@
 # Feature Specification: UC-002 · Consultar llegada de referencia y escenarios reproducibles
 
-**Feature Branch**: `chore/sdd-foundation` (borrador; rama de construcción por crear)
+**Feature Branch**: `feat/002-journey-estimate`
 
 **Created**: 2026-11-01
 
-**Status**: Draft — pendiente de revisión; ninguna implementación autorizada por este documento.
+**Status**: In progress — petición de continuar UC-002 recibida el 2026-11-02. No implica lectura documental ni aprobación humana de checklists.
 
 **Input**: Consultar mi trayecto para mañana y disponer de escenarios reproducibles de puntualidad y retraso.
 
@@ -25,6 +25,8 @@ Como usuario quiero una llegada para una salida concreta, con su origen de datos
 3. **S3**: Dado que solicito mañana, cuando preparo la consulta, entonces veo la fecha concreta y zona horaria usadas y debo aportar o confirmar la hora de salida.
 4. **S4**: Dada una salida ambigua o inexistente por cambio de hora, cuando consulto, entonces se requiere una elección temporal válida y no se elige una interpretación en silencio.
 5. **S5**: Dado que no hay trayecto configurado, cuando consulto, entonces se indica que falta configuración y no se inventa una llegada.
+
+6. **S6**: Dados los fixtures normal, +15 y desconocido, cuando consulto cada uno, entonces obtengo 08:35, 08:50 y llegada desconocida respectivamente, siempre con ruta, salida y reloj de demostración fijos y visibles.
 
 ### Edge Cases
 
@@ -54,6 +56,8 @@ Consulta temporal: fecha/hora/zona de salida. Estimación: llegada opcional, pro
 - **SC-003**: Ningún fixture aparece como dato real y desconocido no se transforma en retraso cero.
 
 ## Assumptions
+
+Fixtures: ruta «Origen demo → Destino demo», duración 35 min, salida 2026-11-02 08:00 Europe/Madrid, reloj 2026-11-01T08:00:00Z. No representan el trayecto real guardado; requieren que exista configuración para acceder al panel. Referencia y demos son modos separados. La referencia no conoce el retraso real; su horizonte es únicamente la salida solicitada, sin validación ferroviaria.
 
 Depende de UC-001. La hora de salida se confirma por consulta; aún no se almacena una rutina semanal. No es un planificador de horarios ferroviarios.
 
