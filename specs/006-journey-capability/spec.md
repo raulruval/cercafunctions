@@ -1,10 +1,10 @@
 # Feature Specification: UC-006 · Publicar la consulta de trayecto como capacidad
 
-**Feature Branch**: `chore/sdd-foundation` (borrador; rama de construcción por crear)
+**Feature Branch**: `feat/006-journey-capability`
 
 **Created**: 2026-11-01
 
-**Status**: Draft — pendiente de revisión; ninguna implementación autorizada por este documento.
+**Status**: In progress — petición explícita de implementar recibida el2026-11-03; checklist humano conservado.
 
 **Input**: Permitir a un agente externo consultar el trayecto y su estimación con los mismos casos de uso que la UI.
 
@@ -60,3 +60,31 @@ Depende de UC-002/003. Se seguirá la skill oficial AppFunctions vigente; los pr
 
 La precisión del borrador es suficiente para revisar alcance; las decisiones propuestas
 se refinan al activar el caso. Un escenario escrito no demuestra que ya funcione.
+
+
+## Alcance activado ·2026-11-03
+Una función queryJourney: salida LocalDateTime y ZoneId obligatorias; escenario,
+offset UTC e IDs de dos estaciones opcionales y acotados. Referencia por defecto;
+demos solo mediante selección explícita, con fecha/reloj completos sin trasladarlos
+a mañana. Los IDs deben confirmarse expresamente; no inferirlos de nombres guardados.
+Sin IDs el contexto es UNRESOLVED; con ambos válidos se consulta UC-003. Devuelve
+resumen cualitativo (estado, fuente, fechas y recuentos), sin textos de avisos.
+Avisos nunca cambian minutos. No hay predicción operativa real disponible.
+
+Compartir trayecto es opt-in persistido, false por defecto, separado de READ_CALENDAR.
+Función isEnabled=false por defecto y protegida por permisos del sistema; el servicio
+comprueba además consentimiento antes y después de leer. La UI permite autorizar y
+revocar, sin abrir ajustes/permisos desde servicio. Sin sistema compatible sigue
+funcionando la app; activar compartir no está disponible. No se exporta calendario,
+contactos, configuración de sistema ni escritura de trayectos. No se comparte
+automáticamente por pasar tests. Habilitación ADB no sustituye consentimiento.
+
+Datos de respuesta con tipos java.time nativos, referencia/fixture, incertidumbre,
+salida efectiva y observedAt; llegada desconocida es null, retraso desconocido null.
+Entrada inválida o ausencia de configuración producen errores AppFunctions acotados,
+sin datos de trayecto, valores crudos o mensajes internos. Un fallo del feed puede
+devolver llegada de referencia con contexto UNAVAILABLE, sin inventar retraso.
+Cancelación se propaga. Servicio arranca con proceso frío y sin Activity/ViewModel.
+
+Validación positiva real con shell privilegiado; negativa entre UIDs distintos,
+sin confundir tests directos/fakes con IPC. ChatApp/TestingAgent LLM quedan UC-008.
