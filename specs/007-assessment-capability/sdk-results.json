@@ -1,0 +1,177 @@
+{
+  "date": "2026-11-03",
+  "fixtureOnly": true,
+  "queryDate": "2026-11-04",
+  "discoveredEvaluation": "com.cercafunctions.appfunctions.BaseJourneyAppFunctionService#evaluateAuthorizedCommitment",
+  "coldProcess": {
+    "before": "13197",
+    "after": "14965",
+    "emptyBeforeInvocation": true,
+    "activityOpened": false
+  },
+  "compared": {
+    "meetingStart": [
+      {
+        "epochSecond": [
+          1793782800
+        ],
+        "nanoAdjustment": [
+          0
+        ]
+      }
+    ],
+    "departure": [
+      {
+        "epochSecond": [
+          1793781600
+        ],
+        "nanoAdjustment": [
+          0
+        ]
+      }
+    ],
+    "source": [
+      "REFERENCE"
+    ],
+    "status": [
+      "LATE"
+    ],
+    "meetingZone": [
+      {
+        "zoneID": [
+          "UTC"
+        ]
+      }
+    ],
+    "scenario": [
+      "REFERENCE"
+    ],
+    "arrival": [
+      {
+        "epochSecond": [
+          1793783700
+        ],
+        "nanoAdjustment": [
+          0
+        ]
+      }
+    ],
+    "arrivalZone": [
+      {
+        "zoneID": [
+          "UTC"
+        ]
+      }
+    ],
+    "observedAt": [
+      {
+        "epochSecond": [
+          1793722524
+        ],
+        "nanoAdjustment": [
+          450906000
+        ]
+      }
+    ],
+    "signedMarginMinutes": [
+      -15
+    ],
+    "assessedAt": [
+      {
+        "epochSecond": [
+          1793722524
+        ],
+        "nanoAdjustment": [
+          455912000
+        ]
+      }
+    ]
+  },
+  "wrongReference": {
+    "denied": true,
+    "code": 1000,
+    "responseData": false
+  },
+  "unknown": {
+    "departure": [
+      {
+        "epochSecond": [
+          1793602800
+        ],
+        "nanoAdjustment": [
+          0
+        ]
+      }
+    ],
+    "reason": [
+      "UNKNOWN_ARRIVAL"
+    ],
+    "source": [
+      "FIXTURE"
+    ],
+    "status": [
+      "INDETERMINATE"
+    ],
+    "scenario": [
+      "DEMO_UNKNOWN"
+    ],
+    "arrivalZone": [
+      {
+        "zoneID": [
+          "Europe/Madrid"
+        ]
+      }
+    ],
+    "observedAt": [
+      {
+        "epochSecond": [
+          1793520000
+        ],
+        "nanoAdjustment": [
+          0
+        ]
+      }
+    ],
+    "assessedAt": [
+      {
+        "epochSecond": [
+          1793722525
+        ],
+        "nanoAdjustment": [
+          162796000
+        ]
+      }
+    ]
+  },
+  "foreignUidTestsPassed": true,
+  "titleChange": {
+    "denied": true,
+    "code": 1000,
+    "responseData": false
+  },
+  "oldReferenceAfterNewGrant": {
+    "denied": true,
+    "code": 1000,
+    "responseData": false
+  },
+  "explicitRevocation": {
+    "denied": true,
+    "code": 1000,
+    "responseData": false
+  },
+  "readPermissionLoss": {
+    "denied": true,
+    "code": 1000,
+    "responseData": false
+  },
+  "regrantDoesNotRestoreReference": {
+    "denied": true,
+    "code": 1000,
+    "responseData": false
+  },
+  "finalSharingDisabled": true,
+  "finalReadCalendarGranted": false,
+  "ownedFixtureCleanupVerified": true,
+  "finalSystemStateReadBackDisabled": true,
+  "finalReadPermissionReadBackDenied": true
+}

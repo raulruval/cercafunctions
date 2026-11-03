@@ -13,7 +13,7 @@ data class OccurrenceKey(val eventId:Long,val begin:Instant) { init { require(ev
 data class CalendarOccurrence(val key:OccurrenceKey,val end:Instant,val title:String,val calendarName:String) {
     init {require(end>=key.begin)}
 }
-/** Session-only selection; excludes title and other readable agenda details. */
+/** Local session selection. Explicit UC-007 grants may persist its minimal fields, never readable details. */
 data class CalendarSelection(val key:OccurrenceKey,val expectedEnd:Instant,val day:CalendarDay) {
     init {require(day.contains(key.begin));require(expectedEnd>=key.begin)}
 }

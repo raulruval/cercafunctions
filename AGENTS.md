@@ -3,9 +3,9 @@
 ## Contexto y alcance vigente
 
 Leer `START_HERE.md`, `.specify/memory/constitution.md` y `specs/README.md`.
-La petición del2026-11-03 autoriza UC-006 además de base/SDD y UC-001–005 previos.
-Los seis quedan Verified; UC-007/008 siguen Draft. No iniciar el siguiente caso
-sin petición. Ver specs/006-journey-capability/verification.md.
+Las peticiones del2026-11-03 autorizan UC-006 y UC-007 además de base/SDD y casos previos.
+Los siete quedan Verified; UC-008 sigue Draft. No iniciar el siguiente caso
+sin petición. Ver specs/007-assessment-capability/verification.md.
 La fase 0 queda preservada en su etiqueta; los documentos de aquella fase son históricos.
 
 ## Flujo SDD

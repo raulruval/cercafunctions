@@ -11,7 +11,7 @@ Base ejecutable: etiqueta `phase-0-base`. Adopción SDD: etiqueta `sdd-inception
 | UC-004 | [Elegir un compromiso del calendario del dispositivo](004-calendar-selection/spec.md) | Base Android; independiente de UC-001–003. | Verified | 14/14; ver [evidencia](004-calendar-selection/verification.md) |
 | UC-005 | [Evaluar llegada frente al compromiso seleccionado](005-arrival-assessment/spec.md) | UC-002 y UC-004; UC-003 como contexto adicional. | Verified | 13/13; ver [evidencia](005-arrival-assessment/verification.md) |
 | UC-006 | [Publicar la consulta de trayecto como capacidad](006-journey-capability/spec.md) | UC-002 y UC-003. | Verified | 15/15; ver [evidencia](006-journey-capability/verification.md) |
-| UC-007 | [Compartir una evaluación mínima del compromiso autorizado](007-assessment-capability/spec.md) | UC-005 y UC-006. | Draft | Se preparan al activar |
+| UC-007 | [Compartir una evaluación mínima del compromiso autorizado](007-assessment-capability/spec.md) | UC-005 y UC-006. | Verified | 17/17; ver [evidencia](007-assessment-capability/verification.md) |
 | UC-008 | [Orquestar propuesta a Ana con confirmación explícita](008-cross-app-demo/spec.md) | UC-006 y UC-007; ChatApp y Testing Agent oficiales. | Draft | Se preparan al activar |
 
 ## Orden y dependencias
@@ -43,7 +43,7 @@ en las últimas etapas, desde el consumidor externo además de la UI existente.
 - **Verified**: aceptación satisfecha y evidencia registrada en `verification.md`.
 - **Blocked**: obstáculo real encontrado, con causa y acción pendiente documentadas.
 
-Estado al2026-11-03: **UC-001–006 Verified**, **80/80 tareas completadas** y **6/8 casos Verified**. Las casillas
+Estado al2026-11-03: **UC-001–007 Verified**, **97/97 tareas completadas** y **7/8 casos Verified**. Las casillas
 marcadas de `checklists/requirements.md` solo indican revisión del documento.
 No representan tests ejecutados ni aprobación humana. Al implementar, actualizar
 estado y tareas en el mismo commit que su código/evidencia.
@@ -71,6 +71,6 @@ estado y tareas en el mismo commit que su código/evidencia.
 
 ## Próxima sesión
 
-UC-006 queda cerrado en `uc-006-v1`. El siguiente caso propuesto es UC-007:
-revisar autorización específica y DTO mínimos para evaluación de calendario.
+UC-007 queda cerrado en `uc-007-v1`. El siguiente caso propuesto es UC-008:
+ChatApp y TestingAgent oficiales, privilegios y confirmación antes del envío.
 No se ha iniciado. Ver [START_HERE](../START_HERE.md) y las evidencias de cada caso.

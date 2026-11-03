@@ -1,0 +1,29 @@
+{
+  "apkSha256": "284231290409ffca049c6ca79450b0ccf2af8ed27154288e2a9ad2bd3c499a62",
+  "functions": [
+    "com.cercafunctions.appfunctions.BaseJourneyAppFunctionService#queryJourney",
+    "com.cercafunctions.appfunctions.BaseJourneyAppFunctionService#evaluateAuthorizedCommitment"
+  ],
+  "bothDisabledByDefault": true,
+  "evaluationRequiredParameters": [
+    "reference",
+    "departure",
+    "zone"
+  ],
+  "evaluationResponseProperties": [
+    "arrival",
+    "arrivalZone",
+    "assessedAt",
+    "departure",
+    "meetingStart",
+    "meetingZone",
+    "observedAt",
+    "reason",
+    "scenario",
+    "signedMarginMinutes",
+    "source",
+    "status"
+  ],
+  "allParameterAndResponseKDocPackaged": true,
+  "appInstructionsPackaged": true
+}

@@ -12,3 +12,7 @@ se propaga. Resultado UC-005 indeterminado de llegada conserva causa/fuente mín
 sin divulgar reunión. Comparación de llegada a estación: tramo y margen adicional0.
 Autorización propia, no reutilizar flag de trayecto UC-006. No garantiza instante
 atómico global del proveedor ni revoca información ya entregada.
+
+Si el sistema desactiva la función antes de ejecutar, puede devolver1002 (disabled).
+El1000 uniforme corresponde a autorización inválida dentro de la capacidad;
+ambos casos carecen de datos del compromiso.

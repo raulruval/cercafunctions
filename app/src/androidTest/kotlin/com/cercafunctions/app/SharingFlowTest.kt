@@ -17,6 +17,12 @@ class SharingFlowTest {
         compose.waitUntil(10_000){has("sharing_change")}
         val manager=requireNotNull(AppFunctionManager.getInstance(compose.activity))
         val id=JourneyAppFunctionService.FUNCTION_ID_QUERY_JOURNEY
+        // Installation may preserve an earlier user/test opt-in; establish this test's own starting state.
+        compose.waitUntil(10_000){compose.onAllNodesWithTag("sharing_change").fetchSemanticsNodes().any{isEnabled().matches(it)}}
+        if(compose.onAllNodesWithTag("sharing_change").fetchSemanticsNodes().any{hasText("Revocar",substring=true).matches(it)}) {
+            compose.onNodeWithTag("sharing_change").performScrollTo().performClick()
+            compose.waitUntil(10_000){compose.onAllNodesWithTag("sharing_status").fetchSemanticsNodes().any{hasText("Sin autorización",substring=true).matches(it)}}
+        }
         compose.onNodeWithTag("sharing_change").performScrollTo().assertTextContains("Autorizar",substring=true)
         assertFalse(runBlocking{manager.isAppFunctionEnabled(id)})
         compose.onNodeWithTag("sharing_change").performClick()

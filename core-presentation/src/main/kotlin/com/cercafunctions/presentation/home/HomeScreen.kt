@@ -11,6 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import com.cercafunctions.presentation.assessment.AssessmentRoute
 import com.cercafunctions.presentation.sharing.SharingRoute
+import com.cercafunctions.presentation.authorization.AssessmentSharingRoute
+import com.cercafunctions.presentation.authorization.AssessmentSharingViewModel
+import com.cercafunctions.domain.authorization.GrantTarget
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import com.cercafunctions.presentation.sharing.SharingViewModel
 import com.cercafunctions.domain.estimate.ArrivalResult
 import com.cercafunctions.presentation.calendar.CalendarRoute
@@ -44,19 +49,24 @@ internal data class HomeActions(
 )
 
 @Composable
-fun HomeRoute(viewModel: HomeViewModel, arrivalViewModel: ArrivalViewModel, railViewModel: RailContextViewModel, calendarViewModel: CalendarViewModel, sharingViewModel:SharingViewModel) {
+fun HomeRoute(viewModel: HomeViewModel, arrivalViewModel: ArrivalViewModel, railViewModel: RailContextViewModel, calendarViewModel: CalendarViewModel, sharingViewModel:SharingViewModel, authorizationViewModel:AssessmentSharingViewModel) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    val calendarState by calendarViewModel.uiState.collectAsStateWithLifecycle()
+    val target=calendarState.selection?.let{selection->calendarState.selected?.let{GrantTarget(selection,it)}}
+    LaunchedEffect(target){authorizationViewModel.setTarget(target)}
+    LifecycleEventEffect(Lifecycle.Event.ON_STOP){authorizationViewModel.onStop()}
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME){authorizationViewModel.refresh()}
     LaunchedEffect(state.content) { arrivalViewModel.onJourneyChanged((state.content as? JourneyContent.Ready)?.journey) }
     val arrivalState by arrivalViewModel.uiState.collectAsStateWithLifecycle()
     val usableArrival=(arrivalState.result as? ArrivalResult.Estimated)?.value.takeIf{state.editor==null && state.content is JourneyContent.Ready}
     LaunchedEffect(usableArrival){calendarViewModel.setArrival(usableArrival)}
     BackHandler(enabled = state.editor != null, onBack = viewModel::cancelEditing)
     HomeScreen(state, HomeActions(viewModel::refresh, viewModel::beginEditing, viewModel::cancelEditing,
-        viewModel::updateOrigin, viewModel::updateDestination, viewModel::updateDuration, viewModel::save), calendarContent={CalendarRoute(calendarViewModel)},sharingContent={SharingRoute(sharingViewModel)},assessmentContent={AssessmentRoute(calendarViewModel,usableArrival)}) { ArrivalRoute(arrivalViewModel, railViewModel) }
+        viewModel::updateOrigin, viewModel::updateDestination, viewModel::updateDuration, viewModel::save), calendarContent={CalendarRoute(calendarViewModel)},sharingContent={SharingRoute(sharingViewModel)},authorizationContent={AssessmentSharingRoute(authorizationViewModel)},assessmentContent={AssessmentRoute(calendarViewModel,usableArrival)}) { ArrivalRoute(arrivalViewModel, railViewModel) }
 }
 
 @Composable
-internal fun HomeScreen(state: HomeUiState, actions: HomeActions = HomeActions(), calendarContent: @Composable () -> Unit = {}, assessmentContent: @Composable () -> Unit = {}, sharingContent: @Composable () -> Unit = {}, arrivalContent: @Composable () -> Unit = {}) {
+internal fun HomeScreen(state: HomeUiState, actions: HomeActions = HomeActions(), calendarContent: @Composable () -> Unit = {}, assessmentContent: @Composable () -> Unit = {}, sharingContent: @Composable () -> Unit = {}, authorizationContent: @Composable () -> Unit = {}, arrivalContent: @Composable () -> Unit = {}) {
     Scaffold { insets ->
         Column(
             modifier = Modifier.fillMaxSize().padding(insets).imePadding()
@@ -68,7 +78,7 @@ internal fun HomeScreen(state: HomeUiState, actions: HomeActions = HomeActions()
             Text(stringResource(if (state.editor == null) R.string.home_title else R.string.journey_editor_title),
                 style = MaterialTheme.typography.headlineLarge)
             if (state.editor == null) Text(stringResource(R.string.home_subtitle), style = MaterialTheme.typography.bodyLarge)
-            if(state.editor==null){sharingContent();calendarContent()}
+            if(state.editor==null){sharingContent();calendarContent();authorizationContent()}
             Card(modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)) {
                 Column(Modifier.padding(24.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {

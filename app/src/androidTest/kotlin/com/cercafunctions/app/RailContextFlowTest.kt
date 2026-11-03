@@ -31,8 +31,10 @@ class RailContextFlowTest {
         compose.onNodeWithTag("rail_status").assertTextContains("Cobertura no resuelta",substring=true)
         compose.onNodeWithTag("rail_origin").performScrollTo().performTextReplacement("70100")
         compose.onNodeWithTag("rail_origin_70100").performScrollTo().performClick()
+        compose.waitUntil(10_000){compose.onAllNodesWithTag("rail_origin").fetchSemanticsNodes().any{hasText("Vicálvaro · 70100",substring=true).matches(it)}}
         compose.onNodeWithTag("rail_destination").performScrollTo().performTextReplacement("70108")
         compose.onNodeWithTag("rail_destination_70108").performScrollTo().performClick()
+        compose.waitUntil(10_000){compose.onAllNodesWithTag("rail_destination").fetchSemanticsNodes().any{hasText("Coslada · 70108",substring=true).matches(it)}}
         compose.onNodeWithTag("rail_status").assertDoesNotExist()
         compose.activityRule.scenario.recreate()
         compose.onNodeWithTag("rail_origin").assertTextContains("Vicálvaro · 70100")

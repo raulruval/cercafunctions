@@ -281,3 +281,47 @@ solo el proceso debug propio, sin force-stop, y comprueba que la siguiente consu
 lo crea sin Activity. Es comparable a probar muerte del proceso móvil, no solo
 a recrear una pantalla. Probar desde la guía UC-006 y seguir SharingModule →
 DataStoreJourneySharingRepository → BaseJourneyAppFunctionService → los dos casos.
+
+
+## Lo aprendido en UC-007
+Permiso READ_CALENDAR, autorización para divulgar una evaluación y privilegio del
+consumidor son tres controles diferentes. Un referente opaco de alcance reducido
+permite evaluar una sola ocurrencia durante un tiempo acotado; no es un eventId
+externo ni una autorización de agenda. Su poseedor debe además estar permitido por
+Android. Emitir uno nuevo rota el anterior y revocar elimina el registro privado.
+
+El token recién emitido vive en StateFlow como estado de un Cubit y se retira al
+pasar a segundo plano. No se coloca en SavedStateHandle/DataStore. Solo persisten
+hash, firma de versión y campos mínimos del grant para proceso frío. El usuario
+puede revocarlo tras recrear proceso, pero debe reautorizar para obtener otra copia.
+Clipboard se escribe solo al pulsar Copiar; el cliente SDK lo lee sin eco por stdin
+y envía parámetros a adb también por stdin, evitando referencia en historial/argv.
+
+Clock civil sirve para horarios del compromiso; elapsedRealtime cuenta tiempo
+desde boot e incluye suspensión. Se guardan ambos límites y bootCount. Una instancia
+de Stopwatch Dart por sí sola no recupera ese plazo entre procesos; aquí se usa
+una referencia monotónica del sistema más identidad de arranque. El cambio de boot
+invalida conservadoramente y el límite monotónico evita prolongar por rollback.
+Pruebas inyectan ambos relojes: no esperamos30min ni cambiamos el reloj real.
+
+Hilt usa AuthorizationIo como qualifier: distingue este CoroutineDispatcher en
+el grafo y permite un dispatcher de test controlado. Equivale a distinguir bindings
+por nombre/tipo en un contenedor Dart. ViewModel conserva interacción; casos de uso
+puros deciden autorización; DataStore/Settings/Binder quedan en adaptadores Android.
+
+Revalidar proveedor y autorización implica suspensiones independientes. Una copia
+válida antes de consultar puede revocarse durante la lectura: la prueba concurrente
+exige releer autorización después. Eso define una comprobación final; no congela
+otros procesos ni retracta datos ya entregados. Detectamos cambios de campos ya
+proyectados, incluida etiqueta local, con HMAC sin guardar títulos; notas/asistentes
+no se leen. Sigue AuthorizationModule → AssessmentAuthorizations → AuthorizedAssessment
+→ AssessArrival y contrasta el DTO externo con la pantalla local.
+
+En el laboratorio, adb consumía stdin durante el descubrimiento y dejaba vacía
+la referencia destinada al cliente Python. Las llamadas que no necesitan entrada
+usan ahora DEVNULL; solo la invocación recibe JSON por stdin. Se verificó mediante
+IPC real, no desactivando controles de autorización. El comando cmd dentro del
+dispositivo sí recibe los parámetros: el guion evita argumentos/historial del host,
+sin presentar al shell privilegiado como canal inaccesible para otro administrador.
+Clipboard se marca sensible para ocultar la vista previa Android; no es un control
+de acceso ni se borra automáticamente al revocar o retirar la referencia de UI.

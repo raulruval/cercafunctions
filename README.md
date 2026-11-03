@@ -3,7 +3,7 @@
 Empieza por [START_HERE.md](START_HERE.md): mapa de casos, primer incremento y método SDD.
 
 Base Android nativa para investigar una arquitectura que proporcione capacidades
-a agentes, inspirada en Rocket-Beer. UC-001–006 implementados y verificados; dos casos siguientes en Draft.
+a agentes, inspirada en Rocket-Beer. UC-001–007 implementados y verificados; UC-008 sigue Draft.
 
 ## Qué ejecuta esta base
 
@@ -47,6 +47,13 @@ proceso frío y sin Activity usando los mismos casos de dominio. Ver
 [guía SDK](specs/006-journey-capability/quickstart.md) y
 [verificación](specs/006-journey-capability/verification.md).
 
+UC-007 publica evaluación mínima de una ocurrencia autorizada mediante referencia
+temporal. Límite30min/comienzo, revocación y validación de versión/permiso/reloj;
+se guarda hash y selección mínima, sin rawtoken ni títulos. Capacidad independiente
+del opt-in de trayecto, sin agenda completa ni mensajes. Ver
+[guía](specs/007-assessment-capability/quickstart.md) y
+[pruebas](specs/007-assessment-capability/verification.md).
+
 ## Módulos
 
 | Módulo | Responsabilidad |
@@ -83,6 +90,5 @@ en `gradle/libs.versions.toml`. AGP 9 usa Kotlin integrado en los módulos Andro
 - [Guía Android desde Flutter](docs/android-for-flutter.md).
 - [Snapshot de esta fase y validación](docs/phase-0.md).
 
-Evaluación externa de calendario, ChatApp y Testing Agent siguen en los siguientes
-casos de `specs/`. UC-001–006 son incrementos funcionales
+ChatApp y Testing Agent siguen en UC-008 de `specs/`. UC-001–007 son incrementos funcionales
 con Spec Kit y evidencia versionada; no hay backend ni predicción de puntualidad real.

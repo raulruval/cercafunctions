@@ -188,3 +188,24 @@ Un caller SDK privilegiado y un testhost de otro UID verifican caminos distintos
 API26 sigue minSdk de UI; AppFunctions se probó en37.2, sin prometer matriz16/17.
 UC-007 definirá consentimiento para compartir la evaluación: el opt-in de trayecto
 no lo concede. No se añaden módulos ni agente propio.
+
+
+## Incremento UC-007
+domain/authorization define referencias opacas, políticas temporales/versión y
+AuthorizedAssessment. Este compone QueryJourneyArrival+AssessArrival y valida
+autorización antes/después; resolve relee el registro tras la consulta de calendario
+para detectar revocación concurrente. No duplica reglas de margen de UC-005.
+Crypto JVM usa SecureRandom32bytes, SHA256 de referencia y HMAC con ella sobre
+campos de ocurrencia con longitudes; ningún texto ni token original se persiste.
+
+DataStoreGrantRepository en platform usa el store existente y CAS por hash bajo
+mutex para ordenar publicación/revocación y no desactivar grants sustituidos.
+AndroidGrantClock aporta Clock,elapsedRealtime y BOOT_COUNT; deadline monotónico
+y civil, drift5s máximo y reboot inválido. Purga al observar invalidez, sin alarmas.
+AuthorizationModule ensambla callbacks de la segunda función, nunca flag UC-006.
+
+AssessmentSharingViewModel recibe snapshots locales y usa dispatcher IO cualificado;
+HomeRoute maneja lifecycle aun durante edición de trayecto. Rawtoken en memoria,
+retirado ON_STOP; copia explícita. AppFunctions consume dominio y proyecta DTO propio
+de datos mínimos, sin nombres del trayecto. Dos funciones, mismo servicio/IDsprevios.
+Sin módulos/dependencias nuevas. UC-008 pendiente.

@@ -22,11 +22,13 @@ class UnauthorizedCallerTest {
         assertNotEquals(android.content.pm.PackageManager.PERMISSION_GRANTED,
             context.checkSelfPermission("android.permission.EXECUTE_APP_FUNCTIONS"))
         val manager=requireNotNull(context.getSystemService(AppFunctionManager::class.java))
+        for(functionId in listOf(JourneyAppFunctionService.FUNCTION_ID_QUERY_JOURNEY,
+            JourneyAppFunctionService.FUNCTION_ID_EVALUATE_AUTHORIZED_COMMITMENT)) {
         val latch=CountDownLatch(1)
         var failure:AppFunctionException?=null
         var success=false
         manager.executeAppFunction(ExecuteAppFunctionRequest.Builder("com.cercafunctions.app",
-            JourneyAppFunctionService.FUNCTION_ID_QUERY_JOURNEY).build(),Runnable::run,CancellationSignal(),
+            functionId).build(),Runnable::run,CancellationSignal(),
             object:OutcomeReceiver<ExecuteAppFunctionResponse,AppFunctionException> {
                 override fun onResult(result:ExecuteAppFunctionResponse){success=true;latch.countDown()}
                 override fun onError(error:AppFunctionException){failure=error;latch.countDown()}
@@ -34,5 +36,6 @@ class UnauthorizedCallerTest {
         assertTrue("System callback",latch.await(15,TimeUnit.SECONDS))
         assertFalse("No journey response",success)
         assertEquals(AppFunctionException.ERROR_DENIED,requireNotNull(failure).errorCode)
+        }
     }
 }

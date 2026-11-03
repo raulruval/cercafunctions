@@ -92,7 +92,7 @@ Actualización del feed (UTC): %2$s</string>
 Afectación publicada (UTC): %2$s</string>
     <string name="rail_unchanged">La llegada de referencia se mantiene independiente. No hay un retraso cuantitativo verificado para esta salida.</string>
     <string name="calendar_heading">Elige un compromiso del calendario</string>
-    <string name="calendar_privacy">Solo lectura de calendarios visibles del dispositivo. Los datos se usan aquí para elegir; no se comparten con agentes ni se guardan en la app.</string>
+    <string name="calendar_privacy">Consulta local de calendarios visibles para elegir una ocurrencia. Compartir su evaluación requiere autorización separada. Solo esa autorización conserva temporalmente datos mínimos; no guarda títulos, notas ni participantes.</string>
     <string name="calendar_date">Fecha del calendario (AAAA-MM-DD)</string>
     <string name="calendar_zone">Zona del calendario (p. ej. Europe/Madrid)</string>
     <string name="calendar_tomorrow">Usar mañana en esta zona</string>
@@ -153,4 +153,16 @@ Afectación publicada (UTC): %2$s</string>
     <string name="sharing_saving">Actualizando autorización…</string>
     <string name="sharing_error">No se pudo completar o comprobar el cambio. Revisa el estado y reintenta.</string>
     <string name="sharing_retry">Comprobar de nuevo</string>
+    <string name="authorization_title">Compartir evaluación del compromiso</string>
+    <string name="authorization_privacy">Autoriza la evaluación de una sola ocurrencia durante un máximo de 30 minutos o hasta su comienzo. El asistente permitido por Android recibe solo horarios, margen y procedencia, sin títulos, notas, participantes ni nombres del trayecto. No recibe tu agenda ni envía mensajes. Autorizar de nuevo sustituye la referencia anterior.</string>
+    <string name="authorization_unavailable">Capacidad no disponible en este dispositivo o perfil.</string>
+    <string name="authorization_select">Elige explícitamente una ocurrencia en Calendario antes de autorizar.</string>
+    <string name="authorization_active">Autorización para comienzo %1$s. Caduca %2$s (UTC). Elegir otra reunión no la autoriza; vuelve a autorizar para sustituir esta referencia.</string>
+    <string name="authorization_none">No hay autorización temporal activa comprobada.</string>
+    <string name="authorization_issue">Autorizar esta evaluación temporal</string>
+    <string name="authorization_secret">Esta referencia permite consultar la evaluación autorizada. Compártela solo con el asistente elegido. Se oculta al salir de primer plano; para obtener otra debes autorizar de nuevo.</string>
+    <string name="authorization_copy">Copiar referencia temporal</string>
+    <string name="authorization_revoke">Revocar evaluación compartida</string>
+    <string name="authorization_refresh">Comprobar autorización</string>
+    <string name="authorization_error">No se pudo completar o comprobar la autorización. Consulta el calendario, selecciona de nuevo y reintenta; no se ha confirmado el cambio.</string>
 </resources>

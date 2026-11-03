@@ -3,6 +3,8 @@ import androidx.annotation.RequiresApi
 import androidx.appfunctions.*
 import androidx.appfunctions.metadata.AppFunctionMetadata
 import com.cercafunctions.domain.estimate.*
+import com.cercafunctions.domain.authorization.*
+import com.cercafunctions.domain.assessment.*
 import com.cercafunctions.domain.rail.RailSelection
 import java.time.ZoneOffset
 import java.time.DateTimeException
@@ -21,6 +23,7 @@ abstract class BaseJourneyAppFunctionService:AppFunctionService() {
     @Inject internal lateinit var arrivalQuery:QueryJourneyArrival
     @Inject internal lateinit var railQuery:QueryRailContext
     @Inject internal lateinit var sharing:JourneySharingRepository
+    @Inject internal lateinit var authorizedAssessment:AuthorizedAssessment
 
     /**
      * Queries the habitual journey's station arrival and qualitative railway context for an explicit departure.
@@ -73,5 +76,45 @@ abstract class BaseJourneyAppFunctionService:AppFunctionService() {
         } catch(cancelled:CancellationException){throw cancelled
         } catch(known:AppFunctionException){throw known
         } catch(_:Exception){throw AppFunctionAppUnknownException("Journey query is temporarily unavailable.")}
+    }
+    /**
+     * Evaluates station arrival against one explicitly authorized calendar occurrence.
+     * Extra margin and station-to-meeting travel are zero. Reference and fixed demos are not operational predictions.
+     * The reference is time-limited and revalidated; invalid authorization discloses no commitment information.
+     * @param reference Opaque reference issued only by app UI for one occurrence, valid at most 30 minutes or until its start.
+     * @param departure Explicit local departure date and time; fixed demos preserve their own complete data instead.
+     * @param zone Explicit departure display zone; no implicit device-zone default.
+     * @param scenario Null selects REFERENCE. Exact alternatives: DEMO_NORMAL, DEMO_DELAYED, DEMO_UNKNOWN.
+     * @param utcOffset Optional matching UTC offset for repeated local reference times, such as +01:00.
+     * @return Minimal comparison timing, margin and source. Indeterminate arrivals omit commitment timing; no titles or journey names.
+     */
+    @OptIn(ExperimentalAppFunctionsApi::class)
+    @AppFunctionAccessLevel(level=AppFunctionMetadata.ACCESS_LEVEL_ANDROID_TRUSTED,isCompatEnforcementEnabled=true)
+    @AppFunctionDeclaration(isDescribedByKDoc=true,isEnabled=false)
+    suspend fun evaluateAuthorizedCommitment(reference:String,departure:LocalDateTime,zone:ZoneId,
+        scenario:String?=null,utcOffset:String?=null):AssessmentResponse=withContext(Dispatchers.IO) {
+        try {
+            val mode=try{if(scenario==null)ArrivalScenario.REFERENCE else ArrivalScenario.valueOf(scenario)}
+                catch(_:IllegalArgumentException){throw AppFunctionInvalidArgumentException("Unknown assessment scenario.")}
+            val offset=try{utcOffset?.let(ZoneOffset::of)}
+                catch(_:DateTimeException){throw AppFunctionInvalidArgumentException("Invalid UTC offset.")}
+            when(val result=authorizedAssessment(reference,DepartureInput(departure,zone,offset),mode)) {
+                is AssessmentResult.Compared -> {
+                    val value=result.value;val evidence=value.evidence
+                    AssessmentResponse(value.status.name,null,value.signedMarginMinutes,evidence.departure,evidence.arrival,
+                        evidence.zone,value.meeting.start,value.meeting.zone,evidence.source.name,evidence.scenario.name,
+                        evidence.observedAt,value.assessedAt)
+                }
+                is AssessmentResult.Indeterminate -> {
+                    val evidence=result.evidence
+                    AssessmentResponse("INDETERMINATE",result.reason.name,null,evidence?.departure,evidence?.arrival,
+                        evidence?.zone,null,null,evidence?.source?.name,evidence?.scenario?.name,evidence?.observedAt,result.assessedAt)
+                }
+            }
+        } catch(cancelled:CancellationException){throw cancelled
+        } catch(_:AssessmentAccessDenied){throw AppFunctionDeniedException("Assessment authorization is unavailable. Select and authorize again in the app.")
+        } catch(_:InvalidAssessmentDeparture){throw AppFunctionInvalidArgumentException("Invalid or unavailable departure time.")
+        } catch(known:AppFunctionException){throw known
+        } catch(_:Exception){throw AppFunctionAppUnknownException("Assessment is temporarily unavailable.")}
     }
 }

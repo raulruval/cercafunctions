@@ -1,26 +1,22 @@
 # core-appfunctions
-Adaptador Android de capacidades, ahora con queryJourney. Depende de dominio,
-Jetpack AppFunctions beta01, Coroutines y Hilt. KSP procesa servicio y DTO en este
-módulo. No depende de presentation, data ni platform; app ensambla los casos y
-la autorización persistida. No duplica cálculo de llegada o reglas ferroviarias.
+Adaptador Android de capacidades: queryJourney y evaluateAuthorizedCommitment.
+Depende de dominio, Jetpack AppFunctions beta01, Coroutines/Hilt; ambos compiladores
+KSP generan servicio, DTO y XML. Un entry point conserva IDs publicados de UC-006.
+No depende de presentation/platform/data; app ensambla los casos y repositorios.
 
-BaseJourneyAppFunctionService es el entry point abstracto. KSP genera
-JourneyAppFunctionService, XML/serializadores y FUNCTION_ID_QUERY_JOURNEY. Manifest
-registra el servicio generado bajo permiso BIND_APP_FUNCTION_SERVICE. Metadata
-de aplicación usa instructions y DTO usan KDoc inline con tipos java.time nativos.
+queryJourney exige opt-in propio del trayecto. evaluateAuthorizedCommitment exige
+una referencia de ocurrencia emitida solo desde UI, con30min/comienzo como límite.
+No reutiliza flag de trayecto ni ofrece emisión/listado de grants por IPC.
+Ambas funciones disabled-default y ANDROID_TRUSTED compat; BIND protege servicio.
+El sistema autoriza consumidor y el dominio comprueba consentimiento: gates separados.
 
-isEnabled=false por defecto, acceso ANDROID_TRUSTED con compat enforcement. UI
-autoriza compartir trayecto; DataStore conserva flagfalse inicial. El servicio
-comprueba ese consentimiento antes y después de leer. Habilitar con ADB no lo
-sustituye. No abre pantallas ni permisos. Entrada no válida produce error acotado;
-cancelación se propaga. No consulta ni devuelve calendario/contactos/mensajes.
+DTO de evaluación propio con horarios/margen/estado/evidencia, sin origen/destino,
+IDs de agenda, títulos, notas, participantes, correos o token. Reutiliza AssessArrival;
+no invoca ViewModels ni permisos UI. KDoc inline e instructions describen alcance,
+fuentes/fixtures y comparación estación–reunión0. No hay mensajería.
 
-Reutilización: patrón de servicio/DI, KSP, documentación, permisos, consentimiento
-y pruebas de contrato/IPC. Los DTO y queryJourney son propios de Cercanías: este
-módulo no es un SDK corporativo genérico. Un segundo producto permitirá extraer
-infraestructura comprobada sin depender de dominio ferroviario.
-
-Guía y límites: specs/006-journey-capability/quickstart.md y verification.md.
-Los tests directos del servicio no prueban Binder; UnauthorizedCallerTest usa
-otro UID sin identidad shell y necesita el APK app instalado. Shell positivo
-es un cliente privilegiado de laboratorio. ChatApp/TestingAgent LLM siguen UC-008.
+Patrón reutilizable: adaptador/DI/KSP, contrato mínimo, autorización acotada y tests
+de IPC. Funciones/DTO ferroviarios son del producto: este AAR no es un SDK genérico.
+Guía: specs/007-assessment-capability/quickstart.md y verification.md.
+Testhost de biblioteca usa UID distinto para negativas; SDK shell positivo es
+privilegiado. ChatApp/TestingAgent y orquestación LLM quedan UC-008.
