@@ -1,0 +1,20 @@
+{
+  "officialPin": "0bb367a2b7ef276218ac37f8eb45f6c9a81ca0cd",
+  "apks": {
+    "copilot": {
+      "sha256": "284231290409ffca049c6ca79450b0ccf2af8ed27154288e2a9ad2bd3c499a62",
+      "bytes": 15708187
+    },
+    "chatapp": {
+      "sha256": "cdc501316de06785682dd99c95e27e9ceb05d90e98490e79667e64593aca413d",
+      "bytes": 14801235
+    },
+    "testingAgent": {
+      "sha256": "29462b5d179d5dcaa970f3f3ed89b5e1511dd1fc230ba0412257172727c4e023",
+      "bytes": 85826852
+    }
+  },
+  "pythonNewTests": 18,
+  "androidBaselinePreviousUC": 245,
+  "newAndroidModules": 0
+}

@@ -1,38 +1,36 @@
 # Empieza aquí
-Estado al2026-11-03: UC-001–007 implementados y verificados; UC-008 Draft.
-Snapshots phase-0-base,sdd-inception-v1 y uc-001-v1…uc-007-v1.
+Estado al2026-11-03: UC-001–008 Verified; ocho snapshots uc-001-v1…uc-008-v1.
+POC Android de seis módulos; proveedores Copilot y ChatApp oficial, consumidor de
+laboratorio determinista y Testing Agent oficial. El usuario confirmó una escritura
+sintética, que se verificó por IPC y en la UI de ChatApp. No entrega por red.
 
-## Probar una evaluación autorizada
-Instalar APK en sistema AppFunctions compatible (probado37.2). Consultar Calendario,
-conceder READ_CALENDAR y elegir explícitamente una ocurrencia futura. En Compartir
-evaluación del compromiso, pulsar Autorizar esta evaluación temporal y copiar
-referencia solo si deseas entregarla al asistente. Caduca a30min o al comienzo.
-Una emisión nueva sustituye la anterior; puedes revocar. Al salir de primer plano
-se oculta el token: para obtener otro hay que reautorizar. El permiso local de
-calendario y la autorización de trayecto UC-006 son decisiones diferentes.
+## Probar lo construido
+En este equipo ChatApp y Testing Agent ya están instalados en Pixel_10_Pro API37.2.
+Copias oficiales en C:\Users\rrva9\Documents\Codex\2026-11-01\qu\work\uc008-official.
+Abre ChatApp→Ana POC para ver la prueba mientras siga vivo su proceso. Ambas
+autorizaciones de Copilot y READ_CALENDAR se dejaron revocados; agente detenido.
+
+1. [Guía UC-008](specs/008-cross-app-demo/quickstart.md): instalación reproducible,
+   fixture/calendario, preview, confirmación exacta y Testing Agent Windows.
+2. [Evidencia UC-008](specs/008-cross-app-demo/verification.md).
+3. [Conclusiones Rocket-Beer](docs/agent-ready-conclusions.md).
+4. [Arquitectura](docs/architecture.md) y [Android desde Flutter](docs/android-for-flutter.md).
+5. [Tablero SDD](specs/README.md).
+
+## Recorrido rápido
+Configura trayecto35, autoriza consulta UC-006, elige ocurrencia ficticia09:00 UTC
+futura y autoriza evaluación UC-007; copia referencia. En terminal:
 
 ```powershell
-python scripts/appfunctions-smoke.py discover
-python scripts/appfunctions-smoke.py assessment --departure 2026-11-04T08:40 --zone UTC
+python scripts/interop_flow.py --departure 2026-11-04T08:40 --zone UTC
+python scripts/interop_flow.py --departure 2026-11-04T08:40 --zone UTC --interactive
 ```
-La referencia se solicita por entrada oculta/stdin; no va en argumentos del cliente
-ni del adb anfitrión o historial de la terminal.
-Usar fecha de salida futura para referencia. Calendario ficticio opcional: scripts/
-calendar-demo-fixture.py create; fecha/UTC impresas, reunión09:00 y trayecto35
-dan15min tarde para08:40. Limpiar fixture con cleanup usando el mismo archivo de estado.
-El consumidor SDK es privilegiado, no una app ordinaria. La autorización de pruebas
-se dejó revocada y READ_CALENDAR desactivado. No se han enviado mensajes.
 
-1. [Guía UC-007](specs/007-assessment-capability/quickstart.md).
-2. [Evidencia y límites](specs/007-assessment-capability/verification.md).
-3. [Consulta de trayecto UC-006](specs/006-journey-capability/quickstart.md).
-4. [Evaluación local UC-005](specs/005-arrival-assessment/quickstart.md).
-5. [Tablero](specs/README.md).
+Sustituye fecha por la de tu fixture futura. Primero preview sin envío; luego revisa
+destinatario/texto exactos y escribe el código solicitado solo si decides enviar.
+La referencia se pide sin eco, no en argumentos. Referencia no es predicción Renfe.
+Testing Agent standardDebug no necesita Gemini para Debugger. El flujo LLM de
+escritura no garantiza gate de confirmación y no se ha ejecutado.
 
-## SDD y aprendizaje
-5fd05e2 guarda spec/plan UC-007 antes del código. Cada caso conserva spec,plan,
-tasks,verification; checklist humano8/10 intacto, sin atribuir lectura al usuario.
-[Android desde Flutter](docs/android-for-flutter.md) explica reloj monotónico,
-referencias de alcance mínimo, lifecycle y revocación concurrente.
-UC-008 permanece sin iniciar: ChatApp/TestingAgent oficiales, propuesta a Ana y
-confirmación explícita antes de envío.
+Spec/plan UC-008 en e5604a5;18 pruebas nuevas del consumidor más evidencia real.
+Checklist humano8/10 se conserva; los tests/documentos no atribuyen revisión al usuario.

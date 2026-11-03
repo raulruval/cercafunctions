@@ -1,0 +1,49 @@
+{
+  "date": "2026-11-03",
+  "officialPin": "0bb367a2b7ef276218ac37f8eb45f6c9a81ca0cd",
+  "fixtureOnly": true,
+  "networkDelivery": false,
+  "coldCopilot": {
+    "before": "19356",
+    "after": "21170",
+    "activityOpened": false
+  },
+  "proposal": {
+    "recipient": {
+      "name": "Ana POC",
+      "endpoint": "uc008-ana",
+      "display": "ana.poc@example.invalid"
+    },
+    "message": "Hola Ana POC, con mi duración de referencia llegaría 15 min tarde. ¿Podemos retrasar la reunión al 2026-11-04 09:15 UTC?",
+    "proposedAtUTC": "2026-11-04 09:15 UTC",
+    "code": "9bbd3d41bc8e",
+    "source": "REFERENCE"
+  },
+  "noConfirmationAndRejection": {
+    "sendInvocations": 0,
+    "exactMessagesBefore": 0,
+    "exactMessagesAfter": 0
+  },
+  "onTimeNoProposal": true,
+  "unknownNoProposal": true,
+  "ambiguousContactNoProposal": true,
+  "missingContactNoProposal": true,
+  "cliPreviewNoSend": true,
+  "confirmedSend": {
+    "humanApproved": true,
+    "sendInvocations": 1,
+    "exactMessagesBefore": 0,
+    "exactMessagesAfter": 1,
+    "duplicateConfirmationExtraCalls": 0,
+    "state": "SENT"
+  },
+  "ownedFixtureCleanupVerified": true,
+  "finalReadCalendarGranted": false,
+  "agentDebuggerSearchContactsVerified": true,
+  "agentCopilotDiscoveryVerified": true,
+  "chatAppUiMessageVerified": true,
+  "agentInstrumentationStopped": true,
+  "finalFunctionsReadBackDisabled": true,
+  "llmExecution": false,
+  "llmReason": "Official agent has no general sendMessage confirmation barrier; deterministic fallback S6."
+}

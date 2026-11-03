@@ -16,3 +16,7 @@ external/
 
 # Local SDD CLI environment
 .venv-sdd/
+
+# Local Python tooling caches
+__pycache__/
+*.pyc

@@ -209,3 +209,14 @@ HomeRoute maneja lifecycle aun durante edición de trayecto. Rawtoken en memoria
 retirado ON_STOP; copia explícita. AppFunctions consume dominio y proyecta DTO propio
 de datos mínimos, sin nombres del trayecto. Dos funciones, mismo servicio/IDsprevios.
 Sin módulos/dependencias nuevas. UC-008 pendiente.
+
+
+## Incremento UC-008
+El consumidor queda fuera de los seis módulos: scripts/interop_flow.py usa discovery
+y SDK IPC. Proposal inmutable/OneShotSend vinculan revisión a destinatario y texto;
+antes del único intento revalidan capacidad y contacto. No añade reglas de evaluación
+al ViewModel ni implementa envío propio. ChatApp/Testing Agent son proyectos oficiales
+separados, pin fijo; setup solo añade Ana ficticia, no modifica su lógica.
+La CLI es instrumento de laboratorio; core-appfunctions sigue siendo adaptador del
+proveedor, no biblioteca de agentes. Estado UNKNOWN no reintenta; no promete ledger
+durable ni exactly-once. Ver docs/agent-ready-conclusions.md y guía UC-008.

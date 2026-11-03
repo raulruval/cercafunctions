@@ -325,3 +325,25 @@ dispositivo sí recibe los parámetros: el guion evita argumentos/historial del 
 sin presentar al shell privilegiado como canal inaccesible para otro administrador.
 Clipboard se marca sensible para ocultar la vista previa Android; no es un control
 de acceso ni se borra automáticamente al revocar o retirar la referencia de UI.
+
+
+## Lo aprendido en UC-008
+MethodChannel conecta Flutter con el código nativo de la app. AppFunctions publica
+un contrato que otro proceso descubre e invoca mediante el sistema; añade schemas,
+identidad/privilegios y lifecycle sin Activity. Un Dart package puro con reglas
+reutilizables es el paralelo del dominio Kotlin: el proveedor y la UI comparten
+casos, mientras el consumidor externo solo ve DTO/capacidades, no StateFlow/BLoC.
+
+applicationId identifica instalación/permisos; el paquete Kotlin organiza clases.
+No tienen por qué coincidir. functionId viene del compilador y el documento del
+índice puede tener otro ID: el consumidor usa el campo del contrato descubierto.
+El Testing Agent requiere instrumentación viva/allowlist según el launcher oficial;
+un manifest o un prompt no concede privilegios ni consentimiento del propietario.
+
+Una propuesta es un estado inmutable similar al estado de un BLoC. La aprobación
+se vincula a esos datos; si cambian, se genera otra propuesta. Consumir el intento
+antes del await evita doble click en esa sesión. Un timeout tras IPC no demuestra
+que el efecto no ocurrió: estado UNKNOWN, comprobar proveedor y no retry automático.
+El ejemplo Google guarda mensajes en memoria; no confundir IPC real con entrega
+real por red. El usuario confirmó la prueba; el Debugger permite verificar lectura
+y el envío se hizo con el gate del consumidor, porque el LLM oficial no lo impone.

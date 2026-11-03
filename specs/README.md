@@ -12,7 +12,7 @@ Base ejecutable: etiqueta `phase-0-base`. Adopción SDD: etiqueta `sdd-inception
 | UC-005 | [Evaluar llegada frente al compromiso seleccionado](005-arrival-assessment/spec.md) | UC-002 y UC-004; UC-003 como contexto adicional. | Verified | 13/13; ver [evidencia](005-arrival-assessment/verification.md) |
 | UC-006 | [Publicar la consulta de trayecto como capacidad](006-journey-capability/spec.md) | UC-002 y UC-003. | Verified | 15/15; ver [evidencia](006-journey-capability/verification.md) |
 | UC-007 | [Compartir una evaluación mínima del compromiso autorizado](007-assessment-capability/spec.md) | UC-005 y UC-006. | Verified | 17/17; ver [evidencia](007-assessment-capability/verification.md) |
-| UC-008 | [Orquestar propuesta a Ana con confirmación explícita](008-cross-app-demo/spec.md) | UC-006 y UC-007; ChatApp y Testing Agent oficiales. | Draft | Se preparan al activar |
+| UC-008 | [Orquestar propuesta a Ana con confirmación explícita](008-cross-app-demo/spec.md) | UC-006 y UC-007; ChatApp y Testing Agent oficiales. | Verified | 13/13; ver [evidencia](008-cross-app-demo/verification.md) |
 
 ## Orden y dependencias
 
@@ -43,7 +43,7 @@ en las últimas etapas, desde el consumidor externo además de la UI existente.
 - **Verified**: aceptación satisfecha y evidencia registrada en `verification.md`.
 - **Blocked**: obstáculo real encontrado, con causa y acción pendiente documentadas.
 
-Estado al2026-11-03: **UC-001–007 Verified**, **97/97 tareas completadas** y **7/8 casos Verified**. Las casillas
+Estado al2026-11-03: **UC-001–008 Verified**, **110/110 tareas completadas** y **8/8 casos Verified**. Las casillas
 marcadas de `checklists/requirements.md` solo indican revisión del documento.
 No representan tests ejecutados ni aprobación humana. Al implementar, actualizar
 estado y tareas en el mismo commit que su código/evidencia.
@@ -71,6 +71,6 @@ estado y tareas en el mismo commit que su código/evidencia.
 
 ## Próxima sesión
 
-UC-007 queda cerrado en `uc-007-v1`. El siguiente caso propuesto es UC-008:
-ChatApp y TestingAgent oficiales, privilegios y confirmación antes del envío.
-No se ha iniciado. Ver [START_HERE](../START_HERE.md) y las evidencias de cada caso.
+UC-008 cierra el recorrido en `uc-008-v1`: interoperabilidad real determinista,
+confirmación humana y un mensaje local de ejemplo, sin orquestación LLM de escritura.
+No se inicia otro caso automáticamente. Ver [START_HERE](../START_HERE.md) y las evidencias de cada caso.

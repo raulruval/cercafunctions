@@ -3,9 +3,10 @@
 ## Contexto y alcance vigente
 
 Leer `START_HERE.md`, `.specify/memory/constitution.md` y `specs/README.md`.
-Las peticiones del2026-11-03 autorizan UC-006 y UC-007 además de base/SDD y casos previos.
-Los siete quedan Verified; UC-008 sigue Draft. No iniciar el siguiente caso
-sin petición. Ver specs/007-assessment-capability/verification.md.
+Las peticiones del2026-11-03 autorizan UC-006–008 y los incrementos previos.
+Los ocho quedan Verified. UC-008 demuestra consumidor determinista y envío local
+confirmado a fixture, no autonomía LLM ni entrega de red. Ver
+specs/008-cross-app-demo/verification.md. No ampliar alcance sin petición.
 La fase 0 queda preservada en su etiqueta; los documentos de aquella fase son históricos.
 
 ## Flujo SDD

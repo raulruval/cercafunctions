@@ -3,7 +3,7 @@
 Empieza por [START_HERE.md](START_HERE.md): mapa de casos, primer incremento y método SDD.
 
 Base Android nativa para investigar una arquitectura que proporcione capacidades
-a agentes, inspirada en Rocket-Beer. UC-001–007 implementados y verificados; UC-008 sigue Draft.
+a agentes, inspirada en Rocket-Beer. UC-001–008 implementados y verificados; demo entre apps determinista con confirmación humana.
 
 ## Qué ejecuta esta base
 
@@ -90,5 +90,10 @@ en `gradle/libs.versions.toml`. AGP 9 usa Kotlin integrado en los módulos Andro
 - [Guía Android desde Flutter](docs/android-for-flutter.md).
 - [Snapshot de esta fase y validación](docs/phase-0.md).
 
-ChatApp y Testing Agent siguen en UC-008 de `specs/`. UC-001–007 son incrementos funcionales
+ChatApp y Testing Agent oficiales se han instalado y verificado en UC-008. UC-001–008 son incrementos funcionales
 con Spec Kit y evidencia versionada; no hay backend ni predicción de puntualidad real.
+
+UC-008: [guía Windows/determinista](specs/008-cross-app-demo/quickstart.md),
+[evidencia](specs/008-cross-app-demo/verification.md) y
+[conclusiones Rocket-Beer](docs/agent-ready-conclusions.md). Mensajes solo en memoria
+del ejemplo oficial; un envío de prueba confirmado, sin entrega remota ni LLM de escritura.
