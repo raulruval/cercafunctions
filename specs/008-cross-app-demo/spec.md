@@ -1,10 +1,10 @@
 # Feature Specification: UC-008 · Orquestar propuesta a Ana con confirmación explícita
 
-**Feature Branch**: `chore/sdd-foundation` (borrador; rama de construcción por crear)
+**Feature Branch**: `feat/008-cross-app-demo`
 
 **Created**: 2026-11-01
 
-**Status**: Draft — pendiente de revisión; ninguna implementación autorizada por este documento.
+**Status**: In progress — petición explícita de ejecutar UC-008,2026-11-03; checklist humano intacto.
 
 **Input**: Demostrar el flujo Copilot → evaluación → ChatApp oficial → propuesta revisada → envío confirmado.
 
@@ -63,3 +63,33 @@ Depende de UC-006/007 y de las aplicaciones oficiales instaladas. El proveedor d
 
 La precisión del borrador es suficiente para revisar alcance; las decisiones propuestas
 se refinan al activar el caso. Un escenario escrito no demuestra que ya funcione.
+
+## Alcance activado
+Consumidor determinista de laboratorio en scripts Python estándar, sin módulos Android
+nuevos ni mensajería propia. Instalar ChatApp/Testing Agent oficiales del commit
+0bb367a2b7ef276218ac37f8eb45f6c9a81ca0cd en copia aislada. Único cambio de proveedor:
+añadir Ana POC (ana.poc@example.invalid,endpoint uc008-ana) a sus contactos estáticos.
+Sin modificar lógica de mensajes, UI ni AppFunctions oficiales.
+
+El consumidor descubre IDs/contratos reales, consulta trayecto y evaluación UC-007,
+y busca Ana solo si hay comparación LATE con fuente/evidencia coherentes. ON_TIME o
+INDETERMINATE no generan propuesta ni escritura. Contacto ausente/varios resultados
+requieren aclaración: jamás elegir primero, ni reutilizar un endpoint arbitrario.
+Propuesta inmutable: destinatario/endpoint, texto exacto y nueva hora UTC explícita,
+sin título u otros detalles del calendario. La hora propuesta es comienzo+minutos
+de tardanza redondeados por UC-005; no promete acuerdo ni predicción ferroviaria.
+
+CLI muestra propuesta y pide ENVIAR más código ligado a sus datos. Rechazo, EOF,
+ausencia de TTY o preview no invocan envío. No flag --yes. Antes de enviar revalida
+evaluación y contacto; un cambio cancela y exige nueva propuesta. Marca intento
+consumido antes del IPC; fallo/time-out deja UNKNOWN y nunca reintenta. Un único
+proceso no envía dos veces esa propuesta; no se promete exactly-once entre sesiones
+o tras muerte del consumidor. La verificación usa searchMessages en el proceso
+vivo de ChatApp, que es almacenamiento local volátil, sin entrega de red.
+
+Testing Agent standardDebug sin claves para discovery/debugger. Se reproduce su
+launcher oficial con allowlist acotada a paquete/firma e instrumentación viva.
+No conectar escritura ChatApp al LLM sin barrera: Confirm action protege PendingIntent,
+no sendMessage. S6 usa fallback determinista y explica cómo configurar LLM opcional
+solo lectura. El envío real de laboratorio requiere confirmación humana del texto
+y destinatario exactos; si queda pendiente se registra como tal, sin afirmar SC-002.
