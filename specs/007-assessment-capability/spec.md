@@ -1,10 +1,10 @@
 # Feature Specification: UC-007 · Compartir una evaluación mínima del compromiso autorizado
 
-**Feature Branch**: `chore/sdd-foundation` (borrador; rama de construcción por crear)
+**Feature Branch**: `feat/007-assessment-capability`
 
 **Created**: 2026-11-01
 
-**Status**: Draft — pendiente de revisión; ninguna implementación autorizada por este documento.
+**Status**: In progress — continuación explícita del usuario,2026-11-03; checklist humano intacto.
 
 **Input**: Exponer la evaluación del compromiso compartiendo únicamente los datos estrictamente necesarios.
 
@@ -60,3 +60,35 @@ Depende de UC-005/006. La vigencia y selección previa son propuestas de POC a r
 
 La precisión del borrador es suficiente para revisar alcance; las decisiones propuestas
 se refinan al activar el caso. Un escenario escrito no demuestra que ya funcione.
+
+
+## Alcance activado ·2026-11-03
+Una autorización activa, emitida solo por UI para selección y detalles locales
+revalidados. Nueva emisión sustituye y revoca referencia anterior. Token CSPRNG256bits
+Base64URL; solo hash y selección/versión mínima persisten. Token recién emitido
+en memoria, copia solo explícita; tras proceso frío se puede revocar, no recuperar
+rawtoken. No guardar SavedState ni registrar tokens en logs/capturas versionadas.
+
+Versión observable: EVENT_ID+BEGIN+END+título+nombre de calendario, que ya lee UC-004.
+HMAC con el token detecta cambios sin persistir textos. No se leen notas/asistentes
+para versionar. No se promete detectar campos no proyectados ni divergencia
+Events/Instances. Permiso ausente observado invalida duraderamente la autorización;
+no se promete detectar revocación y reconcesión ocurridas entre comprobaciones
+con proceso muerto. Fallo de proveedor/autorización deniega y requiere reautorizar.
+
+Límite min(30min,comienzo), comprobado con Clock+elapsedRealtime+bootCount. Cambio
+de boot, elapsed atrás, cualquier límite vencido o desviación wall/elapsed>5s
+invalida. Los5s toleran ajuste pequeño y nunca amplían el límite monotónico.
+Sin alarmas/receivers o sistema de permisos general. Estado de habilitación del
+sistema puede quedar activo tras caducar hasta la próxima comprobación, pero el
+token no permite ejecutar con éxito más allá del límite.
+
+evaluateAuthorizedCommitment acepta referencia y salida/zona/escenario/offset;
+nunca eventId ni selección enviada por consumidor. Autorización propia independiente
+del opt-in de trayecto UC-006. Revalida token/versión/permiso antes y después de
+componer QueryJourneyArrival y AssessArrival. Indeterminado de llegada no divulga
+horarios de reunión; errores de autorización son uniformes sin confirmar existencia.
+DTO solo estado, causa, margen, horarios/zonas mínimos, fuente/escenario y fechas
+de evidencia/evaluación. No nombres de trayecto, IDs, título, calendario o token.
+Comparación estación–reunión0 y margen adicional0 se describen en contrato.
+Un entry point, segunda función disabled-default/trusted compat. Sin mensajes.
