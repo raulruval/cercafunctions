@@ -4,7 +4,7 @@
 
 **Created**: 2026-11-01
 
-**Status**: In progress — petición explícita de implementar recibida el2026-11-03; checklist humano conservado.
+**Status**: Verified — evidencia en verification.md; petición del2026-11-03, checklist humano conservado.
 
 **Input**: Permitir a un agente externo consultar el trayecto y su estimación con los mismos casos de uso que la UI.
 

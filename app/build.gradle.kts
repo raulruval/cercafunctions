@@ -29,6 +29,7 @@ dependencies {
     implementation(project(":core-platform"))
     implementation(project(":core-presentation"))
     implementation(project(":core-appfunctions"))
+    implementation(libs.androidx.appfunctions)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
@@ -39,5 +40,6 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.androidx.test.espresso.core)
 }

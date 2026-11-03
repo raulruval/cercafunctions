@@ -1,0 +1,350 @@
+{
+  "DEMO_NORMAL": {
+    "destination": [
+      "Destino demo"
+    ],
+    "departure": [
+      {
+        "epochSecond": [
+          1793602800
+        ],
+        "nanoAdjustment": [
+          0
+        ]
+      }
+    ],
+    "delayMinutes": [
+      0
+    ],
+    "origin": [
+      "Origen demo"
+    ],
+    "source": [
+      "FIXTURE"
+    ],
+    "scenario": [
+      "DEMO_NORMAL"
+    ],
+    "arrival": [
+      {
+        "epochSecond": [
+          1793604900
+        ],
+        "nanoAdjustment": [
+          0
+        ]
+      }
+    ],
+    "rail": [
+      {
+        "sourceUrl": [
+          "https://gtfsrt.renfe.com/alerts.json"
+        ],
+        "status": [
+          "DEMO_SKIPPED"
+        ],
+        "consultedAt": [
+          {
+            "epochSecond": [
+              1793699346
+            ],
+            "nanoAdjustment": [
+              366544000
+            ]
+          }
+        ],
+        "coverage": [
+          "ENDPOINTS_ONLY"
+        ],
+        "relevantAlertCount": [
+          0
+        ],
+        "unresolvedCount": [
+          0
+        ]
+      }
+    ],
+    "zone": [
+      {
+        "zoneID": [
+          "Europe/Madrid"
+        ]
+      }
+    ],
+    "observedAt": [
+      {
+        "epochSecond": [
+          1793520000
+        ],
+        "nanoAdjustment": [
+          0
+        ]
+      }
+    ],
+    "referenceDurationMinutes": [
+      35
+    ]
+  },
+  "DEMO_DELAYED": {
+    "destination": [
+      "Destino demo"
+    ],
+    "departure": [
+      {
+        "epochSecond": [
+          1793602800
+        ],
+        "nanoAdjustment": [
+          0
+        ]
+      }
+    ],
+    "delayMinutes": [
+      15
+    ],
+    "origin": [
+      "Origen demo"
+    ],
+    "source": [
+      "FIXTURE"
+    ],
+    "scenario": [
+      "DEMO_DELAYED"
+    ],
+    "arrival": [
+      {
+        "epochSecond": [
+          1793605800
+        ],
+        "nanoAdjustment": [
+          0
+        ]
+      }
+    ],
+    "rail": [
+      {
+        "sourceUrl": [
+          "https://gtfsrt.renfe.com/alerts.json"
+        ],
+        "status": [
+          "DEMO_SKIPPED"
+        ],
+        "consultedAt": [
+          {
+            "epochSecond": [
+              1793699346
+            ],
+            "nanoAdjustment": [
+              587283000
+            ]
+          }
+        ],
+        "coverage": [
+          "ENDPOINTS_ONLY"
+        ],
+        "relevantAlertCount": [
+          0
+        ],
+        "unresolvedCount": [
+          0
+        ]
+      }
+    ],
+    "zone": [
+      {
+        "zoneID": [
+          "Europe/Madrid"
+        ]
+      }
+    ],
+    "observedAt": [
+      {
+        "epochSecond": [
+          1793520000
+        ],
+        "nanoAdjustment": [
+          0
+        ]
+      }
+    ],
+    "referenceDurationMinutes": [
+      35
+    ]
+  },
+  "DEMO_UNKNOWN": {
+    "destination": [
+      "Destino demo"
+    ],
+    "departure": [
+      {
+        "epochSecond": [
+          1793602800
+        ],
+        "nanoAdjustment": [
+          0
+        ]
+      }
+    ],
+    "origin": [
+      "Origen demo"
+    ],
+    "source": [
+      "FIXTURE"
+    ],
+    "scenario": [
+      "DEMO_UNKNOWN"
+    ],
+    "rail": [
+      {
+        "sourceUrl": [
+          "https://gtfsrt.renfe.com/alerts.json"
+        ],
+        "status": [
+          "DEMO_SKIPPED"
+        ],
+        "consultedAt": [
+          {
+            "epochSecond": [
+              1793699346
+            ],
+            "nanoAdjustment": [
+              809153000
+            ]
+          }
+        ],
+        "coverage": [
+          "ENDPOINTS_ONLY"
+        ],
+        "relevantAlertCount": [
+          0
+        ],
+        "unresolvedCount": [
+          0
+        ]
+      }
+    ],
+    "zone": [
+      {
+        "zoneID": [
+          "Europe/Madrid"
+        ]
+      }
+    ],
+    "observedAt": [
+      {
+        "epochSecond": [
+          1793520000
+        ],
+        "nanoAdjustment": [
+          0
+        ]
+      }
+    ],
+    "referenceDurationMinutes": [
+      35
+    ]
+  },
+  "invalidPair": {
+    "exitCode": 1,
+    "message": "Error executing app function: android.app.appfunctions.AppFunctionException: Provide both station IDs or neither. (code 1001). See logcat for more details."
+  },
+  "realContext": {
+    "destination": [
+      "POC Chamartin"
+    ],
+    "departure": [
+      {
+        "epochSecond": [
+          1793779200
+        ],
+        "nanoAdjustment": [
+          0
+        ]
+      }
+    ],
+    "origin": [
+      "POC Atocha"
+    ],
+    "source": [
+      "REFERENCE"
+    ],
+    "scenario": [
+      "REFERENCE"
+    ],
+    "arrival": [
+      {
+        "epochSecond": [
+          1793781300
+        ],
+        "nanoAdjustment": [
+          0
+        ]
+      }
+    ],
+    "rail": [
+      {
+        "sourceUrl": [
+          "https://gtfsrt.renfe.com/alerts.json"
+        ],
+        "failure": [
+          "NETWORK"
+        ],
+        "status": [
+          "UNAVAILABLE"
+        ],
+        "consultedAt": [
+          {
+            "epochSecond": [
+              1793699347
+            ],
+            "nanoAdjustment": [
+              258435000
+            ]
+          }
+        ],
+        "coverage": [
+          "ENDPOINTS_ONLY"
+        ],
+        "relevantAlertCount": [
+          0
+        ],
+        "unresolvedCount": [
+          0
+        ]
+      }
+    ],
+    "zone": [
+      {
+        "zoneID": [
+          "UTC"
+        ]
+      }
+    ],
+    "observedAt": [
+      {
+        "epochSecond": [
+          1793699347
+        ],
+        "nanoAdjustment": [
+          250192000
+        ]
+      }
+    ],
+    "referenceDurationMinutes": [
+      35
+    ]
+  },
+  "contract": {
+    "functionId": "com.cercafunctions.appfunctions.BaseJourneyAppFunctionService#queryJourney",
+    "functionCount": 1,
+    "defaultEnabled": false,
+    "required": [
+      "departure",
+      "zone"
+    ],
+    "kdocParameters": 6,
+    "appInstructionsInApk": true,
+    "assetsXmlSha256": "013377e6324d930f4e9eb63db42417669a19b8209747b122a515268b73e8c4b8",
+    "apkSha256": "a3fc19a6e72d24f6b7687aacc260f8780463e875aafa703e0bf30636e7811704"
+  }
+}

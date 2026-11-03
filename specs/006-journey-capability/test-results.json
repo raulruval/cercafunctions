@@ -1,0 +1,198 @@
+{
+  "date": "2026-11-03",
+  "total": 206,
+  "unit": 141,
+  "instrumented": 65,
+  "lintIssues": 9,
+  "suites": [
+    {
+      "module": "core-domain",
+      "instrumented": false,
+      "name": "com.cercafunctions.domain.assessment.AssessArrivalTest",
+      "tests": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "module": "core-domain",
+      "instrumented": false,
+      "name": "com.cercafunctions.domain.calendar.CalendarUseCasesTest",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "module": "core-domain",
+      "instrumented": false,
+      "name": "com.cercafunctions.domain.estimate.QueryJourneyArrivalTest",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "module": "core-domain",
+      "instrumented": false,
+      "name": "com.cercafunctions.domain.journey.GetHabitualJourneyTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "module": "core-domain",
+      "instrumented": false,
+      "name": "com.cercafunctions.domain.journey.SaveHabitualJourneyTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "module": "core-domain",
+      "instrumented": false,
+      "name": "com.cercafunctions.domain.rail.QueryRailContextTest",
+      "tests": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "module": "core-data",
+      "instrumented": false,
+      "name": "com.cercafunctions.data.estimate.ReproducibleJourneyFixturesTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "module": "core-data",
+      "instrumented": false,
+      "name": "com.cercafunctions.data.rail.OkHttpAlertsSourceTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "module": "core-data",
+      "instrumented": false,
+      "name": "com.cercafunctions.data.rail.RenfeRailRepositoryTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "module": "core-platform",
+      "instrumented": false,
+      "name": "com.cercafunctions.platform.journey.DataStoreJourneyRepositoryTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "module": "core-platform",
+      "instrumented": false,
+      "name": "com.cercafunctions.platform.sharing.DataStoreJourneySharingRepositoryTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "module": "core-presentation",
+      "instrumented": false,
+      "name": "com.cercafunctions.presentation.calendar.CalendarAssessmentViewModelTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "module": "core-presentation",
+      "instrumented": false,
+      "name": "com.cercafunctions.presentation.calendar.CalendarViewModelTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "module": "core-presentation",
+      "instrumented": false,
+      "name": "com.cercafunctions.presentation.estimate.ArrivalViewModelTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "module": "core-presentation",
+      "instrumented": false,
+      "name": "com.cercafunctions.presentation.home.HomeViewModelTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "module": "core-presentation",
+      "instrumented": false,
+      "name": "com.cercafunctions.presentation.rail.RailContextViewModelTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "module": "core-presentation",
+      "instrumented": false,
+      "name": "com.cercafunctions.presentation.sharing.SharingViewModelTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "module": "core-platform",
+      "instrumented": true,
+      "name": null,
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "module": "core-presentation",
+      "instrumented": true,
+      "name": null,
+      "tests": 36,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "module": "core-appfunctions",
+      "instrumented": true,
+      "name": null,
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "module": "app",
+      "instrumented": true,
+      "name": null,
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ]
+}

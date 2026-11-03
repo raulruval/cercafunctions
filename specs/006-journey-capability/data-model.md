@@ -3,7 +3,8 @@ queryJourney(departure:LocalDateTime,zone:ZoneId,scenario:String?=null,
 utcOffset:String?=null,originStationId:String?=null,destinationStationId:String?=null).
 scenario null→REFERENCE; valores REFERENCE/DEMO_NORMAL/DEMO_DELAYED/DEMO_UNKNOWN.
 offset null o ZoneOffset válido; ambos IDs null o ambos válidos/distintos del catálogo.
-Validar toda entrada antes de leer trayecto; no normalizar arbitrariamente opciones.
+Validar enum/sintaxis de offset/IDs antes de leer trayecto; no normalizar opciones.
+Gap/solapamiento/salida pasada se validan en el caso de dominio compartido.
 
 JourneyResponse: origin/destination,referenceDurationMinutes,departure:Instant,
 arrival:Instant?,zone:ZoneId,source,scenario,observedAt:Instant,delayMinutes:Int?,

@@ -1,9 +1,26 @@
 # core-appfunctions
+Adaptador Android de capacidades, ahora con queryJourney. Depende de dominio,
+Jetpack AppFunctions beta01, Coroutines y Hilt. KSP procesa servicio y DTO en este
+módulo. No depende de presentation, data ni platform; app ensambla los casos y
+la autorización persistida. No duplica cálculo de llegada o reglas ferroviarias.
 
-Biblioteca Android con dependencia Jetpack AppFunctions beta01 y dominio.
-No hay servicio, metadatos ni funciones publicadas en esta fase: la UI aún no
-ofrece las consultas ferroviarias ni de calendario que se expondrán al agente.
+BaseJourneyAppFunctionService es el entry point abstracto. KSP genera
+JourneyAppFunctionService, XML/serializadores y FUNCTION_ID_QUERY_JOURNEY. Manifest
+registra el servicio generado bajo permiso BIND_APP_FUNCTION_SERVICE. Metadata
+de aplicación usa instructions y DTO usan KDoc inline con tipos java.time nativos.
 
-Ver docs/architecture.md para el diseño de la fachada, Hilt, KSP, privacidad
-y los límites de reutilización empresarial. Los alias del compilador y de
-testing ya están fijados en el catálogo, pendientes de activación con el primer servicio.
+isEnabled=false por defecto, acceso ANDROID_TRUSTED con compat enforcement. UI
+autoriza compartir trayecto; DataStore conserva flagfalse inicial. El servicio
+comprueba ese consentimiento antes y después de leer. Habilitar con ADB no lo
+sustituye. No abre pantallas ni permisos. Entrada no válida produce error acotado;
+cancelación se propaga. No consulta ni devuelve calendario/contactos/mensajes.
+
+Reutilización: patrón de servicio/DI, KSP, documentación, permisos, consentimiento
+y pruebas de contrato/IPC. Los DTO y queryJourney son propios de Cercanías: este
+módulo no es un SDK corporativo genérico. Un segundo producto permitirá extraer
+infraestructura comprobada sin depender de dominio ferroviario.
+
+Guía y límites: specs/006-journey-capability/quickstart.md y verification.md.
+Los tests directos del servicio no prueban Binder; UnauthorizedCallerTest usa
+otro UID sin identidad shell y necesita el APK app instalado. Shell positivo
+es un cliente privilegiado de laboratorio. ChatApp/TestingAgent LLM siguen UC-008.

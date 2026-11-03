@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AppFunctionAppMetadata xmlns:appfn="http://schemas.android.com/apk/androidx.appfunctions"
+    appfn:instructions="Cercanías Copilot provides a read-only habitual-journey arrival query with optional qualitative Renfe endpoint context. Journey sharing requires explicit opt-in in the app and an Android-authorized caller. Reference calculations use a user-entered duration; they are not timetables or operational predictions. Explicit demonstrations retain fixed data and clocks. Railway alerts do not produce delay minutes. No calendar, contacts, messaging, ticketing or route changes are exposed." />

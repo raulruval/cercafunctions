@@ -10,7 +10,7 @@ Base ejecutable: etiqueta `phase-0-base`. Adopción SDD: etiqueta `sdd-inception
 | UC-003 | [Consultar contexto ferroviario real con vigencia explícita](003-renfe-context/spec.md) | UC-002. | Verified | 14/14; ver [evidencia](003-renfe-context/verification.md) |
 | UC-004 | [Elegir un compromiso del calendario del dispositivo](004-calendar-selection/spec.md) | Base Android; independiente de UC-001–003. | Verified | 14/14; ver [evidencia](004-calendar-selection/verification.md) |
 | UC-005 | [Evaluar llegada frente al compromiso seleccionado](005-arrival-assessment/spec.md) | UC-002 y UC-004; UC-003 como contexto adicional. | Verified | 13/13; ver [evidencia](005-arrival-assessment/verification.md) |
-| UC-006 | [Publicar la consulta de trayecto como capacidad](006-journey-capability/spec.md) | UC-002 y UC-003. | In progress | Servicio, consentimiento y contrato compartido |
+| UC-006 | [Publicar la consulta de trayecto como capacidad](006-journey-capability/spec.md) | UC-002 y UC-003. | Verified | 15/15; ver [evidencia](006-journey-capability/verification.md) |
 | UC-007 | [Compartir una evaluación mínima del compromiso autorizado](007-assessment-capability/spec.md) | UC-005 y UC-006. | Draft | Se preparan al activar |
 | UC-008 | [Orquestar propuesta a Ana con confirmación explícita](008-cross-app-demo/spec.md) | UC-006 y UC-007; ChatApp y Testing Agent oficiales. | Draft | Se preparan al activar |
 
@@ -43,7 +43,7 @@ en las últimas etapas, desde el consumidor externo además de la UI existente.
 - **Verified**: aceptación satisfecha y evidencia registrada en `verification.md`.
 - **Blocked**: obstáculo real encontrado, con causa y acción pendiente documentadas.
 
-Estado al 2026-11-02: **UC-001–005 Verified**, **65/65 tareas completadas** y **5/8 casos Verified**. Las casillas
+Estado al2026-11-03: **UC-001–006 Verified**, **80/80 tareas completadas** y **6/8 casos Verified**. Las casillas
 marcadas de `checklists/requirements.md` solo indican revisión del documento.
 No representan tests ejecutados ni aprobación humana. Al implementar, actualizar
 estado y tareas en el mismo commit que su código/evidencia.
@@ -71,6 +71,6 @@ estado y tareas en el mismo commit que su código/evidencia.
 
 ## Próxima sesión
 
-UC-005 queda cerrado en `uc-005-v1`. El siguiente caso propuesto es UC-006:
-revisar skill Google, contratos AppFunctions y descubrimiento del trayecto.
+UC-006 queda cerrado en `uc-006-v1`. El siguiente caso propuesto es UC-007:
+revisar autorización específica y DTO mínimos para evaluación de calendario.
 No se ha iniciado. Ver [START_HERE](../START_HERE.md) y las evidencias de cada caso.

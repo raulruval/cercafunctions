@@ -165,3 +165,26 @@ AssessmentPanel es stateless. CalendarModule ensambla la fachada; UI y futuros
 adaptadores ejecutarán exactamente ese caso de uso. Sin nuevas dependencias,
 módulos, almacenamiento o permisos. ON_STOP cancela/retira evaluación; ON_RESUME requiere evaluación nueva.
 No se infieren minutos de avisos ni se envían mensajes. UC-006 sigue Draft.
+
+
+## Incremento UC-006
+BaseJourneyAppFunctionService, DTO y metadata viven en core-appfunctions, con
+ambos procesadores KSP (Hilt y AppFunctions). Un único servicio generado y permiso
+BIND_APP_FUNCTION_SERVICE. isEnabled=false, nivel ANDROID_TRUSTED con compat.
+queryJourney valida parámetros de frontera, ejecuta IO y consume QueryJourneyArrival
+y QueryRailContext; java.time nativo cruza IPC mediante serializadores generados.
+Resumen cualitativo sin textos remotos, sin inventar minutos ni acceder a calendario.
+
+JourneySharingRepository en domain representa consentimiento; adaptador DataStore
+en platform conserva boolfalse en el store existente. app inyecta callback Manager:
+habilitar sistema antes de publicartrue; retirarfalse antes de deshabilitar. Orden
+fail closed en fallo/cancelación. Servicio comprueba consentimiento antes/después.
+SharingViewModel/Panel muestran control explícito; ningún ViewModel en el servicio.
+Manager nullable/SDK/servicio/perfil se comprueban, sin diálogos automáticos.
+
+La autorización no es una entrada controlable por agente y no se deriva del permiso
+de calendario. Binder impone privilegios de consumidor, además del consentimiento.
+Un caller SDK privilegiado y un testhost de otro UID verifican caminos distintos.
+API26 sigue minSdk de UI; AppFunctions se probó en37.2, sin prometer matriz16/17.
+UC-007 definirá consentimiento para compartir la evaluación: el opt-in de trayecto
+no lo concede. No se añaden módulos ni agente propio.

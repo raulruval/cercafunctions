@@ -241,3 +241,43 @@ dominio solo devuelve horarios y evidencia. Esto prepara la frontera AppFunction
 UC-007 aún deberá definir consentimiento y DTO externos. No serializamos el estado
 de pantalla como contrato de capacidades. Para verificar: probar +10/0/−15 con
 la guía UC-005 y seguir CalendarModule → AssessArrival → sus dos casos de lectura.
+
+
+## Lo aprendido en UC-006
+Un Android Service es un componente del sistema con lifecycle propio. Android
+puede crear el proceso para atenderlo sin abrir Activity. No es un ViewModel ni
+un BLoC permanente; Hilt inyecta dependencias de aplicación y cada petición tiene
+su cancelación. AppFunctions conecta ese servicio al consumidor mediante Binder,
+IPC local entre UIDs, con permisos del sistema. Un platform channel Flutter suele
+unir Dart y código nativo de la misma app; aquí la llamada cruza aplicaciones.
+
+KSP genera código durante compilación, comparable a build_runner. A partir del
+servicio abstracto/anotaciones genera clase concreta, serializadores y XML que
+Android indexa. Los procesadores Hilt y AppFunctions se ejecutan en el módulo que
+define el servicio. Abrir archivos generados ayuda a entenderlo; no se editan.
+El Manifest registra la clase generada y la metadata apunta a assets/res correctos.
+La skill contiene snippets viejos: beta01 exige AppFunctionDeclaration y el
+isDescribedByKDoc explícito; app metadata usa instructions. KDoc es parte del
+contrato que descubre el consumidor, con propiedades documentadas inline.
+
+queryJourney no contiene reglas temporales nuevas: llama QueryJourneyArrival y
+QueryRailContext, igual que la UI. La frontera convierte errores a tipos AppFunctions
+con mensajes constantes y proyecta DTO mínimos. Los tipos java.time ya tienen
+proxy nativo Jetpack (LocalDateTime se representa estructurado, no como un string
+inventado). La utilidad Python compone ese formato para las pruebas de SDK.
+Una función suspend no cambia de hilo por sí sola; la frontera usa withContext(IO).
+
+Tres decisiones distintas: usuario autoriza compartir, proveedor habilita función,
+y Android autoriza al consumidor. Ninguna sustituye a las otras. DataStore guarda
+false por defecto y el servicio vuelve a comprobarlo después de leer. Habilitar
+mediante ADB con consentimiento revocado continúa denegado. La UI no otorga
+EXECUTE_APP_FUNCTIONS a una app cualquiera. No reutilizamos READ_CALENDAR como permiso
+para divulgar la agenda. El consentimiento se puede revocar sin cambiar trayecto.
+
+Tests directos verifican adapter/DTO, pero no prueban Binder. El testhost de la
+biblioteca tiene UID distinto y sin EXECUTE_APP_FUNCTIONS obtiene ERROR_DENIED;
+shell es privilegiado y prueba el camino positivo. La prueba de proceso frío mata
+solo el proceso debug propio, sin force-stop, y comprueba que la siguiente consulta
+lo crea sin Activity. Es comparable a probar muerte del proceso móvil, no solo
+a recrear una pantalla. Probar desde la guía UC-006 y seguir SharingModule →
+DataStoreJourneySharingRepository → BaseJourneyAppFunctionService → los dos casos.

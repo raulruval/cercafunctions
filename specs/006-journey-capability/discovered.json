@@ -1,0 +1,878 @@
+{
+  "com.cercafunctions.app": [
+    {
+      "AppFunctionComponentMetadataDocument-com.cercafunctions.app": {
+        "dataTypes": [
+          {
+            "name": [
+              "com.cercafunctions.appfunctions.JourneyResponse"
+            ],
+            "dataTypeMetadata": [
+              {
+                "description": [
+                  "Arrival evidence for one departure; a reference or fixture is not an operational forecast."
+                ],
+                "properties": [
+                  {
+                    "name": [
+                      "origin"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "description": [
+                          "Origin name of the saved journey, or the explicitly requested fixed demo."
+                        ],
+                        "type": [
+                          8
+                        ],
+                        "isNullable": [
+                          false
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": [
+                      "destination"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "description": [
+                          "Destination name of that journey."
+                        ],
+                        "type": [
+                          8
+                        ],
+                        "isNullable": [
+                          false
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": [
+                      "referenceDurationMinutes"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "description": [
+                          "Reference duration in minutes; excludes station-to-meeting travel."
+                        ],
+                        "type": [
+                          7
+                        ],
+                        "isNullable": [
+                          false
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": [
+                      "departure"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "description": [
+                          "Effective departure instant. Demos retain their entire fixed date and clock."
+                        ],
+                        "dataTypeReference": [
+                          "java.time.Instant"
+                        ],
+                        "type": [
+                          11
+                        ],
+                        "isNullable": [
+                          false
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": [
+                      "arrival"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "description": [
+                          "Estimated station arrival, or null when no quantitative evidence exists."
+                        ],
+                        "dataTypeReference": [
+                          "java.time.Instant"
+                        ],
+                        "type": [
+                          11
+                        ],
+                        "isNullable": [
+                          true
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": [
+                      "zone"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "description": [
+                          "Display zone of the effective departure and arrival."
+                        ],
+                        "dataTypeReference": [
+                          "java.time.ZoneId"
+                        ],
+                        "type": [
+                          11
+                        ],
+                        "isNullable": [
+                          false
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": [
+                      "source"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "description": [
+                          "REFERENCE uses the saved duration; FIXTURE is synthetic demonstration data."
+                        ],
+                        "type": [
+                          8
+                        ],
+                        "isNullable": [
+                          false
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": [
+                      "scenario"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "description": [
+                          "Effective REFERENCE, DEMO_NORMAL, DEMO_DELAYED or DEMO_UNKNOWN scenario."
+                        ],
+                        "type": [
+                          8
+                        ],
+                        "isNullable": [
+                          false
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": [
+                      "observedAt"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "description": [
+                          "Instant when arrival evidence was calculated; fixed for demos, not a validity guarantee."
+                        ],
+                        "dataTypeReference": [
+                          "java.time.Instant"
+                        ],
+                        "type": [
+                          11
+                        ],
+                        "isNullable": [
+                          false
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": [
+                      "delayMinutes"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "description": [
+                          "Synthetic delay only for known demos; null means unknown, never assumed zero."
+                        ],
+                        "type": [
+                          7
+                        ],
+                        "isNullable": [
+                          true
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": [
+                      "rail"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "description": [
+                          "Qualitative railway context that never modifies arrival or supplies delay minutes."
+                        ],
+                        "dataTypeReference": [
+                          "com.cercafunctions.appfunctions.RailSummary"
+                        ],
+                        "type": [
+                          11
+                        ],
+                        "isNullable": [
+                          false
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "required": [
+                  "origin",
+                  "destination",
+                  "referenceDurationMinutes",
+                  "departure",
+                  "arrival",
+                  "zone",
+                  "source",
+                  "scenario",
+                  "observedAt",
+                  "delayMinutes",
+                  "rail"
+                ],
+                "objectQualifiedName": [
+                  "com.cercafunctions.appfunctions.JourneyResponse"
+                ],
+                "type": [
+                  3
+                ],
+                "isNullable": [
+                  true
+                ]
+              }
+            ]
+          },
+          {
+            "name": [
+              "com.cercafunctions.appfunctions.RailSummary"
+            ],
+            "dataTypeMetadata": [
+              {
+                "description": [
+                  "Bounded qualitative summary; raw remote alert text and calendar data are excluded."
+                ],
+                "properties": [
+                  {
+                    "name": [
+                      "status"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "description": [
+                          "AVAILABLE, UNRESOLVED, UNAVAILABLE, STALE, FRESHNESS_UNKNOWN, FUTURE_TIMESTAMP or DEMO_SKIPPED."
+                        ],
+                        "type": [
+                          8
+                        ],
+                        "isNullable": [
+                          false
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": [
+                      "consultedAt"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "description": [
+                          "Instant the railway context was consulted."
+                        ],
+                        "dataTypeReference": [
+                          "java.time.Instant"
+                        ],
+                        "type": [
+                          11
+                        ],
+                        "isNullable": [
+                          false
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": [
+                      "sourceUrl"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "description": [
+                          "Public source URL; not proof of coverage or freshness."
+                        ],
+                        "type": [
+                          8
+                        ],
+                        "isNullable": [
+                          false
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": [
+                      "publishedAt"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "description": [
+                          "Feed publication instant when known, including rejected stale or invalid content."
+                        ],
+                        "dataTypeReference": [
+                          "java.time.Instant"
+                        ],
+                        "type": [
+                          11
+                        ],
+                        "isNullable": [
+                          true
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": [
+                      "relevantAlertCount"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "description": [
+                          "Number of alerts matched under the existing endpoint and time-window rules."
+                        ],
+                        "type": [
+                          7
+                        ],
+                        "isNullable": [
+                          false
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": [
+                      "unresolvedCount"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "description": [
+                          "Number of unresolvable selectors; zero does not prove absence of disruption."
+                        ],
+                        "type": [
+                          7
+                        ],
+                        "isNullable": [
+                          false
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": [
+                      "coverage"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "description": [
+                          "ENDPOINTS_ONLY: no claim about line, train, direction, direct service or intermediate stations."
+                        ],
+                        "type": [
+                          8
+                        ],
+                        "isNullable": [
+                          false
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": [
+                      "failure"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "description": [
+                          "NETWORK, HTTP, INVALID_FORMAT or TOO_LARGE when unavailable; otherwise null."
+                        ],
+                        "type": [
+                          8
+                        ],
+                        "isNullable": [
+                          true
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "required": [
+                  "status",
+                  "consultedAt",
+                  "sourceUrl",
+                  "publishedAt",
+                  "relevantAlertCount",
+                  "unresolvedCount",
+                  "coverage",
+                  "failure"
+                ],
+                "objectQualifiedName": [
+                  "com.cercafunctions.appfunctions.RailSummary"
+                ],
+                "type": [
+                  3
+                ],
+                "isNullable": [
+                  true
+                ]
+              }
+            ]
+          },
+          {
+            "name": [
+              "java.time.Instant"
+            ],
+            "dataTypeMetadata": [
+              {
+                "properties": [
+                  {
+                    "name": [
+                      "epochSecond"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "type": [
+                          6
+                        ],
+                        "isNullable": [
+                          false
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": [
+                      "nanoAdjustment"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "type": [
+                          7
+                        ],
+                        "isNullable": [
+                          false
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "required": [
+                  "epochSecond",
+                  "nanoAdjustment"
+                ],
+                "objectQualifiedName": [
+                  "java.time.Instant"
+                ],
+                "type": [
+                  3
+                ],
+                "isNullable": [
+                  true
+                ]
+              }
+            ]
+          },
+          {
+            "name": [
+              "java.time.LocalDateTime"
+            ],
+            "dataTypeMetadata": [
+              {
+                "properties": [
+                  {
+                    "name": [
+                      "year"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "type": [
+                          7
+                        ],
+                        "isNullable": [
+                          false
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": [
+                      "month"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "type": [
+                          7
+                        ],
+                        "isNullable": [
+                          false
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": [
+                      "dayOfMonth"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "type": [
+                          7
+                        ],
+                        "isNullable": [
+                          false
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": [
+                      "hour"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "type": [
+                          7
+                        ],
+                        "isNullable": [
+                          false
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": [
+                      "minute"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "type": [
+                          7
+                        ],
+                        "isNullable": [
+                          false
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": [
+                      "second"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "type": [
+                          7
+                        ],
+                        "isNullable": [
+                          false
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": [
+                      "nanoOfSecond"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "type": [
+                          7
+                        ],
+                        "isNullable": [
+                          false
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "required": [
+                  "year",
+                  "month",
+                  "dayOfMonth",
+                  "hour",
+                  "minute",
+                  "second",
+                  "nanoOfSecond"
+                ],
+                "objectQualifiedName": [
+                  "java.time.LocalDateTime"
+                ],
+                "type": [
+                  3
+                ],
+                "isNullable": [
+                  true
+                ]
+              }
+            ]
+          },
+          {
+            "name": [
+              "java.time.ZoneId"
+            ],
+            "dataTypeMetadata": [
+              {
+                "properties": [
+                  {
+                    "name": [
+                      "zoneID"
+                    ],
+                    "dataTypeMetadata": [
+                      {
+                        "type": [
+                          8
+                        ],
+                        "isNullable": [
+                          false
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "required": [
+                  "zoneID"
+                ],
+                "objectQualifiedName": [
+                  "java.time.ZoneId"
+                ],
+                "type": [
+                  3
+                ],
+                "isNullable": [
+                  true
+                ]
+              }
+            ]
+          }
+        ],
+        "mobileApplicationQualifiedId": [
+          "android$apps-db\/apps#com.cercafunctions.app"
+        ],
+        "packageName": [
+          "com.cercafunctions.app"
+        ]
+      }
+    },
+    {
+      "AppFunctionStaticMetadata-com.cercafunctions.app": {
+        "serviceName": [
+          "com.cercafunctions.appfunctions.JourneyAppFunctionService"
+        ],
+        "description": [
+          "Queries the habitual journey's station arrival and qualitative railway context for an explicit departure.\nReference uses the saved duration and is not an operational forecast. Explicit demos retain their fixed\njourney, date and clock. Sharing must be authorized in the app; calendar and contact data are excluded."
+        ],
+        "accessLevel": [
+          "androidTrusted"
+        ],
+        "isCompatEnforcementEnabled": [
+          true
+        ],
+        "response": [
+          {
+            "description": [
+              "Arrival evidence and bounded railway summary, including source and observation times. Null arrival\/delay are unknown."
+            ],
+            "valueType": [
+              {
+                "dataTypeReference": [
+                  "com.cercafunctions.appfunctions.JourneyResponse"
+                ],
+                "type": [
+                  11
+                ],
+                "isNullable": [
+                  false
+                ]
+              }
+            ]
+          }
+        ],
+        "enabledByDefault": [
+          false
+        ],
+        "functionId": [
+          "com.cercafunctions.appfunctions.BaseJourneyAppFunctionService#queryJourney"
+        ],
+        "packageNameHash": [
+          725150957
+        ],
+        "scope": [
+          "global"
+        ],
+        "parameters": [
+          {
+            "description": [
+              "Local departure date and time. A past reference or nonexistent\/ambiguous unresolved time is invalid."
+            ],
+            "isRequired": [
+              true
+            ],
+            "name": [
+              "departure"
+            ],
+            "dataTypeMetadata": [
+              {
+                "dataTypeReference": [
+                  "java.time.LocalDateTime"
+                ],
+                "type": [
+                  11
+                ],
+                "isNullable": [
+                  false
+                ]
+              }
+            ]
+          },
+          {
+            "description": [
+              "IANA or fixed-offset zone for departure; no implicit device-zone default."
+            ],
+            "isRequired": [
+              true
+            ],
+            "name": [
+              "zone"
+            ],
+            "dataTypeMetadata": [
+              {
+                "dataTypeReference": [
+                  "java.time.ZoneId"
+                ],
+                "type": [
+                  11
+                ],
+                "isNullable": [
+                  false
+                ]
+              }
+            ]
+          },
+          {
+            "description": [
+              "Null selects REFERENCE. Other exact values: DEMO_NORMAL, DEMO_DELAYED, DEMO_UNKNOWN."
+            ],
+            "isRequired": [
+              false
+            ],
+            "name": [
+              "scenario"
+            ],
+            "dataTypeMetadata": [
+              {
+                "type": [
+                  8
+                ],
+                "isNullable": [
+                  true
+                ]
+              }
+            ]
+          },
+          {
+            "description": [
+              "Null unless disambiguating a repeated local time; otherwise an offset such as +01:00 matching that time."
+            ],
+            "isRequired": [
+              false
+            ],
+            "name": [
+              "utcOffset"
+            ],
+            "dataTypeMetadata": [
+              {
+                "type": [
+                  8
+                ],
+                "isNullable": [
+                  true
+                ]
+              }
+            ]
+          },
+          {
+            "description": [
+              "Optional explicit Renfe origin catalog ID. Both station IDs must be supplied together and differ."
+            ],
+            "isRequired": [
+              false
+            ],
+            "name": [
+              "originStationId"
+            ],
+            "dataTypeMetadata": [
+              {
+                "type": [
+                  8
+                ],
+                "isNullable": [
+                  true
+                ]
+              }
+            ]
+          },
+          {
+            "description": [
+              "Optional explicit destination catalog ID. Null IDs leave context UNRESOLVED; demos skip the feed."
+            ],
+            "isRequired": [
+              false
+            ],
+            "name": [
+              "destinationStationId"
+            ],
+            "dataTypeMetadata": [
+              {
+                "type": [
+                  8
+                ],
+                "isNullable": [
+                  true
+                ]
+              }
+            ]
+          }
+        ],
+        "mobileApplicationQualifiedId": [
+          "android$apps-db\/apps#com.cercafunctions.app"
+        ],
+        "packageName": [
+          "com.cercafunctions.app"
+        ]
+      },
+      "AppFunctionRuntimeMetadata-com.cercafunctions.app": {
+        "AppFunctionRuntimeMetadata-com.cercafunctions.app": {
+          "enabled": [
+            1
+          ],
+          "appFunctionStaticMetadataQualifiedId": [
+            "android$apps-db\/app_functions#com.cercafunctions.app\/com.cercafunctions.appfunctions.BaseJourneyAppFunctionService\\#queryJourney"
+          ],
+          "functionId": [
+            "com.cercafunctions.appfunctions.BaseJourneyAppFunctionService#queryJourney"
+          ],
+          "packageName": [
+            "com.cercafunctions.app"
+          ]
+        }
+      }
+    }
+  ]
+}

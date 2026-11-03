@@ -3,7 +3,7 @@
 Empieza por [START_HERE.md](START_HERE.md): mapa de casos, primer incremento y método SDD.
 
 Base Android nativa para investigar una arquitectura que proporcione capacidades
-a agentes, inspirada en Rocket-Beer. UC-001–005 implementados y verificados; tres casos siguientes en Draft.
+a agentes, inspirada en Rocket-Beer. UC-001–006 implementados y verificados; dos casos siguientes en Draft.
 
 ## Qué ejecuta esta base
 
@@ -40,6 +40,13 @@ Sin margen extra ni desplazamiento estación–reunión, explícitos en pantalla
 Ver [prueba guiada](specs/005-arrival-assessment/quickstart.md) y
 [verificación](specs/005-arrival-assessment/verification.md).
 
+UC-006 publica queryJourney mediante el servicio AppFunctions generado por KSP.
+Opt-in de compartir trayecto desde UI, desactivado por defecto; consumidores
+autorizados por Android, sin calendario/contactos ni mensajes. Funciona con
+proceso frío y sin Activity usando los mismos casos de dominio. Ver
+[guía SDK](specs/006-journey-capability/quickstart.md) y
+[verificación](specs/006-journey-capability/verification.md).
+
 ## Módulos
 
 | Módulo | Responsabilidad |
@@ -49,7 +56,7 @@ Ver [prueba guiada](specs/005-arrival-assessment/quickstart.md) y
 | `core-domain` | Modelos, contratos y casos de uso Kotlin/JVM |
 | `core-data` | Repositorios JVM, HTTP/parser Renfe, catálogo de estaciones y fixtures |
 | `core-platform` | Persistencia DataStore y lectura CalendarContract con cancelación |
-| `core-appfunctions` | Frontera Android de capacidades; biblioteca preparada, sin servicio publicado |
+| `core-appfunctions` | Servicio AppFunctions, DTO, KSP, permisos y mapeo a dominio |
 
 ## Ejecutar
 
@@ -76,6 +83,6 @@ en `gradle/libs.versions.toml`. AGP 9 usa Kotlin integrado en los módulos Andro
 - [Guía Android desde Flutter](docs/android-for-flutter.md).
 - [Snapshot de esta fase y validación](docs/phase-0.md).
 
-AppFunctions, ChatApp y Testing Agent siguen en los siguientes casos de `specs/`.
-UC-001–005 son incrementos funcionales
+Evaluación externa de calendario, ChatApp y Testing Agent siguen en los siguientes
+casos de `specs/`. UC-001–006 son incrementos funcionales
 con Spec Kit y evidencia versionada; no hay backend ni predicción de puntualidad real.

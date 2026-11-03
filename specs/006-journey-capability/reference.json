@@ -1,0 +1,87 @@
+{
+  "androidAppfunctionsReturnValue": [
+    {
+      "destination": [
+        "POC Chamartin"
+      ],
+      "departure": [
+        {
+          "epochSecond": [
+            1793779200
+          ],
+          "nanoAdjustment": [
+            0
+          ]
+        }
+      ],
+      "origin": [
+        "POC Atocha"
+      ],
+      "source": [
+        "REFERENCE"
+      ],
+      "scenario": [
+        "REFERENCE"
+      ],
+      "arrival": [
+        {
+          "epochSecond": [
+            1793781300
+          ],
+          "nanoAdjustment": [
+            0
+          ]
+        }
+      ],
+      "rail": [
+        {
+          "sourceUrl": [
+            "https:\/\/gtfsrt.renfe.com\/alerts.json"
+          ],
+          "status": [
+            "UNRESOLVED"
+          ],
+          "consultedAt": [
+            {
+              "epochSecond": [
+                1793699263
+              ],
+              "nanoAdjustment": [
+                240688000
+              ]
+            }
+          ],
+          "coverage": [
+            "ENDPOINTS_ONLY"
+          ],
+          "relevantAlertCount": [
+            0
+          ],
+          "unresolvedCount": [
+            0
+          ]
+        }
+      ],
+      "zone": [
+        {
+          "zoneID": [
+            "UTC"
+          ]
+        }
+      ],
+      "observedAt": [
+        {
+          "epochSecond": [
+            1793699263
+          ],
+          "nanoAdjustment": [
+            237005000
+          ]
+        }
+      ],
+      "referenceDurationMinutes": [
+        35
+      ]
+    }
+  ]
+}

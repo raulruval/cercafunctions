@@ -10,6 +10,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import com.cercafunctions.presentation.assessment.AssessmentRoute
+import com.cercafunctions.presentation.sharing.SharingRoute
+import com.cercafunctions.presentation.sharing.SharingViewModel
 import com.cercafunctions.domain.estimate.ArrivalResult
 import com.cercafunctions.presentation.calendar.CalendarRoute
 import com.cercafunctions.presentation.calendar.CalendarViewModel
@@ -42,7 +44,7 @@ internal data class HomeActions(
 )
 
 @Composable
-fun HomeRoute(viewModel: HomeViewModel, arrivalViewModel: ArrivalViewModel, railViewModel: RailContextViewModel, calendarViewModel: CalendarViewModel) {
+fun HomeRoute(viewModel: HomeViewModel, arrivalViewModel: ArrivalViewModel, railViewModel: RailContextViewModel, calendarViewModel: CalendarViewModel, sharingViewModel:SharingViewModel) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     LaunchedEffect(state.content) { arrivalViewModel.onJourneyChanged((state.content as? JourneyContent.Ready)?.journey) }
     val arrivalState by arrivalViewModel.uiState.collectAsStateWithLifecycle()
@@ -50,11 +52,11 @@ fun HomeRoute(viewModel: HomeViewModel, arrivalViewModel: ArrivalViewModel, rail
     LaunchedEffect(usableArrival){calendarViewModel.setArrival(usableArrival)}
     BackHandler(enabled = state.editor != null, onBack = viewModel::cancelEditing)
     HomeScreen(state, HomeActions(viewModel::refresh, viewModel::beginEditing, viewModel::cancelEditing,
-        viewModel::updateOrigin, viewModel::updateDestination, viewModel::updateDuration, viewModel::save), calendarContent={CalendarRoute(calendarViewModel)},assessmentContent={AssessmentRoute(calendarViewModel,usableArrival)}) { ArrivalRoute(arrivalViewModel, railViewModel) }
+        viewModel::updateOrigin, viewModel::updateDestination, viewModel::updateDuration, viewModel::save), calendarContent={CalendarRoute(calendarViewModel)},sharingContent={SharingRoute(sharingViewModel)},assessmentContent={AssessmentRoute(calendarViewModel,usableArrival)}) { ArrivalRoute(arrivalViewModel, railViewModel) }
 }
 
 @Composable
-internal fun HomeScreen(state: HomeUiState, actions: HomeActions = HomeActions(), calendarContent: @Composable () -> Unit = {}, assessmentContent: @Composable () -> Unit = {}, arrivalContent: @Composable () -> Unit = {}) {
+internal fun HomeScreen(state: HomeUiState, actions: HomeActions = HomeActions(), calendarContent: @Composable () -> Unit = {}, assessmentContent: @Composable () -> Unit = {}, sharingContent: @Composable () -> Unit = {}, arrivalContent: @Composable () -> Unit = {}) {
     Scaffold { insets ->
         Column(
             modifier = Modifier.fillMaxSize().padding(insets).imePadding()
@@ -66,7 +68,7 @@ internal fun HomeScreen(state: HomeUiState, actions: HomeActions = HomeActions()
             Text(stringResource(if (state.editor == null) R.string.home_title else R.string.journey_editor_title),
                 style = MaterialTheme.typography.headlineLarge)
             if (state.editor == null) Text(stringResource(R.string.home_subtitle), style = MaterialTheme.typography.bodyLarge)
-            if(state.editor==null)calendarContent()
+            if(state.editor==null){sharingContent();calendarContent()}
             Card(modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)) {
                 Column(Modifier.padding(24.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {

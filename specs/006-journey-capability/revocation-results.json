@@ -1,0 +1,20 @@
+{
+  "revokedDisabled": {
+    "exitCode": 1,
+    "message": "Error executing app function: android.app.appfunctions.AppFunctionException: The app function is disabled (code 1002). See logcat for more details."
+  },
+  "adbEnableCannotReplaceConsent": {
+    "exitCode": 1,
+    "message": "Error executing app function: android.app.appfunctions.AppFunctionException: Journey sharing is not authorized in the app. (code 1000). See logcat for more details."
+  },
+  "finalSystemState": [
+    {
+      "functionName": "com.cercafunctions.app/com.cercafunctions.appfunctions.BaseJourneyAppFunctionService#queryJourney",
+      "isEnabled": false,
+      "activityIds": []
+    }
+  ],
+  "initialDisabledObservedCode": 1002,
+  "missingJourneyObservedCode": 1500,
+  "readCalendarRequiredForCapability": false
+}

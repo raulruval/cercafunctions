@@ -26,7 +26,7 @@
     <string name="journey_save_error">No se ha podido guardar. Tu edición sigue aquí para reintentar.</string>
     <string name="journey_saved">Trayecto guardado</string>
     <string name="home_upcoming_title">Próximamente</string>
-    <string name="home_upcoming_body">Consulta desde asistentes y propuesta de cambio de reunión con tu confirmación.</string>
+    <string name="home_upcoming_body">Evaluación del compromiso desde asistentes y propuesta de cambio de reunión con tu confirmación.</string>
     <string name="home_privacy">Tú decides cuándo dar acceso a tu calendario.</string>
     <string name="arrival_heading">Llegada para una salida concreta</string>
     <string name="arrival_intro">Confirma fecha, hora y zona antes de consultar. El cálculo de referencia usa tu duración guardada.</string>
@@ -142,4 +142,15 @@ Afectación publicada (UTC): %2$s</string>
     <string name="assessment_calendar_changed">El compromiso cambió o desapareció. Vuelve a consultar el calendario y elige de nuevo.</string>
     <string name="assessment_calendar_permission">No hay acceso de lectura al calendario. Solicítalo desde su panel.</string>
     <string name="assessment_calendar_unavailable">No se pudo revalidar el calendario. Reintenta desde su panel.</string>
+    <string name="sharing_title">Compartir trayecto con asistentes</string>
+    <string name="sharing_privacy">Al autorizar, los asistentes permitidos por Android podrán consultar origen, destino y estimación de tu trayecto habitual, con la app cerrada. Incluye demos solo si se piden expresamente. No comparte calendario ni contactos, ni envía mensajes.</string>
+    <string name="sharing_loading">Comprobando tu autorización…</string>
+    <string name="sharing_allowed">Autorizado por ti. Puedes revocarlo aquí. Android controla qué asistentes pueden ejecutar la consulta.</string>
+    <string name="sharing_denied">Sin autorización para compartir. La función está desactivada por defecto.</string>
+    <string name="sharing_unavailable">Consulta desde asistentes no disponible en este dispositivo o perfil.</string>
+    <string name="sharing_authorize">Autorizar consulta del trayecto</string>
+    <string name="sharing_revoke">Revocar autorización</string>
+    <string name="sharing_saving">Actualizando autorización…</string>
+    <string name="sharing_error">No se pudo completar o comprobar el cambio. Revisa el estado y reintenta.</string>
+    <string name="sharing_retry">Comprobar de nuevo</string>
 </resources>

@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-03",
+  "fixtureOnly": true,
+  "method": "HOME then own-debug-UID kill -9; not force-stop",
+  "pidBefore": "7665",
+  "pidAfterKill": "",
+  "pidAfterInvocation": "9463",
+  "providerActivityResumed": false,
+  "arrivalSeconds": 1793781300
+}
