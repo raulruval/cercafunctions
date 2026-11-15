@@ -10,10 +10,10 @@ La referencia de capas sigue siendo útil si el dominio puede ejecutarse sin pan
 | rocket-core-data | Mantener mapeo de fuentes/repositorios. Hacer explícita procedencia, vigencia y ausencia de evidencia; un error de red no significa cero retrasos |
 | rocket-core-presentation | Conservar estado UI y bindings de casos. Evitar que la regla de negocio o selección de repositorios viva exclusivamente en BLoC/ViewModel |
 | Platform | Encapsular CalendarContract, permisos y reloj del sistema. Solicitar permiso en UI; comprobarlo también al ejecutar sin UI |
-| core-appfunctions | Publicar contratos mínimos y estables mediante KSP, Hilt y errores acotados. Reutilizar dominio; no serializar StateFlow ni importar presentation |
+| appfunctions | Publicar contratos mínimos y estables mediante KSP, Hilt y errores acotados. Reutilizar dominio; no serializar StateFlow ni importar presentation |
 | Consumidor/agente | Descubrir contratos, resolver ambigüedad y confirmar efectos. La autorización de Android y el consentimiento del proveedor son controles diferentes |
 
-El módulo core-appfunctions de esta POC demuestra el patrón de adaptador, pero sus
+El módulo appfunctions de esta POC demuestra el patrón de adaptador, pero sus
 funciones y DTO ferroviarios pertenecen al producto. Para reutilizar en la compañía,
 extraer solo convenciones de build/KDoc, mapeo de errores y pruebas de contrato cuando
 existan al menos dos proveedores reales. Evitar un framework genérico de permisos,

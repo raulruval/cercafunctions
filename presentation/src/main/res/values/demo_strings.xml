@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="demo_brand">Cercanías Copilot</string>
+    <string name="demo_intro">Tu próxima reunión de mañana, con un trayecto de demostración.</string>
+    <string name="demo_normal">Puntual</string>
+    <string name="demo_delayed">+15 min</string>
+    <string name="demo_unknown">Sin datos</string>
+    <string name="demo_error">No se pudo actualizar la demo. Reintenta; no se ha sustituido el calendario por datos ficticios.</string>
+    <string name="demo_permission">Consulta tu calendario real para encontrar la primera reunión con hora de mañana. Este permiso permite leerlo dentro de la app.</string>
+    <string name="demo_allow_calendar">Permitir acceso al calendario</string>
+    <string name="demo_settings">Abrir permisos en Ajustes</string>
+    <string name="demo_no_meeting">No hay reuniones con hora mañana (%1$s, %2$s) en calendarios visibles. Crea una desde tu app de calendario y pulsa Actualizar.</string>
+    <string name="demo_calendar_error">El calendario no está disponible. Pulsa Actualizar para reintentar.</string>
+    <string name="demo_real_meeting">Próxima reunión · calendario real</string>
+    <string name="demo_untitled">Sin título</string>
+    <string name="demo_departure">Salida demo: %1$s · duración 35 min</string>
+    <string name="demo_arrival">Llegada demo: %1$s</string>
+    <string name="demo_late">Llegarías 15 min tarde</string>
+    <string name="demo_on_time">Llegarías a tiempo</string>
+    <string name="demo_indeterminate">No se puede saber si llegarías</string>
+    <string name="demo_fixture_explanation">Tren ficticio de 35 min: sale 35 min antes de tu reunión real. No es un horario ni una predicción de Renfe. Sin traslado adicional. Tu calendario no se modifica.</string>
+    <string name="demo_sharing_title">Permitir consulta del agente</string>
+    <string name="demo_sharing_scope">Comparte solo horario y resultado de la próxima reunión de mañana con agentes autorizados. Sigue activo hasta apagarlo; la reunión puede cambiar cada día. Títulos, notas, asistentes e identificadores quedan en la app.</string>
+    <string name="demo_refresh">Actualizar calendario y resultado</string>
+    <string name="demo_agent_help">Continúa en Testing Agent para consultar el resultado y preparar un borrador para Ana POC. Copilot no envía mensajes.</string>
+    <string name="demo_advanced">Avanzado · referencia y calendario manual</string>
+    <string name="demo_back">Volver a la demo</string>
+</resources>

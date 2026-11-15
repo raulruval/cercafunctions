@@ -18,6 +18,10 @@ import org.junit.Assert.assertNull
 @SdkSuppress(minSdkVersion=29)
 class AssessmentFlowTest {
     @get:Rule val compose=createAndroidComposeRule<MainActivity>()
+    @Before fun openAdvancedScreen() {
+        compose.onNodeWithTag("demo_advanced").performScrollTo().performClick()
+    }
+
     private val instrumentation=InstrumentationRegistry.getInstrumentation()
     private val resolver=instrumentation.targetContext.contentResolver
     private val date=LocalDate.now(ZoneOffset.UTC).plusDays(1)

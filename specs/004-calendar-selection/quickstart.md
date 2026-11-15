@@ -11,9 +11,9 @@ datos al volver (Android puede matar el proceso). No se solicita WRITE_CALENDAR.
 Recrear Activity conserva selección; reiniciar proceso no. Cambiar fecha/zona la retira.
 
 ```powershell
-.\gradlew.bat :core-domain:test :core-data:test :core-platform:testDebugUnitTest :core-presentation:testDebugUnitTest :app:assembleDebug :app:lintDebug
-.\gradlew.bat :core-platform:connectedDebugAndroidTest
-.\gradlew.bat :core-presentation:connectedDebugAndroidTest
+.\gradlew.bat :domain:test :data:test :platform:testDebugUnitTest :presentation:testDebugUnitTest :app:assembleDebug :app:lintDebug
+.\gradlew.bat :platform:connectedDebugAndroidTest
+.\gradlew.bat :presentation:connectedDebugAndroidTest
 .\gradlew.bat :app:connectedDebugAndroidTest
 ```
 Instrumentadas secuenciales. Tests crean calendarios LOCAL únicos con eventos

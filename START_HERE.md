@@ -1,36 +1,53 @@
 # Empieza aquí
-Estado al2026-11-03: UC-001–008 Verified; ocho snapshots uc-001-v1…uc-008-v1.
-POC Android de seis módulos; proveedores Copilot y ChatApp oficial, consumidor de
-laboratorio determinista y Testing Agent oficial. El usuario confirmó una escritura
-sintética, que se verificó por IPC y en la UI de ChatApp. No entrega por red.
 
-## Probar lo construido
-En este equipo ChatApp y Testing Agent ya están instalados en Pixel_10_Pro API37.2.
-Copias oficiales en C:\Users\rrva9\Documents\Codex\2026-11-01\qu\work\uc008-official.
-Abre ChatApp→Ana POC para ver la prueba mientras siga vivo su proceso. Ambas
-autorizaciones de Copilot y READ_CALENDAR se dejaron revocados; agente detenido.
+La POC termina con **UC-001–009 implementados**. Empieza por el [README](README.md)
+para conocer el producto y por la [guía de demo](docs/demo-simple.md) para ensayarlo.
 
-1. [Guía UC-008](specs/008-cross-app-demo/quickstart.md): instalación reproducible,
-   fixture/calendario, preview, confirmación exacta y Testing Agent Windows.
-2. [Evidencia UC-008](specs/008-cross-app-demo/verification.md).
-3. [Conclusiones Rocket-Beer](docs/agent-ready-conclusions.md).
-4. [Arquitectura](docs/architecture.md) y [Android desde Flutter](docs/android-for-flutter.md).
-5. [Tablero SDD](specs/README.md).
+## Recorrido actual
 
-## Recorrido rápido
-Configura trayecto35, autoriza consulta UC-006, elige ocurrencia ficticia09:00 UTC
-futura y autoriza evaluación UC-007; copia referencia. En terminal:
+1. Abre Copilot, concede lectura del calendario y comprueba la primera reunión con
+   hora de mañana. La zona es la del dispositivo; no hay fechas fijas que copiar.
+2. Selecciona Puntual, +15 min o Sin datos. Solo el tren y su salida son sintéticos;
+   el calendario se consulta mediante CalendarContract real.
+3. Activa el interruptor de consulta del agente para compartir horarios y resultado.
+4. Ejecuta `evaluateDemoJourney()` sin parámetros desde Debug del Testing Agent.
+   Para lenguaje natural, configura Gemini API y utiliza Agent Demo.
+
+El interruptor persiste hasta apagarlo. No comparte títulos, notas, asistentes ni
+IDs de calendario. El agente debe ser un consumidor autorizado por Android.
+No hacen falta scripts de eventos, códigos de estaciones ni referencias temporales
+para este recorrido. Si no hay reunión, créala desde tu app de calendario.
+
+## Guías según lo que quieras revisar
+
+- [Demo actual, fuentes y alternativas del agente](docs/demo-simple.md).
+- [UC-009: contrato](specs/009-simple-demo/spec.md) y [evidencia](specs/009-simple-demo/verification.md).
+- [Avanzado / UC-008](specs/008-cross-app-demo/quickstart.md): referencias acotadas,
+  consumidor determinista, revisión exacta y ChatApp oficial.
+- [Arquitectura](docs/architecture.md), [nombres de módulos](docs/module-organization.md)
+  y [equivalencias con Flutter](docs/android-for-flutter.md).
+- [Tablero SDD](specs/README.md) y [conclusiones Rocket-Beer](docs/agent-ready-conclusions.md).
+
+## Reproducir el laboratorio
+
+Consulta [setup](docs/setup.md). Instala ChatApp y Testing Agent desde el repositorio
+oficial `android/appfunctions`, separado de este APK. Se fija la revisión utilizada
+en la guía UC-008. Crea el contacto ficticio Ana POC según esa guía si quieres probar
+la búsqueda/mensajería; el ejemplo guarda sus mensajes en memoria local.
+
+Después de reiniciar el emulador, desde la raíz de este proyecto:
 
 ```powershell
-python scripts/interop_flow.py --departure 2026-11-04T08:40 --zone UTC
-python scripts/interop_flow.py --departure 2026-11-04T08:40 --zone UTC --interactive
+.\scripts\start-testing-agent.ps1 -Serial emulator-5554
 ```
 
-Sustituye fecha por la de tu fixture futura. Primero preview sin envío; luego revisa
-destinatario/texto exactos y escribe el código solicitado solo si decides enviar.
-La referencia se pide sin eco, no en argumentos. Referencia no es predicción Renfe.
-Testing Agent standardDebug no necesita Gemini para Debugger. El flujo LLM de
-escritura no garantiza gate de confirmación y no se ha ejecutado.
+Para detenerlo, añade `-Stop`. No ejecutes pruebas instrumentadas simultáneamente.
+No hay garantía de que un modelo complete cada intento: la evidencia distingue
+pruebas deterministas, ensayo LLM y pasos no comprobados. La app no envía mensajes.
 
-Spec/plan UC-008 en e5604a5;18 pruebas nuevas del consumidor más evidencia real.
-Checklist humano8/10 se conserva; los tests/documentos no atribuyen revisión al usuario.
+## Historial
+
+Las etiquetas `phase-0-base`, `sdd-inception-v1` y `uc-001-v1`…`uc-008-v1`
+conservan los incrementos previos. Los módulos actuales son `app`, `domain`,
+`data`, `platform`, `presentation` y `appfunctions`; las referencias históricas
+no se reescriben. Fecha de cierre documental: 2026-11-15.

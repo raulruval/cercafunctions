@@ -13,8 +13,8 @@ Cambiar hora/modo/estaciones elimina contexto anterior. Red apagada→error expl
 referencia conserva su etiqueta. Reiniciar conserva trayecto, no asociación temporal.
 
 ```powershell
-.\gradlew.bat :core-domain:test :core-data:test :core-platform:testDebugUnitTest :core-presentation:testDebugUnitTest :app:assembleDebug :app:lintDebug
-.\gradlew.bat :core-presentation:connectedDebugAndroidTest
+.\gradlew.bat :domain:test :data:test :platform:testDebugUnitTest :presentation:testDebugUnitTest :app:assembleDebug :app:lintDebug
+.\gradlew.bat :presentation:connectedDebugAndroidTest
 .\gradlew.bat :app:connectedDebugAndroidTest
 ```
 Instrumentadas secuenciales con emulador iniciado (validación API37.2 existente).

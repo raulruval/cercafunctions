@@ -7,6 +7,11 @@ Las peticiones del2026-11-03 autorizan UC-006–008 y los incrementos previos.
 Los ocho quedan Verified. UC-008 demuestra consumidor determinista y envío local
 confirmado a fixture, no autonomía LLM ni entrega de red. Ver
 specs/008-cross-app-demo/verification.md. No ampliar alcance sin petición.
+La petición del 2026-11-04 autoriza UC-009: demo sencilla con calendario REAL,
+trayecto sintético y autorización explícita continua/revocable para tiempos mínimos
+de la próxima reunión de mañana. No sustituir por calendario sintético. La función
+nueva no requiere referencia; los controles anteriores siguen en Avanzado.
+El usuario da por finalizado el proyecto el 2026-11-15: cerrar documentación y sincronización Git; no ampliar funcionalidad.
 La fase 0 queda preservada en su etiqueta; los documentos de aquella fase son históricos.
 
 ## Flujo SDD
@@ -25,7 +30,7 @@ La fase 0 queda preservada en su etiqueta; los documentos de aquella fase son hi
 ## Arquitectura y seguridad
 
 - Mantener seis módulos y dependencias de `docs/architecture.md`.
-- `core-domain` y `core-data`: Kotlin/JVM sin Android, Compose, Hilt o AppFunctions.
+- `domain` y `data`: Kotlin/JVM sin Android, Compose, Hilt o AppFunctions.
 - UI y capacidades consumen los mismos casos de uso; sin ViewModel en servicios.
 - No modificar Rocket-Beer ni incorporar sus artefactos privados.
 - AppFunctions: leer la skill oficial Google y sus referencias al trabajar esa frontera.
@@ -39,5 +44,5 @@ La fase 0 queda preservada en su etiqueta; los documentos de aquella fase son hi
 ## Verificación y mentoría
 
 Elegir comprobaciones según `docs/sdd-workflow.md`; no compilar por documentos solos.
-Base Android: `./gradlew :core-domain:test :app:assembleDebug :app:lintDebug`.
+Base Android: `./gradlew :domain:test :app:assembleDebug :app:lintDebug`.
 Explicar decisiones Android desde experiencia Flutter/Dart/BLoC y aportar evidencia.

@@ -1,33 +1,46 @@
 # Arquitectura · base e incrementos
 
-Estado al 2026-11-02: base y UC-001–004 implementados; SDD activo. La etiqueta phase-0-base conserva el estado inicial.
+Estado final: UC-001–009 implementados. La etiqueta phase-0-base conserva el estado
+inicial. Los apartados de incrementos documentan su evolución histórica.
+
+## Entrada principal final · UC-009
+
+MainActivity presenta DemoRoute/DemoViewModel. Tanto ese ViewModel como la nueva
+AppFunction evaluateDemoJourney consumen EvaluateDemoJourney del dominio. El caso
+reutiliza GetCalendarDay y el comparador puro CompareArrivalTiming: la reunión es
+real; la salida del tren de demostración se alinea 35 minutos antes de ella.
+DemoSettingsRepository guarda escenario y autorización en DataStore, detrás de un
+adaptador de platform. El servicio comprueba consentimiento y permiso antes y después
+de evaluar; devuelve DemoJourneyResponse sin título ni identificadores del calendario.
+Las dos AppFunctions anteriores y HomeRoute quedan en Avanzado.
+
 
 ## Dependencias de compilación
 
 ```mermaid
 flowchart TD
-    app[app: composición Hilt y Activity] --> presentation[core-presentation: Compose y ViewModel]
-    app --> data[core-data: repositorios]
-    app --> platform[core-platform: adaptadores Android]
-    app --> functions[core-appfunctions: adaptador de capacidades]
-    app --> domain[core-domain: Kotlin puro]
+    app[app: composición Hilt y Activity] --> presentation[presentation: Compose y ViewModel]
+    app --> data[data: repositorios]
+    app --> platform[platform: adaptadores Android]
+    app --> functions[appfunctions: adaptador de capacidades]
+    app --> domain[domain: Kotlin puro]
     presentation --> domain
     data --> domain
     platform --> domain
     functions --> domain
 ```
 
-Los módulos Android son bibliotecas salvo `app`, que produce el APK. `core-domain`
-y `core-data` son bibliotecas Kotlin/JVM. Este último podrá seguir siendo JVM
+Los módulos Android son bibliotecas salvo `app`, que produce el APK. `domain`
+y `data` son bibliotecas Kotlin/JVM. Este último podrá seguir siendo JVM
 mientras red, parseo y repositorios no requieran Android. Persistencia DataStore
-o CalendarContract vive en `core-platform`, detrás de un contrato de dominio.
+o CalendarContract vive en `platform`, detrás de un contrato de dominio.
 No hay un módulo por pantalla, framework genérico, navegación ni backend.
 
-`core-platform` y `core-appfunctions` son fronteras solicitadas explícitamente:
-plataforma ya implementa DataStore; capacidades siguen sin servicio publicado. No se añaden
+`platform` y `appfunctions` son fronteras solicitadas explícitamente:
+plataforma implementa DataStore/CalendarContract; appfunctions publica tres capacidades. No se añaden
 módulos `utils`, `common`, `network`, `feature-*` o de convenciones Gradle.
 
-## Recorrido que ya funciona
+## Recorrido avanzado de configuración · UC-001
 
 `MainActivity` obtiene `HomeViewModel` mediante Hilt. `HomeRoute` observa su
 `StateFlow` con `collectAsStateWithLifecycle`; `HomeScreen` solo recibe estado
@@ -43,7 +56,7 @@ Ubicar este repositorio en plataforma mantiene el acceso Android junto a DataSto
 y evita una capa delegadora adicional; el repositorio ferroviario seguirá en data.
 Esto no es una consulta Renfe ni un fixture de puntualidad.
 
-## Qué es core-appfunctions
+## Qué es appfunctions
 
 Es un adaptador Android de entrada a capacidades de negocio, al mismo nivel que
 presentación. No es un agente ni un motor de orquestación. No tiene ViewModels,
@@ -51,29 +64,29 @@ Compose, navegación, acceso directo a Renfe, ContentResolver ni almacenamiento
 de conversaciones. Depende de dominio y de la biblioteca Jetpack AppFunctions.
 La composición Hilt del APK proporciona los mismos casos de uso a ambas entradas.
 
-Al implementar las consultas, el módulo contendrá:
+El módulo implementa:
 
-- Un servicio abstracto `BaseCopilotAppFunctionService : AppFunctionService`, con
-  `@AppFunctionServiceEntryPoint` y `@AndroidEntryPoint`. KSP generará el servicio
-  concreto y el esquema XML; se registrará el generado, no la clase abstracta.
+- Un servicio abstracto `BaseJourneyAppFunctionService : AppFunctionService`, con
+  `@AppFunctionServiceEntryPoint` y `@AndroidEntryPoint`. KSP genera el servicio
+  concreto y el esquema XML; se registra el generado, no la clase abstracta.
 - Métodos `suspend` con `@AppFunctionDeclaration(isDescribedByKDoc = true)` que
   validen entradas, invoquen el caso de uso y proyecten su resultado.
 - DTO de frontera con `@AppFunctionSerializable(isDescribedByKDoc = true)` y
   KDoc inline para cada propiedad. Los modelos de dominio no llevan anotaciones.
 - Traducción de errores de negocio a excepciones AppFunctions específicas y
   mensajes acotados; propagación de `CancellationException` y ninguna fuga de
-  detalles internos. El adaptador moverá la ejecución al dispatcher adecuado;
-  los repositorios harán sus operaciones bloqueantes seguras para el hilo principal.
+  detalles internos. El adaptador mueve la ejecución al dispatcher adecuado;
+  los repositorios realizan sus operaciones bloqueantes seguras para el hilo principal.
 - Metadatos `app_metadata.xml` con `appfn:instructions`, descripción de las
   capacidades, origen de los datos y relaciones entre consultas.
 
-KSP de AppFunctions se activará en este módulo y se verificará la agregación
+KSP de AppFunctions se activa en este módulo; se verifica la agregación
 en `app` con `appfunctions:aggregateAppFunctions=true`, siguiendo ChatApp.
 El APK tendrá un único entry point por compatibilidad con API 36. El servicio
 exportado exigirá `android.permission.BIND_APP_FUNCTION_SERVICE`.
-No se publican servicios ni metadatos vacíos o engañosos en la fase actual.
+El servicio está registrado y sus metadatos se verificaron mediante el registro e IPC del sistema.
 
-## Capacidad futura, sin duplicar negocio
+## Entradas compartidas, sin duplicar negocio
 
 ```mermaid
 sequenceDiagram
@@ -106,7 +119,7 @@ Las funciones sobre trayectos y los contratos de Cercanías son específicos del
 producto: este AAR aún no es un SDK empresarial independiente.
 
 Al aparecer un segundo producto se podrá extraer la infraestructura comprobada
-a un `core-appfunctions` común sin dependencia de Cercanías. Cada aplicación
+a un `appfunctions` común sin dependencia de Cercanías. Cada aplicación
 conservará DTO, funciones y entry point propios. No diseñamos ahora un registro
 genérico, una interfaz universal de herramientas ni una jerarquía de servicios.
 Esto mantiene un coste pequeño y evita acoplar una librería corporativa a trenes.
@@ -123,10 +136,10 @@ Esto mantiene un coste pequeño y evita acoplar una librería corporativa a tren
    alcance ferroviario y conservación de datos se concretarán en SDD.
 
 ## Incremento UC-002
-`QueryJourneyArrival` vive en core-domain y recibe JourneyRepository,
-JourneyFixtureRepository y Clock. El catálogo fijo reside en core-data;
+`QueryJourneyArrival` vive en domain y recibe JourneyRepository,
+JourneyFixtureRepository y Clock. El catálogo fijo reside en data;
 Hilt lo enlaza en app. ArrivalViewModel/ArrivalPanel reciben resultados tipados.
-No se amplían core-platform ni core-appfunctions, ni se añaden módulos. La futura
+No se amplían platform ni appfunctions, ni se añaden módulos. La futura
 fachada AppFunctions consumirá este mismo caso, con mapeo explícito de java.time
 a sus DTO y política de exposición por definir en UC-006.
 
@@ -154,7 +167,7 @@ No se añaden módulos Gradle ni bibliotecas nuevas de producción.
 
 ## Incremento UC-005
 AssessArrival recibe QueryJourneyArrival, RevalidateCalendarSelection y Clock en
-core-domain. Refresca la misma salida conservando offset/zona/escenario; un cambio
+domain. Refresca la misma salida conservando offset/zona/escenario; un cambio
 de evidencia exige nueva consulta visible. Revalida la ocurrencia y compara
 Instant. Resultado Compared o Indeterminate; MeetingTiming no contiene título,
 calendario ni identificadores. El resultado no constituye autorización de divulgación.
@@ -168,7 +181,7 @@ No se infieren minutos de avisos ni se envían mensajes. UC-006 sigue Draft.
 
 
 ## Incremento UC-006
-BaseJourneyAppFunctionService, DTO y metadata viven en core-appfunctions, con
+BaseJourneyAppFunctionService, DTO y metadata viven en appfunctions, con
 ambos procesadores KSP (Hilt y AppFunctions). Un único servicio generado y permiso
 BIND_APP_FUNCTION_SERVICE. isEnabled=false, nivel ANDROID_TRUSTED con compat.
 queryJourney valida parámetros de frontera, ejecuta IO y consume QueryJourneyArrival
@@ -217,6 +230,15 @@ y SDK IPC. Proposal inmutable/OneShotSend vinculan revisión a destinatario y te
 antes del único intento revalidan capacidad y contacto. No añade reglas de evaluación
 al ViewModel ni implementa envío propio. ChatApp/Testing Agent son proyectos oficiales
 separados, pin fijo; setup solo añade Ana ficticia, no modifica su lógica.
-La CLI es instrumento de laboratorio; core-appfunctions sigue siendo adaptador del
+La CLI es instrumento de laboratorio; appfunctions sigue siendo adaptador del
 proveedor, no biblioteca de agentes. Estado UNKNOWN no reintenta; no promete ledger
 durable ni exactly-once. Ver docs/agent-ready-conclusions.md y guía UC-008.
+
+## Nomenclatura actual · 2026-11-04
+Se mantienen las seis fronteras, renombradas sin core-. Organización por capas
+con paquetes funcionales internos; [detalle](module-organization.md). Los bloques
+fechados anteriores describen sus incrementos y no sustituyen el inventario actual.
+
+Escenarios completos del recorrido avanzado (UC-002): usan mañana a las 08:00
+en Europe/Madrid, calculado desde Clock inyectado. El reloj fijo queda para pruebas;
+la observación en ejecución es actual. Ver specs/002-journey-estimate/demo-tomorrow.md.

@@ -13,6 +13,11 @@ Base ejecutable: etiqueta `phase-0-base`. Adopción SDD: etiqueta `sdd-inception
 | UC-006 | [Publicar la consulta de trayecto como capacidad](006-journey-capability/spec.md) | UC-002 y UC-003. | Verified | 15/15; ver [evidencia](006-journey-capability/verification.md) |
 | UC-007 | [Compartir una evaluación mínima del compromiso autorizado](007-assessment-capability/spec.md) | UC-005 y UC-006. | Verified | 17/17; ver [evidencia](007-assessment-capability/verification.md) |
 | UC-008 | [Orquestar propuesta a Ana con confirmación explícita](008-cross-app-demo/spec.md) | UC-006 y UC-007; ChatApp y Testing Agent oficiales. | Verified | 13/13; ver [evidencia](008-cross-app-demo/verification.md) |
+| UC-009 | [Demo sencilla con calendario real](009-simple-demo/spec.md) | UC-004–008 | Verified | 7/7; ver [evidencia](009-simple-demo/verification.md) |
+
+Cierre documental 2026-11-15: **UC-001–009 Verified**, **117/117 tareas**.
+UC-009 es la demo principal; los snapshots previos se conservan como historia.
+Ver [README](../README.md) y [evidencia de UC-009](009-simple-demo/verification.md).
 
 ## Orden y dependencias
 
@@ -28,10 +33,12 @@ flowchart LR
     U6 --> U7
     U6 --> U8[008 Demo entre apps]
     U7 --> U8
+    U4 --> U9[009 Demo sencilla]
+    U5 --> U9
 ```
 
 La numeración propone el orden de aprendizaje; el diagrama expresa dependencias
-reales. UC-004 puede prepararse de forma independiente. No desarrollamos ocho
+reales. UC-004 puede prepararse de forma independiente. No desarrollamos nueve
 capas por separado: cada caso acaba con comportamiento comprobable desde UI o,
 en las últimas etapas, desde el consumidor externo además de la UI existente.
 
@@ -43,7 +50,7 @@ en las últimas etapas, desde el consumidor externo además de la UI existente.
 - **Verified**: aceptación satisfecha y evidencia registrada en `verification.md`.
 - **Blocked**: obstáculo real encontrado, con causa y acción pendiente documentadas.
 
-Estado al2026-11-03: **UC-001–008 Verified**, **110/110 tareas completadas** y **8/8 casos Verified**. Las casillas
+Estado al 2026-11-15: **UC-001–009 Verified**, **117/117 tareas completadas** y **9/9 casos Verified**. Las casillas
 marcadas de `checklists/requirements.md` solo indican revisión del documento.
 No representan tests ejecutados ni aprobación humana. Al implementar, actualizar
 estado y tareas en el mismo commit que su código/evidencia.
@@ -58,6 +65,7 @@ estado y tareas en el mismo commit que su código/evidencia.
 - **UC-006**: AppFunctions, KSP, servicios, serialización e IPC.
 - **UC-007**: Consentimiento de divulgación, frontera de datos y ciclo de vida sin interfaz.
 - **UC-008**: Descubrimiento entre apps, privilegios y comprobación de efectos.
+- **UC-009**: Demo de calendario real y tren sintético, con una consulta sin parámetros y consentimiento revocable.
 
 ## Contratos comunes a todas las specs
 
@@ -69,8 +77,14 @@ estado y tareas en el mismo commit que su código/evidencia.
 - Envío requiere confirmación de destinatario y texto exactos; rechazo implica cero envíos.
 - Los detalles nuevos de cada borrador se revisan al activarlo; no se consideran aprobados por generar este mapa.
 
-## Próxima sesión
+## Cierre
 
-UC-008 cierra el recorrido en `uc-008-v1`: interoperabilidad real determinista,
-confirmación humana y un mensaje local de ejemplo, sin orquestación LLM de escritura.
-No se inicia otro caso automáticamente. Ver [START_HERE](../START_HERE.md) y las evidencias de cada caso.
+UC-009 cierra el desarrollo solicitado. La demo sencilla es el punto de entrada;
+UC-008 conserva el flujo determinista de mensajería local confirmada. No se inicia
+otro incremento automáticamente. Ver [START_HERE](../START_HERE.md).
+
+## Lectura de nombres históricos
+Desde 2026-11-04 las bibliotecas pierden el prefijo core-: domain, data, platform,
+presentation y appfunctions. Planes, tareas cerradas y evidencias conservan sus nombres
+de ejecución; los quickstart se adaptan a los comandos actuales. Los snapshots Git
+no se reescriben. Ver [decisión](../docs/module-organization.md).

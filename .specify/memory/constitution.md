@@ -11,7 +11,7 @@ revisado basta; no pedir aprobación de nuevo para cada tarea ya autorizada.
 
 ### II. Un dominio compartido e independiente
 
-UI y AppFunctions DEBEN ejecutar los mismos casos de uso. `core-domain`
+UI y AppFunctions DEBEN ejecutar los mismos casos de uso. `domain`
 DEBE permanecer Kotlin/JVM sin Android, Compose, Hilt ni AppFunctions.
 Se mantienen las seis fronteras actuales; cualquier cambio de módulos DEBE
 justificarse en el plan. Los originales Rocket-Beer NO se modifican.
@@ -67,4 +67,6 @@ principios, MINOR para ampliarlos y PATCH para aclarar redacción.
 La adopción documental inicial es 2026-11-01. Las specs de producto siguen
 Draft hasta su revisión; un checklist documental no es una aprobación humana.
 
-**Version**: 1.0.0 | **Ratified**: 2026-11-01 | **Last Amended**: 2026-11-01
+**Version**: 1.0.1 | **Ratified**: 2026-11-01 | **Last Amended**: 2026-11-04
+
+Aclaración 1.0.1: renombrado de módulos sin core-; sin cambio de principios, comportamiento o dependencias. Ver docs/module-organization.md.

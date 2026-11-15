@@ -24,11 +24,11 @@ android {
 }
 
 dependencies {
-    implementation(project(":core-domain"))
-    implementation(project(":core-data"))
-    implementation(project(":core-platform"))
-    implementation(project(":core-presentation"))
-    implementation(project(":core-appfunctions"))
+    implementation(project(":domain"))
+    implementation(project(":data"))
+    implementation(project(":platform"))
+    implementation(project(":presentation"))
+    implementation(project(":appfunctions"))
     implementation(libs.androidx.appfunctions)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)

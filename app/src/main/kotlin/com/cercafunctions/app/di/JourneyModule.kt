@@ -34,7 +34,7 @@ object JourneyModule {
 
     @Provides fun provideClock(): Clock = Clock.systemUTC()
     @Provides fun provideZone(): ZoneId = ZoneId.systemDefault()
-    @Provides fun provideFixtures(): JourneyFixtureRepository = ReproducibleJourneyFixtures()
+    @Provides fun provideFixtures(clock: Clock): JourneyFixtureRepository = ReproducibleJourneyFixtures(clock)
     @Provides fun provideArrival(repository: JourneyRepository, fixtures: JourneyFixtureRepository, clock: Clock) =
         QueryJourneyArrival(repository, fixtures, clock)
 

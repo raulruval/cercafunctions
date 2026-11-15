@@ -4,10 +4,10 @@ configurar trayecto y autorizar Compartir trayecto con asistentes. Desactivado
 por defecto y separado de calendario. En API<36/servicio ausente no se puede activar.
 
 ```powershell
-.\gradlew.bat :core-domain:test :core-data:test :core-platform:testDebugUnitTest :core-presentation:testDebugUnitTest :app:assembleDebug :app:lintDebug
+.\gradlew.bat :domain:test :data:test :platform:testDebugUnitTest :presentation:testDebugUnitTest :app:assembleDebug :app:lintDebug
 .\gradlew.bat :app:connectedDebugAndroidTest
 .\gradlew.bat :app:installDebug
-.\gradlew.bat :core-appfunctions:connectedDebugAndroidTest
+.\gradlew.bat :appfunctions:connectedDebugAndroidTest
 adb shell cmd app_function help
 adb shell cmd app_function list-app-functions --package com.cercafunctions.app
 ```
@@ -46,4 +46,4 @@ No usar los tests directos del servicio para atribuirse esa cobertura IPC.
 AGP/UTP puede desinstalar el APK al terminar las instrumentadas. Reinstalar y
 configurar/autorizar desde la app antes del smoke SDK. Para repetir la negativa
 con proveedor habilitado, autorizar tras installDebug y antes del testhost de
-core-appfunctions. Al terminar, revocar compartir desde la UI.
+appfunctions. Al terminar, revocar compartir desde la UI.

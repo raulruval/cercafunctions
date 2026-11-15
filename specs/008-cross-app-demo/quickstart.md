@@ -70,7 +70,7 @@ Para ver el efecto abre ChatApp y Ana POC antes de matar su proceso. Los mensaje
 viven en memoria del ejemplo y no se entregan por red. Reiniciar ChatApp los pierde.
 08:40+35=09:15,15min tarde frente09:00, **fuenteREFERENCE**, no predicción de Renfe.
 Con08:00 no se prepara mensaje. `--scenario DEMO_UNKNOWN` tampoco lo prepara;
-conserva el reloj fijo de demo y no comparte horarios de reunión. `--contact-query Bob`
+usa mañana en Europe/Madrid con el reloj inyectado y no comparte horarios de reunión. `--contact-query Bob`
 demuestra ambigüedad: exige aclarar en otra ejecución, nunca escoge el primero.
 
 ## 4. Testing Agent oficial en Windows

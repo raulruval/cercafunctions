@@ -3,7 +3,7 @@
 `QueryJourneyArrival(input, scenario)` es suspend y público desde core-domain.
 Lee repositorio antes de calcular: ausencia/fallo retorna estado específico.
 REFERENCE respeta entrada y duración guardada, captura Clock una vez; demos usan
-exclusivamente catálogo fijo, entrada temporal visible y no editable en UI.
+exclusivamente catálogo sintético, con salida mañana08:00 Europe/Madrid según Clock inyectado; entrada temporal visible y no editable en UI.
 `tomorrow(zone)` devuelve siguiente fecha local; `fixture(scenario)` permite
 mostrar datos demo sin dependencia de presentation hacia data.
 

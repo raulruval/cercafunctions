@@ -8,15 +8,15 @@ Cambiar hora/fecha/zona/selección retira evaluación. Eliminar evento y evaluar
 da indeterminado y retira selección. Revocación no pide permiso desde evaluación.
 Al terminar `python scripts/calendar-demo-fixture.py cleanup`.
 
-Fixture UC-002 tiene fecha fija2026-11-02, Europe/Madrid: para comparar demo +15
+Fixture UC-002 usa mañana según el reloj actual en Europe/Madrid: para comparar demo +15
 08:50 contra reunión09:00 del mismo día hay que preparar/seleccionar esa ocurrencia.
-Nunca se desplaza la demo a mañana. Demo desconocido siempre indeterminado.
+La fecha se recalcula al consultar o seleccionar el escenario. Demo desconocido siempre indeterminado.
 No se garantiza llegar físicamente desde estación a reunión: tramo/margen extra0.
 
 ```powershell
-.\gradlew.bat :core-domain:test :core-data:test :core-platform:testDebugUnitTest :core-presentation:testDebugUnitTest :app:assembleDebug :app:lintDebug
-.\gradlew.bat :core-platform:connectedDebugAndroidTest
-.\gradlew.bat :core-presentation:connectedDebugAndroidTest
+.\gradlew.bat :domain:test :data:test :platform:testDebugUnitTest :presentation:testDebugUnitTest :app:assembleDebug :app:lintDebug
+.\gradlew.bat :platform:connectedDebugAndroidTest
+.\gradlew.bat :presentation:connectedDebugAndroidTest
 .\gradlew.bat :app:connectedDebugAndroidTest
 ```
 Instrumentadas secuenciales. Para avisos Atocha–Chamartín:18000 y17000; pulsar las

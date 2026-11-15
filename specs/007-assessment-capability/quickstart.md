@@ -12,7 +12,7 @@ Denied sin horarios. Token erróneo/expirado idem. Nueva autorización rota ante
 No versionar token/clipboard/capturas con referencia; limpiar fixture propia al acabar.
 
 Pruebas: dominio/data/plataforma/VM; instrumentadas secuenciales presentación,
-app, reinstalar app, core-appfunctions (testhost otro UID). UTP puede desinstalar.
+app, reinstalar app, appfunctions (testhost otro UID). UTP puede desinstalar.
 SDK positivo es privilegiado; no afirmar que cualquier app puede ejecutar.
 Reloj/reboot/TTL se verifican inyectados, sin alterar reloj real del dispositivo.
 

@@ -65,3 +65,11 @@ Depende de UC-001. La hora de salida se confirma por consulta; aún no se almace
 
 La precisión del borrador es suficiente para revisar alcance; las decisiones propuestas
 se refinan al activar el caso. Un escenario escrito no demuestra que ya funcione.
+
+## Ajuste vigente autorizado · 2026-11-04
+S6/FR-003 y los datos de referencia de este documento se actualizan: los tres
+escenarios demo parten mañana a las08:00 Europe/Madrid según Clock inyectado;
+observedAt usa ese reloj. Ruta35min y retrasos0/15/desconocido siguen sintéticos.
+Con reloj fijo el resultado sigue reproducible. La fecha histórica2026-11-02 y
+el reloj2026-11-01 describen el snapshot anterior, no la política vigente.
+Ver [plan, tareas y verificación del ajuste](demo-tomorrow.md).

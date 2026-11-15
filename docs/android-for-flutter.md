@@ -75,7 +75,7 @@ accede a Compose para obtener resultados. El agente externo orquesta proveedores
 
 1. Abrir `MainActivity`, seguir `HomeRoute` y `HomeViewModel` hasta `GetHabitualJourney`.
 2. Comprobar que `JourneyRepository` solo contiene tipos Kotlin.
-3. Seguir el enlace Hilt hasta `DataStoreJourneyRepository` en `core-platform`.
+3. Seguir el enlace Hilt hasta `DataStoreJourneyRepository` en `platform`.
 4. Abrir el Preview de `HomeScreen`: funciona sin contenedor Hilt ni dispositivo.
 5. Ejecutar tests JVM; después instalar el APK y rotar la pantalla para observar
    la separación entre Activity y ViewModel. `JourneyFlowTest` ya verifica recreación,
@@ -164,7 +164,7 @@ Dart, manteniendo HTTP y formato remoto fuera del caso de uso.
 `INTERNET` es un permiso normal declarado en Manifest; Android lo concede al
 instalar sin diálogo runtime. READ_CALENDAR del siguiente caso sí requerirá
 flujo de autorización de usuario. No hacen falta Activity ni Context en el
-repositorio HTTP; por eso permanece JVM en core-data.
+repositorio HTTP; por eso permanece JVM en data.
 
 La selección explícita de IDs evita tratar nombres libres como identidad.
 `FeedHeader.timestamp` informa cuándo se produjo el contenido; HTTP200 no lo
@@ -347,3 +347,7 @@ que el efecto no ocurrió: estado UNKNOWN, comprobar proveedor y no retry autom�
 El ejemplo Google guarda mensajes en memoria; no confundir IPC real con entrega
 real por red. El usuario confirmó la prueba; el Debugger permite verificar lectura
 y el envío se hizo con el gate del consumidor, porque el LLM oficial no lo impone.
+
+Actualización de demos2026-11-04: los escenarios sintéticos usan mañana a las08:00
+en Europe/Madrid, calculado desde Clock inyectado. El reloj fijo queda para pruebas;
+la observación en ejecución es actual. Ver specs/002-journey-estimate/demo-tomorrow.md.

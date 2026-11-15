@@ -138,7 +138,7 @@ cuando se construyan; el flujo determinista se registra separado del LLM.
 Comprobación Android base cuando corresponda:
 
 ```powershell
-.\gradlew.bat :core-domain:test :app:assembleDebug :app:lintDebug
+.\gradlew.bat :domain:test :app:assembleDebug :app:lintDebug
 ```
 
 No generar métricas de cobertura o logs de datos privados como sustituto de

@@ -6,15 +6,15 @@ Confirmar zona, usar Mañana, indicar hora HH:mm y Consultar salida: duración 3
 con salida 08:00 debe dar 08:35. No representa horario ni predicción de Renfe.
 
 Seleccionar Demo normal, Demo +15 y Demo desconocido: campos bloqueados con
-salida fija 2026-11-02 08:00 Europe/Madrid y ruta demo35. Consultar cada modo:
-08:35, 08:50 y llegada desconocida. Reloj fijo visible, sin consulta de red.
+salida mañana a las08:00 Europe/Madrid y ruta demo35. Consultar cada modo:
+08:35, 08:50 y llegada desconocida. Instante de consulta visible; Clock fijo en tests, sin consulta de red.
 Editar una entrada/modo/trayecto debe retirar el resultado anterior.
 Recrear Activity conserva borrador; reiniciar proceso reinicia consulta, conserva trayecto.
 
 En PowerShell con JAVA_HOME apuntando a JBR Android Studio:
 ```powershell
-.\gradlew.bat :core-domain:test :core-data:test :core-platform:testDebugUnitTest :core-presentation:testDebugUnitTest :app:assembleDebug :app:lintDebug
-.\gradlew.bat :core-presentation:connectedDebugAndroidTest
+.\gradlew.bat :domain:test :data:test :platform:testDebugUnitTest :presentation:testDebugUnitTest :app:assembleDebug :app:lintDebug
+.\gradlew.bat :presentation:connectedDebugAndroidTest
 .\gradlew.bat :app:connectedDebugAndroidTest
 ```
 Ejecutar instrumentadas secuencialmente en un dispositivo/emulador iniciado.

@@ -1,99 +1,126 @@
-# Cercanías Copilot · Cercafunctions
+# Cercanías Copilot · Android AppFunctions POC
 
-Empieza por [START_HERE.md](START_HERE.md): mapa de casos, primer incremento y método SDD.
+POC Android nativa terminada como demostración de capacidades para agentes.
+La UI y las AppFunctions ejecutan los mismos casos de uso de dominio, sin que
+el agente navegue por las pantallas. Kotlin, Jetpack Compose, Material 3,
+ViewModel/StateFlow, Coroutines y Hilt; patrones inspirados en Rocket-Beer.
 
-Base Android nativa para investigar una arquitectura que proporcione capacidades
-a agentes, inspirada en Rocket-Beer. UC-001–008 implementados y verificados; demo entre apps determinista con confirmación humana.
+## Demo principal
 
-## Qué ejecuta esta base
+La pantalla inicial combina **calendario real del dispositivo** con **un trayecto
+sintético**, para repetir el resultado sin depender de incidencias de Renfe:
 
-Pantalla Compose + Material 3 para configurar, guardar y editar un trayecto habitual.
-ViewModel/StateFlow ejecuta los casos de uso Kotlin puros y Hilt enlaza Preferences
-DataStore. La configuración se recupera tras reiniciar el proceso. Los campos se
-validan antes de escribir y los errores no se convierten en configuración vacía.
+1. Permite leer el calendario. Copilot elige la primera reunión con hora de **mañana**,
+   en la zona del dispositivo. Si no hay ninguna, crea una desde tu app de calendario.
+2. Elige **Puntual**, **+15 min** o **Sin datos**. El trayecto Atocha (demo) → Chamartín
+   (demo) dura 35 minutos; la salida se ajusta a 35 minutos antes de la reunión.
+3. Activa **Permitir consulta del agente**. Comparte únicamente horarios y resultado,
+   sin títulos, notas, asistentes o identificadores del calendario. Persiste hasta revocar.
+4. En AppFunctions Testing Agent → **Debug**, ejecuta **evaluateDemoJourney** sin parámetros.
+   Esta prueba no requiere modelo ni clave API.
+5. Para probar lenguaje natural, configura tu clave **Gemini API** en el agente,
+   fuera de cualquier grabación, y utiliza **Agent Demo**.
 
-La duración es una referencia del usuario, no una predicción ferroviaria. Ver
-[pruebas y evidencia de UC-001](specs/001-habitual-journey/verification.md).
+> Consulta mi trayecto de Cercanías de mañana y comprueba si llegaré a tiempo a mi
+> próxima reunión. Si no llego, prepara un mensaje para Ana POC pidiéndole que la retrase.
 
-El panel de llegada calcula una referencia para fecha/hora/zona confirmadas.
-Incluye tres demos con reloj y datos fijos: normal, +15 y desconocido; nunca se
-presentan como operación real. Pruebas cubren medianoche y cambios de hora.
-Ver [guía UC-002](specs/002-journey-estimate/quickstart.md) y
-[evidencia](specs/002-journey-estimate/verification.md).
+**Resultados:** Puntual llega al comienzo (margen 0); +15 min llega tarde (−15);
+Sin datos devuelve indeterminado. No es una predicción ferroviaria ni un horario de
+Renfe; no añade traslado desde la estación hasta la reunión ni margen de seguridad.
+No se modifica el calendario. [Guía breve y diagnóstico del agente](docs/demo-simple.md).
 
-UC-003 consulta avisos públicos de Renfe por HTTPS y filtra localmente por dos
-estaciones seleccionadas expresamente del catálogo. Distingue feed caducado,
-actualidad desconocida y fuente no disponible. Cobertura solo de extremos;
-ningún aviso añade minutos inventados. Ver [guía](specs/003-renfe-context/quickstart.md)
-y [evidencia](specs/003-renfe-context/verification.md).
+## Capacidades publicadas
 
-UC-004 permite consultar un día del calendario Android con permiso contextual,
-elegir una ocurrencia y revalidarla. No modifica ni persiste agenda; distingue
-denegación, revocación, vacío y fallo de proveedor. No divulga datos a agentes.
-Ver [ejecución y demo opcional sin cuenta](specs/004-calendar-selection/quickstart.md)
-y [verificación](specs/004-calendar-selection/verification.md).
+| AppFunction | Uso | Autorización dentro de Copilot |
+| --- | --- | --- |
+| `evaluateDemoJourney()` | Demo principal: tren sintético y siguiente reunión real de mañana. Sin parámetros. | READ_CALENDAR e interruptor de consulta del agente. |
+| `queryJourney(...)` | Avanzado: llegada de referencia, escenarios y contexto ferroviario. | Consentimiento específico para compartir el trayecto. |
+| `evaluateAuthorizedCommitment(...)` | Avanzado: evaluación mínima de una ocurrencia elegida. | Referencia temporal emitida desde la UI y revalidada. |
 
-UC-005 compara la llegada con el compromiso revalidado mediante AssessArrival,
-caso de dominio compartible con futuras capacidades. Distingue margen, retraso
-e indeterminado; preserva fuente e incertidumbre y retira resultados obsoletos.
-Sin margen extra ni desplazamiento estación–reunión, explícitos en pantalla.
-Ver [prueba guiada](specs/005-arrival-assessment/quickstart.md) y
-[verificación](specs/005-arrival-assessment/verification.md).
+El servicio Android generado por KSP exige consumidores autorizados por Android;
+publicar o descubrir una función no concede acceso a los datos. El servicio no
+solicita permisos ni depende de un ViewModel. [Adaptador AppFunctions](appfunctions/README.md).
 
-UC-006 publica queryJourney mediante el servicio AppFunctions generado por KSP.
-Opt-in de compartir trayecto desde UI, desactivado por defecto; consumidores
-autorizados por Android, sin calendario/contactos ni mensajes. Funciona con
-proceso frío y sin Activity usando los mismos casos de dominio. Ver
-[guía SDK](specs/006-journey-capability/quickstart.md) y
-[verificación](specs/006-journey-capability/verification.md).
+**Avanzado · referencia y calendario manual** conserva la configuración y persistencia
+del trayecto habitual, fecha/hora/zona explícitas, consulta de avisos Renfe, selección
+manual de reuniones y autorizaciones acotadas. Sus escenarios completos usan mañana
+a las 08:00 en Europe/Madrid; la demo principal ajusta la salida al compromiso real.
+Las alertas cualitativas nunca se convierten en minutos de retraso inventados.
 
-UC-007 publica evaluación mínima de una ocurrencia autorizada mediante referencia
-temporal. Límite30min/comienzo, revocación y validación de versión/permiso/reloj;
-se guarda hash y selección mínima, sin rawtoken ni títulos. Capacidad independiente
-del opt-in de trayecto, sin agenda completa ni mensajes. Ver
-[guía](specs/007-assessment-capability/quickstart.md) y
-[pruebas](specs/007-assessment-capability/verification.md).
+## Tres aplicaciones en el laboratorio
 
-## Módulos
+- **Cercanías Copilot:** este repositorio, proveedor de la evaluación.
+- **AppFunctions Testing Agent:** consumidor oficial de pruebas, con Debug manual
+  y Agent Demo mediante Gemini API en la revisión utilizada.
+- **ChatApp:** proveedor oficial de ejemplo para buscar contactos y preparar/enviar
+  mensajes. Usa el contacto ficticio Ana POC; el mensaje queda en memoria local,
+  no se entrega por red. Copilot no implementa mensajería propia.
 
-| Módulo | Responsabilidad |
+Los ejemplos oficiales se instalan por separado desde
+[android/appfunctions](https://github.com/android/appfunctions); no son módulos de este APK.
+Después de reiniciar el emulador, inicia el Testing Agent con los privilegios del laboratorio:
+
+```powershell
+.\scripts\start-testing-agent.ps1 -Serial emulator-5554
+```
+
+El script es el equivalente Windows del lanzador oficial. No ejecutes pruebas
+instrumentadas o UIAutomator a la vez que esa sesión; para detenerla añade `-Stop`.
+La versión fijada del agente integra Gemini API: otro proveedor o un LLM local
+requieren adaptar el cliente, no solo introducir otra clave.
+
+## Módulos actuales
+
+| Módulo Gradle | Responsabilidad |
 | --- | --- |
-| `app` | Application, Activity y ensamblado Hilt |
-| `core-presentation` | Compose, tema, estado y ViewModel |
-| `core-domain` | Modelos, contratos y casos de uso Kotlin/JVM |
-| `core-data` | Repositorios JVM, HTTP/parser Renfe, catálogo de estaciones y fixtures |
-| `core-platform` | Persistencia DataStore y lectura CalendarContract con cancelación |
-| `core-appfunctions` | Servicio AppFunctions, DTO, KSP, permisos y mapeo a dominio |
+| `app` | APK, Application, Activity y composición Hilt. |
+| `domain` | Modelos, contratos y casos de uso Kotlin/JVM sin Android. |
+| `data` | Repositorios JVM, HTTP/parser Renfe, catálogo y fixtures. |
+| `platform` | CalendarContract, permisos y persistencia DataStore. |
+| `presentation` | Compose, tema, ViewModels y StateFlow. |
+| `appfunctions` | Adaptador Android, DTO, KDoc, metadatos y servicio generado. |
 
-## Ejecutar
+Organización por capas con paquetes funcionales internos. Los nombres coinciden con
+`settings.gradle.kts`. [Decisión de nombres y comparación con feature-first](docs/module-organization.md).
+Los documentos de incrementos antiguos conservan los nombres usados en sus snapshots.
 
-Abrir esta carpeta en Android Studio. Seleccionar su JDK integrado como Gradle JDK.
-Instalar Android SDK Platform 37 y Build Tools 36.0.0 o los solicitados por AGP.
-La UI admite API 26+; para el laboratorio AppFunctions usar API 36+ (preferido 37+).
-Ver [configuración y pruebas](docs/setup.md).
+## Compilar y ejecutar
+
+Abre el proyecto en Android Studio y usa su JDK integrado para Gradle. Instala
+SDK Platform 37 y los Build Tools solicitados. La UI admite API26+; el laboratorio
+AppFunctions requiere API36+ y se verificó en un emulador API37.2.
+`local.properties`, claves API y configuración del equipo no se versionan.
 
 ```powershell
 $env:JAVA_HOME = 'C:\Program Files\Android\Android Studio\jbr'
-.\gradlew.bat :core-domain:test :core-data:test :core-platform:testDebugUnitTest :core-presentation:testDebugUnitTest :app:assembleDebug :app:lintDebug
+.\gradlew.bat :domain:test :data:test :platform:testDebugUnitTest :presentation:testDebugUnitTest :app:assembleDebug :app:lintDebug
 .\gradlew.bat :app:installDebug
 ```
 
-El wrapper descarga Gradle 9.6.1 y verifica su SHA-256. Las versiones están fijadas
-en `gradle/libs.versions.toml`. AGP 9 usa Kotlin integrado en los módulos Android;
-`org.jetbrains.kotlin.jvm` se aplica solo a los módulos puros.
+Versiones fijadas en `gradle/libs.versions.toml`; wrapper Gradle con SHA-256.
+[Configuración y pruebas](docs/setup.md).
 
-## Documentación para revisar
+## Estado y límites de la POC
 
-- [Análisis Rocket-Beer y fuentes fijadas por commit](docs/research.md).
-- [Arquitectura y diseño de core-appfunctions](docs/architecture.md).
-- [Viabilidad, privacidad y límites de la interoperabilidad](docs/feasibility.md).
-- [Guía Android desde Flutter](docs/android-for-flutter.md).
-- [Snapshot de esta fase y validación](docs/phase-0.md).
+**UC-001–009 implementados**, con especificación, plan, tareas y evidencia en
+[el tablero SDD](specs/README.md). La validación de UC-009 registró **187 tests JVM**,
+**72 tests Android**, APK/lint y consultas IPC reales de los tres escenarios,
+revocación y arranque sin Activity. [Evidencia](specs/009-simple-demo/verification.md).
 
-ChatApp y Testing Agent oficiales se han instalado y verificado en UC-008. UC-001–008 son incrementos funcionales
-con Spec Kit y evidencia versionada; no hay backend ni predicción de puntualidad real.
+UC-008 verificó un flujo determinista entre aplicaciones con confirmación exacta
+antes de un mensaje local de prueba. El ensayo Gemini inspeccionado después verificó
+la evaluación y la búsqueda del contacto; luego generó un nombre de función inexistente.
+Por tanto, el éxito de las herramientas no garantiza que el LLM orqueste siempre el
+flujo completo. No se confía en un prompt como barrera técnica antes de enviar.
+[Flujo determinista y guía de interoperabilidad](specs/008-cross-app-demo/quickstart.md).
 
-UC-008: [guía Windows/determinista](specs/008-cross-app-demo/quickstart.md),
-[evidencia](specs/008-cross-app-demo/verification.md) y
-[conclusiones Rocket-Beer](docs/agent-ready-conclusions.md). Mensajes solo en memoria
-del ejemplo oficial; un envío de prueba confirmado, sin entrega remota ni LLM de escritura.
+Sin backend propio, mapas, compra de billetes ni predicción operativa. La POC conserva
+el alcance educativo; no se presenta como producto listo para producción.
+
+## Documentación
+
+- [Empieza aquí](START_HERE.md) · [Demo sencilla](docs/demo-simple.md).
+- [Arquitectura y AppFunctions](docs/architecture.md) · [Android desde Flutter](docs/android-for-flutter.md).
+- [Análisis de Rocket-Beer](docs/research.md) · [Conclusiones Agent-Ready](docs/agent-ready-conclusions.md).
+- [Método SDD](docs/sdd-workflow.md) · [Casos y evidencias](specs/README.md).
+- [Ejemplos oficiales Google](https://github.com/android/appfunctions) · [Skill oficial AppFunctions](https://github.com/android/skills/blob/main/device-ai/appfunctions/SKILL.md).

@@ -4,8 +4,8 @@
 
 Gradle 9.6.1, AGP 9.3.3, Kotlin/Compose compiler 2.4.10, KSP 2.3.10,
 Hilt 2.60.1, Compose BOM 2026.06.01 y AppFunctions 1.0.0-beta01.
-El catálogo contiene las versiones exactas. AppFunctions compiler/testing están
-declarados para la siguiente fase y todavía no procesan servicios de Copilot.
+El catálogo contiene las versiones exactas. El compilador KSP de AppFunctions
+procesa las tres capacidades de Copilot; servicio y metadatos están implementados.
 
 AGP requiere al menos JDK 17; el bytecode del proyecto se fija a 17. En esta
 máquina se usa el JBR 25 de Android Studio con Gradle 9.6.1. Instalar SDK Platform
@@ -15,7 +15,7 @@ Ese archivo queda ignorado por Git.
 
 ```powershell
 $env:JAVA_HOME = 'C:\Program Files\Android\Android Studio\jbr'
-.\gradlew.bat :core-domain:test :app:assembleDebug :app:lintDebug --console=plain
+.\gradlew.bat :domain:test :app:assembleDebug :app:lintDebug --console=plain
 ```
 
 En macOS/Linux usar `./gradlew` y configurar el JDK/SDK locales. El wrapper
@@ -31,17 +31,18 @@ Crear o iniciar un AVD API 26+ y ejecutar `app` desde Android Studio, o:
 adb shell am start -n com.cercafunctions.app/.MainActivity
 ```
 
-Resultado: «Tu próximo trayecto, con contexto» y «Todavía no hay un trayecto
-configurado». Sin diálogos de permisos, consultas de red o acceso al calendario.
-El botón Reintentar aparece solo ante error de lectura, no como acción vacía.
+Resultado: pantalla Demo de Cercanías Copilot, escenarios Puntual/+15 min/Sin datos
+y acceso al calendario real desde un botón explícito. El recorrido inicial no consulta
+Renfe; Avanzado conserva el trayecto de referencia y la selección manual.
 APK: `app/build/outputs/apk/debug/app-debug.apk`.
 
-Tests JVM: `core-domain/build/reports/tests/test/index.html`.
+Tests JVM: `domain/build/reports/tests/test/index.html`.
 Lint: `app/build/reports/lint-results-debug.html`.
-Los tests validan ausencia/configuración del trayecto, duración/origen/destino y
-propagación de cancelación. No validan todavía puntualidad, permisos ni IPC.
+Las suites cubren dominio, persistencia, ViewModels, cancelación, calendario,
+autorización y frontera AppFunctions. La evidencia de UC-009 incluye consultas IPC
+reales y 72 pruebas instrumentadas; no se confunde con una garantía de orquestación LLM.
 
-## Laboratorio AppFunctions, para la fase posterior
+## Laboratorio AppFunctions
 
 Clonar el ejemplo oficial en otra carpeta, sin copiarlo como módulos del APK.
 Para reproducibilidad usar inicialmente el commit de docs/research.md.

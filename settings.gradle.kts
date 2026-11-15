@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "CercaniasCopilot"
-include(":app", ":core-domain", ":core-data", ":core-platform", ":core-presentation", ":core-appfunctions")
+include(":app", ":domain", ":data", ":platform", ":presentation", ":appfunctions")

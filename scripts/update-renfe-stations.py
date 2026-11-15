@@ -25,7 +25,7 @@ def main():
     root=Path(__file__).resolve().parents[1]
     stamp=datetime.now(timezone.utc).isoformat()
     digest=hashlib.sha256(content).hexdigest()
-    target=root/"core-data/src/main/resources/renfe-stations.tsv"
+    target=root/"data/src/main/resources/renfe-stations.tsv"
     target.parent.mkdir(parents=True,exist_ok=True)
     target.write_text(f"# Origen de los datos: Renfe Operadora | CC BY 4.0\n# {URL}\n# extractedAt={stamp} archiveSha256={digest}\n"+"".join(f"{a}\t{b}\n" for a,b in stations),encoding="utf-8",newline="\n")
     print(f"{len(stations)} station IDs/names written to {target}; sha256={digest}")

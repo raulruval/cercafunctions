@@ -4,6 +4,7 @@ import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Rule
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -11,6 +12,10 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class RailContextFlowTest {
     @get:Rule val compose=createAndroidComposeRule<MainActivity>()
+    @Before fun openAdvancedScreen() {
+        compose.onNodeWithTag("demo_advanced").performScrollTo().performClick()
+    }
+
     @Test fun stationAssociationRequiresSelectionAndSurvivesRotationButNotNewQuery() {
         compose.waitUntil(10_000) {
             compose.onAllNodesWithTag("configure").fetchSemanticsNodes().isNotEmpty() ||

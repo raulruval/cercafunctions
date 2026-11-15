@@ -6,12 +6,17 @@ import androidx.test.filters.SdkSuppress
 import com.cercafunctions.appfunctions.JourneyAppFunctionService
 import kotlinx.coroutines.runBlocking
 import org.junit.Rule
+import org.junit.Before
 import org.junit.Test
 import org.junit.Assert.*
 
 @SdkSuppress(minSdkVersion=36)
 class SharingFlowTest {
     @get:Rule val compose=createAndroidComposeRule<MainActivity>()
+    @Before fun openAdvancedScreen() {
+        compose.onNodeWithTag("demo_advanced").performScrollTo().performClick()
+    }
+
     private fun has(tag:String)=compose.onAllNodesWithTag(tag).fetchSemanticsNodes().isNotEmpty()
     @Test fun explicitOptInRecreationAndRevocationUpdateSystem() {
         compose.waitUntil(10_000){has("sharing_change")}

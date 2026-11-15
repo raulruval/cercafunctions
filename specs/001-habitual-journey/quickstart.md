@@ -3,8 +3,8 @@
 Requisitos: JDK/SDK de docs/setup.md y un emulador de prueba para instrumentación.
 
 ```powershell
-.\gradlew.bat :core-domain:test :core-platform:testDebugUnitTest :core-presentation:testDebugUnitTest :app:assembleDebug :app:lintDebug
-.\gradlew.bat :core-presentation:connectedDebugAndroidTest
+.\gradlew.bat :domain:test :platform:testDebugUnitTest :presentation:testDebugUnitTest :app:assembleDebug :app:lintDebug
+.\gradlew.bat :presentation:connectedDebugAndroidTest
 .\gradlew.bat :app:connectedDebugAndroidTest
 .\gradlew.bat :app:installDebug
 ```
