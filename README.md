@@ -1,5 +1,11 @@
 # Cercanías Copilot · Android AppFunctions POC
 
+> **Nota sobre el origen y propósito del proyecto**
+>
+> Esta aplicación es una prueba de concepto con fines educativos, creada con **Codex**. Tanto el código como la documentación se han generado con esta herramienta, siguiendo mis indicaciones y revisiones; no es una aplicación que haya programado manualmente.
+>
+> El propósito del proyecto es **experimentar con Android AppFunctions**, explorando cómo publicar capacidades de una aplicación para que puedan descubrirlas y ejecutarlas agentes de IA.
+
 POC Android nativa terminada como demostración de capacidades para agentes.
 La UI y las AppFunctions ejecutan los mismos casos de uso de dominio, sin que
 el agente navegue por las pantallas. Kotlin, Jetpack Compose, Material 3,
